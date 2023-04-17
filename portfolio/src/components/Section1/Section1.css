@@ -1,0 +1,202 @@
+.main-div-section1 {
+    display: flex;
+    background-color: #0A0A0A;
+    width: 100%;
+    height: 100vh;
+}
+
+.div-text-section1{
+    width: 50%;
+    margin-left: 102px;
+}
+
+.div-text-section1 h1 {
+    width: 442px;
+    height: 100px;
+
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 50px;
+
+    color: #FFFFFF;
+
+    
+
+}
+
+.div-text-section1 span {
+    background: linear-gradient(180deg, #FFDF1B 0%, #FFB11B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.div-buttons {
+    display: flex;
+}
+
+.button-ir-al-cv {
+/* Button */
+
+
+/* Auto layout */
+
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 15px 20px;
+gap: 10px;
+margin-right: 1rem;
+
+width: auto;
+height: 53px;
+
+background: linear-gradient(180deg, #FFDF1B 0%, #FFB11B 100%);
+border-radius: 6px;
+
+/* Paragraph Bold */
+
+font-family: 'Mulish';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 23px;
+/* identical to box height */
+
+text-align: center;
+
+color: #0A0A0A;
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+
+transition: .5s;
+}
+
+.button-ir-al-cv:hover {
+    cursor:pointer;
+    color: white
+}
+
+.button-verproyectos {
+/* Button */
+
+transition: .5s;
+/* Auto layout */
+
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 15px 20px;
+gap: 10px;
+
+width: auto;
+height: 53px;
+
+/* Button-Mute */
+
+background: #222222;
+border-radius: 6px;
+
+/* Paragraph Bold */
+
+font-family: 'Mulish';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 23px;
+/* identical to box height */
+
+text-align: center;
+
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+.button-verproyectos:hover {
+    cursor:pointer;
+    color: #0A0A0A;
+}
+
+.parrafo-sobremi {
+    width: 550px;
+    height: 191px;
+    
+/* Lead Light */
+
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 28px;
+
+/* Muted */
+    color: #A1B0BF;
+}
+
+.div-tecnologias {
+    display: flex;
+    margin-top: 2rem;
+}
+
+.div-logo-tecnologia {
+    width: 124px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+}
+
+.logo-tecnologias {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    margin-right: 1rem;
+}
+
+.node {
+    width: 40px;
+    height: 24.5px;
+}
+.text-tecnologias {
+    
+    /* Paragraph */
+
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+    /* identical to box height */
+
+    color: #A1B0BF;
+}
+.div-image-section1 {
+    width: 50%;
+}
+
+.image-macbook {
+    z-index: 2;
+    position: absolute;
+    width: 600px;
+    height: 450px;
+}
+
+.image-splash {
+    z-index: 1;
+    position: absolute;
+    width: 618px;
+    height: 456px;
+    transform: matrix(1, 0, 0, -1, 0, 0);
+}

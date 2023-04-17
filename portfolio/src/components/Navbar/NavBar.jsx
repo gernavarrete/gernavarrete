@@ -9,27 +9,50 @@ const NavBar = () => {
     <div className="NavBar-Container">
       <p>German Dario Navarrete</p>
       <div className="container-logos">
-        <NavLink>
+        <NavLink
+          to="https://www.linkedin.com/in/germandarionavarrete/"
+          target="_blank"
+        >
           <img className="logo" src={linkedin} alt="linkedin-logo"></img>
         </NavLink>
-        <NavLink>
+        <NavLink to="https://github.com/gernavarrete" target="_blank">
           <img className="logo" src={github} alt="github-logo"></img>
         </NavLink>
-        <NavLink>
+        <NavLink to="https://twitter.com/German017645362" target="_blank">
           <img className="logo" src={twitter} alt="twitter-logo"></img>
         </NavLink>
       </div>
       <div className="container-links">
-        <NavLink>
+        <NavLink
+          className="inicio"
+          style={{ textDecoration: "none" }}
+          to="/"
+          id="inicio"
+        >
           <h3>Inicio</h3>
         </NavLink>
-        <NavLink>
+        <NavLink
+          className="sobremi"
+          style={{ textDecoration: "none" }}
+          to="/sobremi"
+          id="sobremi"
+        >
           <h3>Sobre mi</h3>
         </NavLink>
-        <NavLink>
+        <NavLink
+          className="servicios"
+          style={{ textDecoration: "none" }}
+          to="/servicios"
+          id="servicios"
+        >
           <h3>Servicios</h3>
         </NavLink>
-        <NavLink>
+        <NavLink
+          className="contactame"
+          style={{ textDecoration: "none" }}
+          to="/contactame"
+          id="contactame"
+        >
           <h3>Contactame</h3>
         </NavLink>
       </div>
