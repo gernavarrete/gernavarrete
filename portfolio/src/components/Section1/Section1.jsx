@@ -5,6 +5,7 @@ import react from "../../images/React-icon.svg";
 import node from "../../images/Node.js_logo.svg";
 import macbookair from "../../images/MacBook-Air.png";
 import splash from "../../images/pngegg (1).png";
+import { Link } from "react-router-dom";
 
 export default function Section1() {
   return (
@@ -21,15 +22,13 @@ export default function Section1() {
           usuarios finales.
         </p>
         <div className="div-buttons">
-          <button className="button-ir-al-cv">Ir al CV</button>
+          <Link to="/cv-german-navarrete" target="_blank">
+            <button className="button-ir-al-cv">Ir al CV</button>
+          </Link>
           <button className="button-verproyectos">Ver Proyectos</button>
         </div>
         <div className="div-tecnologias">
           <div className="div-logo-tecnologia">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
             <img
               className="logo-tecnologias"
               src={javascript}
