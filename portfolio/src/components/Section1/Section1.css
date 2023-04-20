@@ -188,8 +188,15 @@ flex-grow: 0;
     position: absolute;
     width: 600px;
     height: 450px;
+    transition: 0.5s;
 }
-
+.image-macbook:hover {
+    z-index: 2;
+    position: absolute;
+    width: 650px;
+    height: 480px;
+    margin-left: -3rem;
+}
 .image-splash {
     z-index: 1;
     position: absolute;

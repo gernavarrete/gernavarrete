@@ -3,8 +3,18 @@ import linkedin from "../../images/linkedin-logo-2430.svg";
 import github from "../../images/Octicons-mark-github.svg";
 import twitter from "../../images/cdnlogo.com_twitter-icon.svg";
 import { NavLink } from "react-router-dom";
+import Section1 from "../Section1/Section1";
+import SobreMi from "../SobreMi/SobreMi";
+import Servicios from "../Servicios/Servicios";
+import Contactame from "../Contactame/Contactame";
+import { useLocation, useParams } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ changeComponent }) => {
+  const query = new URLSearchParams(useLocation().search);
+  console.log(query);
+
+  const params = useParams();
+  console.log(params["*"]);
   return (
     <div className="NavBar-Container">
       <p>German Dario Navarrete</p>
@@ -26,10 +36,15 @@ const NavBar = () => {
         <NavLink
           className="inicio"
           style={{ textDecoration: "none" }}
-          to="/"
+          to="/inicio"
           id="inicio"
         >
-          <h3>Inicio</h3>
+          <h3
+            onClick={(e) => changeComponent(<Section1 />)}
+            className={params["*"] === "inicio" ? "selected" : null}
+          >
+            Inicio
+          </h3>
         </NavLink>
         <NavLink
           className="sobremi"
@@ -37,7 +52,12 @@ const NavBar = () => {
           to="/sobremi"
           id="sobremi"
         >
-          <h3>Sobre mi</h3>
+          <h3
+            onClick={(e) => changeComponent(<SobreMi />)}
+            className={params["*"] === "sobremi" ? "selected" : null}
+          >
+            Sobre mi
+          </h3>
         </NavLink>
         <NavLink
           className="servicios"
@@ -45,7 +65,12 @@ const NavBar = () => {
           to="/servicios"
           id="servicios"
         >
-          <h3>Servicios</h3>
+          <h3
+            onClick={(e) => changeComponent(<Servicios />)}
+            className={params["*"] === "servicios" ? "selected" : null}
+          >
+            Servicios
+          </h3>
         </NavLink>
         <NavLink
           className="contactame"
@@ -53,7 +78,12 @@ const NavBar = () => {
           to="/contactame"
           id="contactame"
         >
-          <h3>Contactame</h3>
+          <h3
+            onClick={(e) => changeComponent(<Contactame />)}
+            className={params["*"] === "contactame" ? "selected" : null}
+          >
+            Contactame
+          </h3>
         </NavLink>
       </div>
     </div>

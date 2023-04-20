@@ -31,9 +31,19 @@ background: #0A0A0A;
     
     
     /* light */
-    
+    transition: .6s;
     color: #FFFFFF;
 }
+
+.NavBar-Container 
+    p:hover {
+        font-size: 25px;
+        width: 300px;
+        margin-right: -30px;
+        cursor: default;
+        text-shadow:crimson 0px 0px 15px;
+    }
+
 .container-logos {
     display: flex;
     justify-content: space-around;
@@ -55,6 +65,7 @@ padding: 0px 7px;
 .logo:hover {
     width: 33px;
     height: 33px;
+    filter: drop-shadow(0 0 0.75rem crimson);
 }
 
 .container-links {
@@ -75,6 +86,11 @@ h3 {
     
 }
 h3:hover {
-    color:#FFFFFF;
+    color:crimson;
+    font-weight: 700;
+}
+
+.selected {
+    color:crimson;
     font-weight: 700;
 }

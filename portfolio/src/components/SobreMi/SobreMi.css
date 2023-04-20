@@ -1,0 +1,63 @@
+.main-div-sobremi {
+    display: flex;
+    flex-direction: column;
+    background-color: #0A0A0A;
+    width: 100%;
+    height: auto;
+}
+
+.div-avatar-h1 {
+    display: flex;
+    margin-left: 90px;
+}
+
+.avatar {
+    width: 200px;
+    height: 200px;
+    margin-left: 50px;
+    border-radius: 125px;
+}
+.h1-title {
+    background: linear-gradient(180deg, #FFDF1B 0%, #FFB11B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-left: 40px;
+    margin-top: 60px;
+    
+}
+
+
+.h2-title {
+
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+    
+    color: #FFFFFF;
+}
+
+.div-paragraph {
+    display: flex;
+    justify-content: center;
+    margin-left: 90px;
+}
+
+p {
+    width: 90%;
+    height: 100%;
+    
+    /* Paragraph */
+
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+    
+    
+    color: #FFFFFF;
+    
+}
