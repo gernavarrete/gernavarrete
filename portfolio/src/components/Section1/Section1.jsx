@@ -3,7 +3,7 @@ import "./Section1.css";
 import javascript from "../../images/JavaScript_unofficial_logo.svg";
 import react from "../../images/React-icon.svg";
 import node from "../../images/Node.js_logo.svg";
-import macbookair from "../../images/MacBook-Air.png";
+import macbookair from "../../images/MacBook-Air-min.png";
 import splash from "../../images/pngegg (1).png";
 import { NavLink } from "react-router-dom";
 
@@ -29,7 +29,14 @@ export default function Section1() {
           >
             <button className="button-ir-al-cv">Ir al CV</button>
           </NavLink>
-          <button className="button-verproyectos">Ver Proyectos</button>
+          <button className="button-verproyectos">
+            <a
+              className="aMailTo"
+              href="mailto:contacto@germannavarrete.tech?Subject=Necesito%20comunicarme%20con%20usted!"
+            >
+              Contactame
+            </a>
+          </button>
         </div>
         <div className="div-tecnologias">
           <div className="div-logo-tecnologia">

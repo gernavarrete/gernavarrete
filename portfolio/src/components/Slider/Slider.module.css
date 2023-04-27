@@ -1,0 +1,104 @@
+.divContainerMain {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.buttonSlider {
+    height: fit-content;
+    height: 3rem;
+}
+.divContainer {
+    display: flex;
+    flex-direction: column ;
+    align-items: center;
+    background-color: #333030;
+    border-radius: 30px;
+    margin-left: 10%;
+    width: 80%;
+    height: 100%;
+}
+
+.h2NoProjects {
+    display: flex;
+    color:white;
+    margin-left: 3rem;
+}
+.divSlider {
+    
+    background-color: #333030;
+    border-radius: 30px;
+    width: 80%;
+    height: 100%;
+}
+
+
+.h2Title {
+    color:antiquewhite;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 50px;
+}
+.divImgAndDescription {
+    display: flex;
+    margin-left: 1rem;
+}
+.imageProyect {
+    display: block;
+    margin: auto;
+    width: 50%;
+    height:fit-content;
+}
+.description {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.btnIrAlProyecto {
+    /* Button */
+    
+    
+    /* Auto layout */
+    
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 15px 20px;
+    gap: 10px;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    
+    width: auto;
+    height: 53px;
+    
+    background: linear-gradient(180deg, #FFDF1B 0%, #FFB11B 100%);
+    border-radius: 6px;
+    
+    /* Paragraph Bold */
+    
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+    /* identical to box height */
+    
+    text-align: center;
+    
+    color: #0A0A0A;
+    
+    /* Inside auto layout */
+    
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    
+    transition: .5s;
+}
+
+.btnIrAlProyecto:hover {
+    cursor:pointer;
+    color: white
+}

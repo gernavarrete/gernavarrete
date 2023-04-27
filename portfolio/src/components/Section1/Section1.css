@@ -74,7 +74,16 @@ flex-grow: 0;
 
 transition: .5s;
 }
+.aMailTo {
+    color: whitesmoke;
+    text-decoration: none;
+    transition: .5s;
+}
 
+.aMailTo:hover {
+    cursor:pointer;
+    color: #0A0A0A;
+}
 .button-ir-al-cv:hover {
     cursor:pointer;
     color: white
@@ -121,10 +130,6 @@ order: 0;
 flex-grow: 0;
 }
 
-.button-verproyectos:hover {
-    cursor:pointer;
-    color: #0A0A0A;
-}
 
 .parrafo-sobremi {
     width: 550px;

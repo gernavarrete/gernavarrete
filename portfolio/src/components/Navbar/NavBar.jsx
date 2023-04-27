@@ -1,78 +1,81 @@
-import "./NavBar.css";
+import s from "../Navbar/NavBar.module.css";
 import linkedin from "../../images/linkedin-logo-2430.svg";
 import github from "../../images/Octicons-mark-github.svg";
 import twitter from "../../images/cdnlogo.com_twitter-icon.svg";
 import { NavLink } from "react-router-dom";
 import Section1 from "../Section1/Section1";
 import SobreMi from "../SobreMi/SobreMi";
-import Servicios from "../Servicios/Servicios";
-import Contactame from "../Contactame/Contactame";
-import { useLocation, useParams } from "react-router-dom";
+import Proyectos from "../Proyectos/Proyectos";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const NavBar = ({ changeComponent }) => {
-  const query = new URLSearchParams(useLocation().search);
-  console.log(query);
-
   const params = useParams();
-  console.log(params["*"]);
+
+  const [component, setComponent] = useState();
+
+  useEffect(() => {
+    changeComponent(component);
+  }, [component, changeComponent]);
+
   return (
-    <div className="NavBar-Container">
+    <div className={s.NavBarContainer}>
       <p>German Dario Navarrete</p>
-      <div className="container-logos">
+      <div className={s.containerLogos}>
         <NavLink
           to="https://www.linkedin.com/in/germandarionavarrete/"
           target="_blank"
         >
-          <img className="logo" src={linkedin} alt="linkedin-logo"></img>
+          <img className={s.logo} src={linkedin} alt="linkedin-logo"></img>
         </NavLink>
         <NavLink to="https://github.com/gernavarrete" target="_blank">
-          <img className="logo" src={github} alt="github-logo"></img>
+          <img className={s.logo} src={github} alt="github-logo"></img>
         </NavLink>
         <NavLink to="https://twitter.com/German017645362" target="_blank">
-          <img className="logo" src={twitter} alt="twitter-logo"></img>
+          <img className={s.logo} src={twitter} alt="twitter-logo"></img>
         </NavLink>
       </div>
-      <div className="container-links">
+      <div className={s.containerLinks}>
         <NavLink
-          className="inicio"
+          className={s.inicio}
           style={{ textDecoration: "none" }}
           to="/inicio"
           id="inicio"
         >
           <h3
-            onClick={(e) => changeComponent(<Section1 />)}
-            className={params["*"] === "inicio" ? "selected" : null}
+            onClick={(e) => setComponent(<Section1 />)}
+            className={params["*"] === "inicio" ? s.selected : null}
           >
             Inicio
           </h3>
         </NavLink>
         <NavLink
-          className="sobremi"
+          className={s.sobremi}
           style={{ textDecoration: "none" }}
           to="/sobremi"
           id="sobremi"
         >
           <h3
-            onClick={(e) => changeComponent(<SobreMi />)}
-            className={params["*"] === "sobremi" ? "selected" : null}
+            onClick={(e) => setComponent(<SobreMi />)}
+            className={params["*"] === "sobremi" ? s.selected : null}
           >
             Sobre mi
           </h3>
         </NavLink>
         <NavLink
-          className="servicios"
+          className={s.proyectos}
           style={{ textDecoration: "none" }}
-          to="/servicios"
-          id="servicios"
+          to="/proyectos"
+          id="proyectos"
         >
           <h3
-            onClick={(e) => changeComponent(<Servicios />)}
-            className={params["*"] === "servicios" ? "selected" : null}
+            onClick={(e) => setComponent(<Proyectos />)}
+            className={params["*"] === "proyectos" ? s.selected : null}
           >
-            Servicios
+            Proyectos
           </h3>
         </NavLink>
-        <NavLink
+        {/*<NavLink
           className="contactame"
           style={{ textDecoration: "none" }}
           to="/contactame"
@@ -83,8 +86,8 @@ const NavBar = ({ changeComponent }) => {
             className={params["*"] === "contactame" ? "selected" : null}
           >
             Contactame
-          </h3>
-        </NavLink>
+          </h3> 
+  </NavLink>*/}
       </div>
     </div>
   );
