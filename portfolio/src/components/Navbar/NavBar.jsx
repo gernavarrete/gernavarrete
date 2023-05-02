@@ -89,6 +89,11 @@ const NavBar = ({ changeComponent }) => {
           </h3> 
   </NavLink>*/}
       </div>
+      <div className={s.containerToggle}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   );
 };

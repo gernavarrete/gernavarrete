@@ -12,7 +12,14 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-left: 40px;
-    margin-top: 60px;
+    margin-bottom: 3rem;
     
+}
+
+@media(max-width: 768px) {
+    .divProjects {
+        width: auto;
+        height: 100vh;
+
+    }
 }

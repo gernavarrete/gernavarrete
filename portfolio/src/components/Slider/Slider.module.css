@@ -4,15 +4,42 @@
     align-items: center;
 }
 
-.buttonSlider {
+.buttonSliderLeft {
     height: fit-content;
     height: 3rem;
+    margin-left: 4rem;
+    margin-right: -7rem;
+    cursor:pointer;
+    z-index: 2;
+    
 }
+
+.buttonSliderLeft:hover {
+    width: 2rem;
+    height: 4rem;
+    margin-right: -7rem;
+}
+
+.buttonSliderRight {
+    height: fit-content;
+    height: 3rem;
+    margin-left: -7rem;
+    margin-right: 4rem;
+    cursor: pointer;
+}
+
+.buttonSliderRight:hover {
+    width: 2rem;
+    height: 4rem;
+    margin-left: -7rem;
+}
+
 .divContainer {
     display: flex;
     flex-direction: column ;
     align-items: center;
     background-color: #333030;
+    box-shadow: 0px 0px 30px #FFB11B;
     border-radius: 30px;
     margin-left: 10%;
     width: 80%;
@@ -69,6 +96,7 @@
     gap: 10px;
     margin-right: 1rem;
     margin-top: 1rem;
+    margin-bottom: 1rem;
     
     width: auto;
     height: 53px;
@@ -101,4 +129,28 @@
 .btnIrAlProyecto:hover {
     cursor:pointer;
     color: white
+}
+@media(max-width: 768px) {
+    .divContainerMain {
+        align-items:flex-start;
+    }
+
+    .divContainer {
+        height: auto;
+        margin-top: 4rem;
+        justify-content: center;
+    }
+    .divImgAndDescription {
+        display: flex;
+        flex-direction: column;
+        margin-left: 1rem;
+    }
+    .buttonSliderLeft:hover {
+        width: 2rem;
+        height: 2rem;
+    }
+    .buttonSliderRight:hover {
+        width: 2rem;
+        height: 2rem;
+    }
 }

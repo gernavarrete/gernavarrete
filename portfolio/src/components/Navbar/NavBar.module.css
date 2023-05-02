@@ -102,3 +102,39 @@ h3:hover {
     color:crimson;
     font-weight: 700;
 }
+.containerToggle {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .NavBarContainer {
+        /* Navbar */
+        
+        height: auto;
+        
+        position: relative;
+        display: inline-block;
+        
+        /* dark-x */
+        
+        background: #0A0A0A;
+        }
+
+    .containerLinks {
+    justify-content: center;
+    width: auto;
+    height: auto;
+    padding: 0px 20px;
+    gap: 10px;
+    margin-left: 0;
+    } 
+    .NavBarContainer 
+    p {
+        margin-left: 76px;
+    }
+    .containerLogos {
+        justify-content: center;
+        width: auto;
+        margin-left: 0;
+    }
+}
