@@ -27,18 +27,28 @@ export default function Slider({ proyects }) {
       />
       {proyects?.map((proyect, index) => {
         return (
-          <div>
+          <div key={index}>
             {cardCurrent === index && (
-              <div className={s.divContainer}>
-                <h2 className={s.h2Title}>{proyect.title}</h2>
-                <div className={s.divImgAndDescription}>
+              <div className={s.divContainer} key={proyect.title}>
+                <h2 className={s.h2Title} key={proyect.title}>
+                  {proyect.title}
+                </h2>
+                <div
+                  className={s.divImgAndDescription}
+                  key={`${proyect.title}+${index}`}
+                >
                   <img
                     key={index}
                     src={proyect.img}
                     alt={proyect.title}
                     className={s.imageProyect}
                   />
-                  <p className={s.description}>{proyect.description}</p>
+                  <p
+                    className={s.description}
+                    key={`${proyect.title}+${index}`}
+                  >
+                    {proyect.description}
+                  </p>
                 </div>
                 <NavLink
                   to={proyect.linkapp}

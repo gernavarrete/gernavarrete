@@ -3,20 +3,10 @@ import linkedin from "../../images/linkedin-logo-2430.svg";
 import github from "../../images/Octicons-mark-github.svg";
 import twitter from "../../images/cdnlogo.com_twitter-icon.svg";
 import { NavLink } from "react-router-dom";
-import Section1 from "../Section1/Section1";
-import SobreMi from "../SobreMi/SobreMi";
-import Proyectos from "../Proyectos/Proyectos";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 
-const NavBar = ({ changeComponent }) => {
+const NavBar = () => {
   const params = useParams();
-
-  const [component, setComponent] = useState();
-
-  useEffect(() => {
-    changeComponent(component);
-  }, [component, changeComponent]);
 
   return (
     <div className={s.NavBarContainer}>
@@ -43,8 +33,8 @@ const NavBar = ({ changeComponent }) => {
           id="inicio"
         >
           <h3
-            onClick={(e) => setComponent(<Section1 />)}
-            className={params["*"] === "inicio" ? s.selected : null}
+            // onClick={(e) => setComponent(<Section1 />)}
+            className={params.component === "inicio" ? s.selected : null}
           >
             Inicio
           </h3>
@@ -56,8 +46,8 @@ const NavBar = ({ changeComponent }) => {
           id="sobremi"
         >
           <h3
-            onClick={(e) => setComponent(<SobreMi />)}
-            className={params["*"] === "sobremi" ? s.selected : null}
+            //onClick={(e) => setComponent(<SobreMi />)}
+            className={params.component === "sobremi" ? s.selected : null}
           >
             Sobre mi
           </h3>
@@ -69,8 +59,8 @@ const NavBar = ({ changeComponent }) => {
           id="proyectos"
         >
           <h3
-            onClick={(e) => setComponent(<Proyectos />)}
-            className={params["*"] === "proyectos" ? s.selected : null}
+            //onClick={(e) => setComponent(<Proyectos />)}
+            className={params.component === "proyectos" ? s.selected : null}
           >
             Proyectos
           </h3>
