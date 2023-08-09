@@ -13,7 +13,7 @@ const NavBar = () => {
       <p>German Dario Navarrete</p>
       <div className={s.containerLogos}>
         <NavLink
-          to="https://www.linkedin.com/in/germandarionavarrete/"
+          to="https://www.linkedin.com/in/germandnavarrete/"
           target="_blank"
         >
           <img className={s.logo} src={linkedin} alt="linkedin-logo"></img>
