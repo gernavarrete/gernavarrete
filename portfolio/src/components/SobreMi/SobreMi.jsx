@@ -16,41 +16,19 @@ export default function SobreMi() {
           Te invito a conocerme un poco mas!
         </h2>
         <span id="pMain">
+          <p id="p1Description">
+            {" "}
+            Desde muy joven, siempre he sentido una gran pasión por la tecnología y la informática. Por eso, a los 18 años, decidí estudiar Ingeniería en Sistemas en la Universidad Tecnológica Nacional. Durante los primeros años de mi carrera, logré adquirir conocimientos valiosos y desarrollar habilidades importantes en el mundo de la tecnología. Sin embargo, después de cursar hasta tercer año, me vi obligado a abandonar mis estudios debido a circunstancias personales.
+          </p>
           <p id="p2Description">
             {" "}
-            A mis 18 años comencé a estudiar Ingeniería en Sistemas en la
-            Universidad Tecnológica Nacional con el fin de seguir mis deseos por
-            adentrarme un poco mas en el mundo IT, logre cursar hasta tercer año 
-            pero luego de eso no pude continuar. 
+            Posteriormente, trabajé en varios empleos que no me satisfacían, pero que debía realizar por cuestiones económicas. Desde hace 10 años trabajo en el sector de administración, asesoría con atención al cliente y funciones de cajero. Paralelamente, siempre he sido emprendedor y tuve dos emprendimientos que no dieron los frutos esperados. También soy Productor Asesor de Seguros, actividad que desarrollo hace más de 5 años.
           </p>
           <p id="p3Description">
-            {" "}
-            Fui pasando por varios trabajos los cuales no me gustaban pero por
-            cuestiones económicas los debía realizar, hace ya 10 años que
-            trabajo en el sector de administración, asesoría con atención al
-            cliente y funciones de cajero, paralelamente siempre he sido
-            emprendedor tuve dos emprendimientos los cuales no dieron los frutos
-            esperados, soy también Productor Asesor de Seguros, actividad que
-            desarrollo hace mas de 5 años, pero aunque buscaba una profesión
-            ninguna me llenaba o me hacia sentir a gusto, hasta que un día; como
-            soy de escuchar podcast y ver videos de desarrollo personal, ventas,
-            marketing digital, neuromarketing, emprendimientos, etc, me tope con
-            soyHenry y me encanto su propuesta, ya que ofrecía lo que yo siempre
-            quise estudiar de un manera mas intensiva y sin un costo inicial,
-            eso marcó un antes y un después en mi vida, hoy ya terminando y
-            consolidando lenguajes y herramientas como HTML, CSS, Javascript,
-            React.js, Node.js, Express.js puedo decir que me apasiona y que
-            podría pasar horas escribiendo codigo sin darme cuenta del tiempo
-            que paso.
+          A pesar de buscar una profesión que me llenara o me hiciera sentir a gusto, no encontré ninguna hasta que un día descubrí soyHenry. Me encantó su propuesta ya que ofrecía lo que siempre quise estudiar de una manera más intensiva y sin un costo inicial. Eso marcó un antes y un después en mi vida. Hoy, ya terminando y consolidando lenguajes y herramientas como HTML, CSS, Javascript, React.js, Node.js y Express.js puedo decir que me apasiona y que podría pasar horas escribiendo código sin darme cuenta del tiempo que pasa.
           </p>
           <p id="p4Description">
-            Quería agradecerte si llegaste hasta aquí e invitarte a que si
-            llegas a necesitar algún desarrollador con ganas, responsabilidad,
-            flexibilidad y full time, no dudes en contactarme. Me encantaría
-            poder sumarme a un equipo de trabajo que tenga ganas de crecer y
-            seguir impactando de la mejor manera, con la tecnología, en la vida
-            cotidiana de las personas y otorgarle el confort que la sociedad se
-            merece.
+          Quería agradecerte por leer hasta aquí e invitarte a que si necesitas algún desarrollador con ganas, responsabilidad, flexibilidad y full time no dudes en contactarme. Me encantaría poder sumarme a un equipo de trabajo que tenga ganas de crecer y seguir impactando de la mejor manera con la tecnología en la vida.
           </p>
         </span>
       </div>
