@@ -16,23 +16,12 @@ export default function SobreMi() {
           Te invito a conocerme un poco mas!
         </h2>
         <span id="pMain">
-          <p id="p1Description">
-            A mis 13 años mis viejos con mucho esfuerzo nos compraron la primer
-            computadora, yo estaba decidido a estudiar alguna carrera afín a
-            contaduría; pero este hecho cambio mi rumbo por completo, vi en esa
-            fabulosa maquina un potencial increíble que permitía explorar un
-            nuevo mundo de soluciones, creatividad y diversión, fue desde
-            entonces que empecé a interiorizarme un poco mas por la tecnología.
-          </p>
           <p id="p2Description">
             {" "}
-            Luego a mis 18 años comencé a estudiar Ingeniería en Sistemas en la
+            A mis 18 años comencé a estudiar Ingeniería en Sistemas en la
             Universidad Tecnológica Nacional con el fin de seguir mis deseos por
-            adentrarme un poco mas en el mundo IT y poder interactuar con esa
-            maquina en el mismo idioma, para mi mala suerte nunca pude terminar
-            esa carrera ya que por situaciones personales no continúe, pero
-            siempre me quedo como esa tarea pendiente de cumplir, con lo que
-            realmente me gusta hacer.
+            adentrarme un poco mas en el mundo IT, logre cursar hasta tercer año 
+            pero luego de eso no pude continuar. 
           </p>
           <p id="p3Description">
             {" "}
