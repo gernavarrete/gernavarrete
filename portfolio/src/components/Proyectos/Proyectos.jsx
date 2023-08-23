@@ -11,7 +11,7 @@ export default function Proyectos() {
       img: mangiare,
       linkapp: "https://mangiare.vercel.app/",
       description:
-        "Es un proyecto que nació de buscar una solución a la siguiente pregunta: ¿Qué cocinar hoy? Como sabemos en muchas familias, el tiempo para planear la comida es escaso; debido a que en muchos casos ambos padres trabajan, o tienen otras actividades;fue asi decidimos brindarles una solución para que cuando llegue ese momento donde se preguntan qué comer, puedan con los ingredientes que poseen, encontrar una receta para crearla y en el caso de que algún ingrediente falte poder adquirirlo de manera fácil y rápida.",
+      "Este proyecto nació con el objetivo de brindar una solución a la pregunta que muchas familias se hacen diariamente: ¿Qué cocinar hoy? Sabemos que el tiempo para planear la comida es escaso, especialmente cuando ambos padres trabajan o tienen otras actividades. Por eso, decidimos crear una plataforma que les permita encontrar una receta con los ingredientes que poseen y, en caso de que falte alguno, adquirirlo de manera fácil y rápida. En resumen, nuestro proyecto busca simplificar la vida de las personas al momento de cocinar, ofreciéndoles una solución práctica y eficiente para que puedan disfrutar de una comida deliciosa sin tener que preocuparse por la planificación.",
       tecnologias:
         "Front: Javascript, React, Redux, Auth0, Nodemailer, Cloudinary, Localstorage, ChakraUi. Back: Javascript, Node.js, Express.js Base de datos: PostgreSQL y Sequelize.",
     },
