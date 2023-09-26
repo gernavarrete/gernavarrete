@@ -3,6 +3,7 @@ import s from "../Proyectos/Proyectos.module.css";
 import Slider from "../Slider/Slider";
 import mangiare from "../../images/Mangiare-min.png";
 import foodapi from "../../images/FoodApi.png";
+import starwars from "../../images/screenshot1.png"
 
 export default function Proyectos() {
   const Proyects = [
@@ -23,6 +24,15 @@ export default function Proyectos() {
         "FoodApp es una App creada para consultar una receta extraida de una api segun un parametro de busqueda como puede ser el nombre o la dieta, ademas se puede ordenar segun el score o alfabeticamente",
       tecnologias:
         "Front: Javascript, React, Redux. Back: Javascript, Node.js, Express.js. Base de datos: PostgreSQL y Sequelize.",
+    },
+    {
+      title: "StarWarsChallenge",
+      img: starwars,
+      linkapp: "https://starwarschallenge.vercel.app/",
+      description:
+        "Star Wars Explorer es una Single Page Application (SPA) que te permite explorar el emocionante mundo de la saga Star Wars. Con esta aplicación, podrás consultar toda la información relacionada con tus personajes, naves, planetas y más, a través de una búsqueda por nombre fácil y rápida.",
+      tecnologias:
+        "Front: HTML, CSS, Javascript, React, Next.js , Redux-toolkit, MaterialUI,",
     },
   ];
   return (
