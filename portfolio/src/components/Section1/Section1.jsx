@@ -23,7 +23,7 @@ export default function Section1() {
         </p>
         <div className="div-buttons">
           <NavLink
-            to="https://drive.google.com/file/d/1Dho3hxB9Sofsat2JMa4itOttbKAOCPSO/view?usp=drive_link"
+            to="https://drive.google.com/file/d/1AmhmiGbEJAhj0lvf-eybKjjAQItS29-6/view?usp=drive_link"
             target="_blank"
             style={{ textDecoration: "none" }}
           >
