@@ -206,6 +206,7 @@ flex-grow: 0;
 @media(max-width: 768px) {
     .main-div-section1 {
         display: inline-block;
+        height: auto;
     }
     .image-splash {
         width: 318px;
