@@ -1,9 +1,9 @@
-.main-div-section1 {
+/*.main-div-section1 {
     display: flex;
     background-color: #0A0A0A;
     width: 100%;
     height: 100vh;
-}
+}*/
 
 .div-text-section1{
     width: 50%;
@@ -204,10 +204,10 @@ flex-grow: 0;
 }
 
 @media(max-width: 450px) {
-    .main-div-section1 {
+    /*.main-div-section1 {
         display: inline-block;
         height: auto;
-    }
+    }*/
     .image-splash {
         width: 318px;
         height: 156px;
