@@ -57,10 +57,10 @@ export default function Section1() {
           </div>
         </div>
       </div>
+      <div className="div-image-section1">
         <img className="image-splash" src={splash} alt="splash" />
         <img className="image-macbook" src={macbookair} alt="MacBook-Air" />
-      {/*<div className="div-image-section1">
-      </div>*/}
+      </div>
     </div>
   );
 }
