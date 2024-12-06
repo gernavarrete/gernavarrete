@@ -206,10 +206,11 @@ flex-grow: 0;
 @media(max-width: 450px) {
     .main-div-section1 {
         display: inline-block;
+        width: 100%;
     }
     .image-splash {
-        width: 318px;
-        height: 156px;
+        width: 100%;
+        height: auto;
         transform: matrix(1, 0, 0, -1, 94, 0);
         
     }
@@ -234,6 +235,12 @@ flex-grow: 0;
         line-height: 50px;
         color: #FFFFFF;
     }
+
+    .div-image-section1 {
+        width: 100%;
+        height: auto;
+    }
+
     .parrafo-sobremi {
         width: auto; 
         height: auto;
