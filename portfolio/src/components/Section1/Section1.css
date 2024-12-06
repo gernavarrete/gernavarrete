@@ -211,7 +211,7 @@ flex-grow: 0;
     .image-splash {
         width: 100%;
         height: auto;
-        transform: matrix(1, 0, 0, -1, 94, 0);
+        transform: matrix(1, 0, 0, -1, 0, 0);
         
     }
     .image-macbook {
