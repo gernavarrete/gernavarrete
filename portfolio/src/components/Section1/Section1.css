@@ -214,11 +214,11 @@ flex-grow: 0;
         
     }
     .image-macbook {
-        z-index: 2;
+        /*z-index: 2;
         position: absolute;
         width: 400px;
         height: 250px;
-        transition: 0.5s;
+        transition: 0.5s;*/
     }
     .div-text-section1 {
         width: auto;
