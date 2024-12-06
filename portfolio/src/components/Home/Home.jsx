@@ -20,7 +20,7 @@ export default function Home() {
   }, [params.component]);
 
   return (
-    <div>
+    <div className="main-div-home">
       <NavBar />
       {viewComponent ? viewComponent : <Section1 />}
     </div>
