@@ -204,9 +204,9 @@ flex-grow: 0;
 }
 
 @media(max-width: 450px) {
-    /*.main-div-section1 {
-        width: 100%;
-    }*/
+    .main-div-section1 {
+        display: inline-block;
+    }
     .image-splash {
         width: 318px;
         height: 156px;
