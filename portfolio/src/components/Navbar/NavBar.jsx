@@ -65,19 +65,6 @@ const NavBar = () => {
             Proyectos
           </h3>
         </NavLink>
-        {/*<NavLink
-          className="contactame"
-          style={{ textDecoration: "none" }}
-          to="/contactame"
-          id="contactame"
-        >
-          <h3
-            onClick={(e) => changeComponent(<Contactame />)}
-            className={params["*"] === "contactame" ? "selected" : null}
-          >
-            Contactame
-          </h3> 
-  </NavLink>*/}
       </div>
       <div className={s.containerToggle}>
         <span></span>
