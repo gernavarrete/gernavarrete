@@ -1,6 +1,6 @@
 .main-div-home {
     background-color: black;
-    height: 100vh;
+    height: 100%;
 }
 
 @media (max-width: 450px) {
