@@ -5,6 +5,6 @@
 
 @media (max-width: 450px) {
     .main-div-home {
-        height: 100vh;
+        height: 100%;
     }
 }
