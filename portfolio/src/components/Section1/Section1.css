@@ -202,7 +202,7 @@ flex-grow: 0;
     transform: matrix(1, 0, 0, -1, 0, 0);
 }
 
-@media(max-width: 750px) {
+@media(max-width: 768px) {
     .main-div-section1 {
         display: inline-block;
         width: 100%;

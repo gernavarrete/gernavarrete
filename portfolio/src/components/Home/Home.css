@@ -1,9 +1,9 @@
 .main-div-home {
     background-color: black;
-    height: 100%;
+    height: 100vh;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 768px) {
     .main-div-home {
         height: 100%;
     }
