@@ -37,10 +37,6 @@
 }
 
 .button-ir-al-cv {
-/* Button */
-
-
-/* Auto layout */
 
 display: flex;
 flex-direction: row;
@@ -200,6 +196,7 @@ flex-grow: 0;
 .image-splash {
     z-index: 1;
     position: absolute;
+    margin-right: auto;
     width: 618px;
     height: 456px;
     transform: matrix(1, 0, 0, -1, 0, 0);
@@ -211,6 +208,7 @@ flex-grow: 0;
         width: 100%;
     }
     .image-splash {
+        background-color: black;
         width: 100%;
         height: auto;
         transform: matrix(1, 0, 0, -1, 0, 0);
