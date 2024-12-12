@@ -130,7 +130,8 @@ h3:hover {
     } 
     .NavBarContainer 
     p {
-        margin-left: 76px;
+        width: auto;
+        margin-left: 50px;
     }
     .containerLogos {
         justify-content: center;
