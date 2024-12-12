@@ -257,6 +257,7 @@ flex-grow: 0;
         /* width: 100%; */
         margin-top: 2rem;
         margin-bottom: 2rem;
+        justify-content: center;
     }
     .div-logo-tecnologia {
         width: 124px;
