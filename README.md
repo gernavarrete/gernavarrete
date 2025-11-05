@@ -1,159 +1,121 @@
-🚀 Germán D. Navarrete — Full-Stack Developer & Automation Engineer
+# 🚀 **Germán D. Navarrete — Full-Stack Developer & Automation Engineer**
+
+> **Transformo procesos complejos en soluciones simples, eficientes y escalables.**
+
+Soy **Desarrollador Full-Stack** con fuerte enfoque en **automatización, IA aplicada e integración de ecosistemas empresariales (Odoo)**.  
+Me apasiona crear soluciones que optimicen operaciones, reduzcan costos y aceleren la toma de decisiones.
+
+He desarrollado proyectos que involucran scraping avanzado con **Puppeteer**, procesamiento de datos, flujos automatizados con **n8n/Make**, construcción de APIs, bases de datos analíticas y despliegue en VPS usando Docker.
+
+Mi propósito es diseñar herramientas inteligentes que hagan a las empresas más eficientes mediante tecnología aplicada.
+
+---
+
+## 🧠 **Qué hago**
+✅ Diseño e implementación de sistemas web  
+✅ Automatización de procesos (n8n / Make.com)  
+✅ Scraping avanzado con Puppeteer  
+✅ Integraciones con Odoo (AFIP, addons, flujos internos)  
+✅ Desarrollo Full-Stack (Node / Python / React)  
+✅ Desarrollo de agentes inteligentes para operaciones  
+✅ Docker + VPS deployments  
+✅ Modelado y gestión de bases de datos  
+✅ Reporting & análisis para decisiones  
+
+---
+
+## 🛠️ **Tecnologías**
+
+### ⚡ **Lenguajes**
+- JavaScript / TypeScript
+- Python
+- SQL (PostgreSQL)
+
+### ⚛️ **Front-End**
+- React.js
+- Next.js
+- TailwindCSS / Chakra UI
+
+### 🔧 **Back-End**
+- Node.js
+- Express.js
+- Python (FastAPI / scripts / integraciones)
+- Prisma / Sequelize
+
+### 🗄️ **Bases de Datos**
+- PostgreSQL
+- Supabase
+
+### ⚙️ **Automatización & Integración**
+- **n8n**
+- **Make.com**
+- APIs REST
+- Manejo de PDF/XLSX/CSV
+
+### 🤖 **Data, AI & Scraping**
+- Puppeteer
+- OCR (OCR.Space)
+- Agentes/self-service AI
+
+### 🏭 **ERP — Odoo**
+- Odoo v18
+- Addons personalizados (Python)
+- Integración AFIP
+- Módulos stock / ventas / compras / contabilidad
+- Odoo SH + Docker
+
+### 🧩 **DevOps & Hosting**
+- Docker / Docker Compose
+- VPS (Ubuntu / Hostinger)
+- Caddy / Nginx
+- Git & GitHub Flow
+
+---
+
+## ✅ **Proyectos Destacados**
+
+### 🔹 **Agente Inteligente para Broker de Seguros**
+- Scraping automatizado (Puppeteer)
+- DB centralizada
+- Cotizaciones por patente
+- Agente para consultas internas
+
+### 🔹 **Ecosistema Odoo + Automatización**
+- Addons personalizados
+- AFIP WS
+- Carga automatizada de costos vía OCR
+- Integración con n8n
+
+### 🔹 **OCR + ERP**
+- Flujo → Remitos → OCR → Limpieza → ERP  
+- Eliminación de carga manual
+
+---
+
+## 💼 **Competencias Clave**
+- Orientación al negocio
+- Procesos + tecnología
+- Diseño de flujos escalables
+- Comunicación clara
+- Autonomía
+- Aprendizaje continuo
 
-Transformo procesos complejos en soluciones eficientes, escalables y centradas en el negocio.
+---
 
-Soy Desarrollador Full-Stack con fuerte enfoque en automatización, integración de sistemas, IA aplicada y ecosistemas ERP (Odoo).
-Me apasiona resolver problemas reales diseñando productos funcionales, estables y orientados al valor.
+## 🎯 **Mi enfoque**
+> Crear soluciones digitales que automatizan procesos, conectan sistemas y potencian la productividad.
 
-He trabajado en proyectos que involucran scraping avanzado con Puppeteer, procesamiento automático de datos, integración de flujos con n8n/Make, construcción de APIs, bases de datos analíticas y despliegue en VPS bajo Docker.
+---
 
-Mi objetivo es seguir desarrollando soluciones inteligentes que permitan a empresas optimizar operaciones, reducir costos y acelerar la toma de decisiones.
+## 🛎 **Contacto**
+📩 Email → **germannavarrete.info@gmail.com**  
+🔗 LinkedIn → **https://www.linkedin.com/in/germandarionavarrete**  
+💬 Slack → German Navarrete  
+🧑‍💻 GitHub → @gernavarrete  
 
-🧠 Qué hago
+---
 
-✅ Diseño e implementación de sistemas web integrados
-✅ Automatización de procesos empresariales (n8n / Make.com)
-✅ Desarrollo full-stack con Node.js / Python / React
-✅ Scraping avanzado → Puppeteer + IA para extracción semántica
-✅ Integraciones con Odoo (custom addons, AFIP, flujos internos)
-✅ Implementación de agentes inteligentes para operaciones internas
-✅ Gestión de infraestructura vía Docker / VPS
-✅ Construcción y mantenimiento de bases de datos relacionales
-✅ Reporting y análisis de datos para toma de decisiones
+## 🙌 **Gracias por visitar mi perfil**
+Si buscás automatizar procesos, integrar sistemas o construir soluciones web que generen impacto real, conversemos.
 
-🛠️ Tecnologías
-⚡ Lenguajes
-
-JavaScript / TypeScript
-
-Python
-
-SQL (PostgreSQL)
-
-⚛️ Front-End
-
-React.js
-
-Next.js
-
-Chakra UI / TailwindCSS
-
-🔧 Back-End
-
-Node.js
-
-Express.js
-
-Python (APIs, integraciones)
-
-Sequelize / Prisma
-
-🗄️ Bases de Datos
-
-PostgreSQL
-
-Supabase
-
-⚙️ Automatización & Integración
-
-n8n (flujos complejos, scraping, integraciones)
-
-Make.com
-
-Generación/lectura de documentos (PDF, XLSX, CSV)
-
-Webhooks & APIs REST
-
-🤖 Data, AI & Scraping
-
-Puppeteer
-
-OCR (OCR.Space)
-
-AI Assistants (procesos operativos)
-
-🏭 ERP — Odoo
-
-Odoo v18 (Enterprise)
-
-Custom addons (Python)
-
-Integración AFIP
-
-Módulos stock, ventas, compras, contabilidad
-
-Interacción con SH / Docker
-
-Automatización de datos externos hacia Odoo
-
-🧩 DevOps & Infra
-
-Docker & Docker Compose
-
-VPS (Ubuntu, Hostinger)
-
-Caddy / Nginx
-
-Git & GitHub Flow
-
-✅ Proyectos Destacados
-🔹 Automatización de Inteligencia para Corredora de Seguros
-
-Scraping diario de aseguradoras vía Puppeteer
-
-DB centralizada + dashboards
-
-Automatización de cotización a partir de patente
-
-Agente AI para consultas operativas
-
-🔹 Ecosistema Odoo + Automatizaciones
-
-Customización avanzada de módulos
-
-Integración de AFIP WS
-
-Automatización de carga de costos / precios mediante OCR
-
-Integración con flujos n8n
-
-🔹 Data + OCR + ERP
-
-Flujo automático de remitos → OCR → estandarización → carga en ERP
-
-💼 Competencias Clave
-
-Pensamiento analítico aplicado a negocio
-
-Experiencia real en operaciones empresariales
-
-Diseño de flujos eficientes y desacoplados
-
-Comunicación clara con equipos técnicos y no técnicos
-
-Mentalidad de aprendizaje continuo
-
-Alto grado de autonomía
-
-Orientación a resultados
-
-🎯 Mi foco hoy
-
-Seguir creando soluciones digitales que automaticen operaciones, conecten sistemas y potencien la productividad de empresas reales.
-
-Me apasiona convertir procesos manuales y lentos en pipelines inteligentes.
-
-🛎 Contacto
-
-📩 Email: german.navarrete.info@gmail.com
-
-🔗 LinkedIn: https://www.linkedin.com/in/germandarionavarrete
-
-💬 Slack: German Navarrete
-🧑‍💻 GitHub: @gernavarrete
-
-🙌 Gracias por visitar mi perfil
-
-Si trabajas en un proyecto donde necesites automatizar procesos, depurar datos, integrar fuentes externas, optimizar flujos empresariales o construir soluciones web, me encantaría colaborar.
-
-Construyamos algo que haga una diferencia real.
+> **Construyamos algo que haga la diferencia.**
