@@ -111,7 +111,7 @@ Mi propósito es diseñar herramientas inteligentes que hagan a las empresas má
 📩 Email → **germannavarrete.info@gmail.com**  
 🔗 LinkedIn → **www.linkedin.com/in/germandnavarrete**
 💬 Slack → German Navarrete  
-🧑‍💻 GitHub → @gernavarrete  
+🧑‍💻 GitHub → [@gernavarrete ](https://github.com/gernavarrete)
 
 ---
 
