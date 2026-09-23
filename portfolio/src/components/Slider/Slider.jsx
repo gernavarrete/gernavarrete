@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import s from "../Slider/Slider.module.css";
 import { NavLink } from "react-router-dom";
-import { ArrowForwardIos, ArrowBackIosNew } from "@mui/icons-material";
+import { ArrowBackIcon, ArrowForwardIcon } from "./ArrowIcon.jsx";
 
 export default function Slider({ proyects }) {
   const [cardCurrent, setCardCurrent] = useState(0);
@@ -20,8 +20,7 @@ export default function Slider({ proyects }) {
 
   return (
     <div className={s.divContainerMain}>
-      <ArrowBackIosNew
-        sx={{ color: "#FFB11B" }}
+      <ArrowBackIcon
         onClick={previousCard}
         className={s.buttonSliderLeft}
       />
@@ -64,8 +63,7 @@ export default function Slider({ proyects }) {
         );
       })}
 
-      <ArrowForwardIos
-        sx={{ color: "#FFB11B" }}
+      <ArrowForwardIcon
         className={s.buttonSliderRight}
         onClick={nextCard}
       />
