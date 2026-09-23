@@ -87,11 +87,27 @@ rest restrained. The system is the hero, not effects.
 - Every text/background pair meets AA contrast (4.5:1 body, 3:1 large text/UI).
 
 ### Typography
-- A precise, modern sans for headings and body (at most 1 family, variable font).
-- A monospace used **only for data labels**: metrics, node names, pipeline
-  stages. Never for paragraphs, and never as fake terminal output.
+- **Geist Variable** is the primary typeface for headings, body and UI.
+- **Geist Mono Variable** is used **only for system elements**: data labels,
+  metrics, states, node names and pipeline stages. Never for paragraphs, and
+  never as fake terminal output.
 - Clear typographic scale with strong contrast between display and body sizes.
 - Self-hosted, subset, at most 2 families total, `font-display: swap`.
+
+Rationale:
+- **Technical, not hacker.** Swiss-grotesk precision that reads as engineering
+  without drifting into terminal or hacker aesthetics.
+- **One coherent sans/mono family.** Geist and Geist Mono share the same
+  skeleton, so text, labels and diagrams read as a single voice.
+- **Strong fit with "Systems, not screens".** Nodes, metrics and flows labeled in
+  Geist Mono sit naturally next to Geist headings.
+- **Good performance.** Both are variable fonts: one file per family covers every
+  weight (latin subset ≈ 29 KB for Geist and ≈ 23 KB for Geist Mono, woff2).
+- **Good Spanish support.** The latin subset covers every character Spanish
+  needs (á é í ó ú ñ ü ¿ ¡).
+- Known trade-off: Geist is strongly associated with the Vercel/Next.js
+  ecosystem, so the identity must come from composition, the amber accent and
+  the system motifs, not from the typeface alone.
 
 ### Layout and composition
 - Grid-based, generous whitespace, strong alignment: an engineering-drawing feel.
@@ -199,6 +215,7 @@ Before adding any visual element, effect or dependency, it must answer YES to:
 | Theme | Dark-first. No light theme for now. |
 | Language | Spanish is the initial language. The architecture must be ready for future internationalization: no user-facing copy hardcoded deep inside components, content kept separate from presentation, and `lang` set correctly. No i18n library until a second language is actually needed. |
 | AI/Automation cases | The real AI and Automation cases will be defined **before** the landing redesign starts. The redesign does not begin without them. |
+| Typography (Sprint 00C) | Geist Variable as the primary typeface; Geist Mono Variable for data labels, metrics, states, nodes and system elements. Chosen over Manrope and Inter after a side-by-side comparison with identical content. Rationale in section 5. |
 
 ### Content gap (context for the decisions above)
 
@@ -210,4 +227,4 @@ visual positioning is backed by evidence, as principle 1 requires.
 
 ### Still open
 
-- Typography families (candidates to be evaluated for performance and character).
+- None at the moment.
