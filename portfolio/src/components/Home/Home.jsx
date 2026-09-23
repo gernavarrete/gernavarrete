@@ -15,6 +15,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- view switching on route param change is intentional; refactor tracked for design-system sprint
     if (params.component === "sobremi") changeComponent(<SobreMi />);
     else if (params.component === "proyectos") changeComponent(<Proyectos />);
     else changeComponent(<Section1 />);
