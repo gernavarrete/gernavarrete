@@ -25,7 +25,7 @@
   --duration-feedback: var(--duration-100); /* hover, press, control color */
   --duration-state: var(--duration-200); /* node state, tab/nav indicator, chevron */
   --duration-crossfade: var(--duration-200); /* tooltip, popover, tab panel, filters, modal backdrop */
-  --duration-crossfade-exit: var(--duration-100); /* exits of the above */
+  --duration-crossfade-exit: var(--duration-100); /* tooltip and popover exits only (the only documented faster exits) */
   --duration-component: var(--duration-300); /* mobile menu, dialog */
   --duration-component-exit: var(--duration-200); /* exits of the above */
   --duration-reveal: var(--duration-400); /* scroll reveal of supporting groups */
