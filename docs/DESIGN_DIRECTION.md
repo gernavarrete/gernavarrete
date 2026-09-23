@@ -310,8 +310,8 @@ the type scale). Values are the approved reference; token names come later.
 | 2 | 0.5rem | 8 | Icon ↔ text, inline gaps, label ↔ input |
 | 3 | 0.75rem | 12 | Control vertical padding, gap between buttons |
 | 4 | 1rem | 16 | Paragraph ↔ paragraph, heading → lead, mobile gutter |
-| 5 | 1.5rem | 24 | Card padding (mobile), field ↔ field, component stack |
-| 6 | 2rem | 32 | Card padding (tablet and up), lead → content |
+| 5 | 1.5rem | 24 | Card padding (cards narrower than 20rem), field ↔ field, component stack |
+| 6 | 2rem | 32 | Card padding (cards 20rem and wider), lead → content |
 | 7 | 3rem | 48 | Between groups, hero → proof |
 | 8 | 4rem | 64 | Narrative blocks (desktop), sections (mobile) |
 | 9 | 6rem | 96 | Hero padding (desktop) |
@@ -331,7 +331,7 @@ snap to the nearest step.
 | Standard button | 12px / 24px padding, **min-height 44px** | 3 / 5 |
 | Large CTA button | 16px / 24px padding (≈ 50px tall) | 4 / 5 |
 | Gap between buttons | 12px | 3 |
-| Card padding | 24px on mobile, 32px from tablet up (stepped, not fluid) | 5 / 6 |
+| Card padding | 24px when the card is narrower than 20rem, 32px when it is 20rem or wider (container query on the card, not the viewport) | 5 / 6 |
 | Card: title → text | 8px | 2 |
 | Card: text → action or metadata | 16px | 4 |
 | Form: label → input | 8px | 2 |
@@ -399,9 +399,10 @@ continuous (e.g. sections: 92px at 768px, 110px at 1024px).
   on desktop for a premium feel.
 - **Fixed (everything else)**: components look the same at any viewport. A
   button with fluid padding would change size when a phone rotates.
-- **Stepped exception**: card padding changes 24 → 32 at a breakpoint because it
-  depends on card width, not viewport width. Long term this is a case for
-  container queries.
+- **Container-based exception**: card padding changes 24 → 32 based on the
+  card's own width (container query at 20rem), not the viewport. At 320px wide
+  with 32px per side, 256px of content remain; below that width 24px preserves
+  the interior better. See "Breakpoints and layout".
 
 #### Vertical rhythm
 
@@ -423,8 +424,8 @@ is surrounded by generous space (48px or more).
 
 To avoid an empty look:
 - Content has a controlled max-width, and text stays limited to 60–65ch, so
-  space is distributed instead of piling up on the sides. The exact container
-  value is defined in the layout/breakpoints sprint.
+  space is distributed instead of piling up on the sides. Container widths are
+  defined in "Breakpoints and layout".
 - Section spacing is never doubled: it is a single layout value between
   sections, not one section's bottom padding plus the next one's top padding
   (which would reach 256px on desktop).
@@ -435,8 +436,8 @@ To avoid an overloaded look:
 - A group's internal gap is at least 2 steps smaller than the gap between
   groups (e.g. 16 vs 48).
 - Density guideline, not a grid specification: card grids of up to 3 columns
-  and metric rows of up to 3–4 items. The definitive grid is defined in the
-  layout/breakpoints sprint.
+  and metric rows of up to 3–4 items. The grid itself is defined in
+  "Breakpoints and layout".
 - Node connections are at least 24px; shorter ones stop reading as a flow.
 
 #### Accessibility and touch
@@ -469,12 +470,141 @@ To avoid an overloaded look:
   spacing as a single layout value.
 - **Off-scale values** slipping in during component work (the classic
   `margin: 20px`): mitigated by tokens and, if needed later, a CSS lint rule.
-- **Stepped card padding inside fluid grids**: on tablets a narrow card may
-  already use 32px padding. The right fix is container queries, not more
-  breakpoints.
+- **Card padding needs a container**: padding depends on a container query, so
+  every card must be declared as a size container. A card that is not falls
+  back to the default 24px padding.
 - **Mobile diagrams**: a 4-node vertical pipeline is about 320px tall
   (4 × ~62px nodes + 3 × 24px connections). Six or more nodes need collapsing
   or internal scroll.
+
+### Breakpoints and layout
+
+Mobile-first. **The page responds to the viewport; components respond to their
+container.** Page structure (navigation, hero, case study) changes with media
+queries; reusable components (cards, diagrams, metric rows) adapt with container
+queries.
+
+#### Breakpoints
+
+Two media queries, chosen by content behavior, not by device.
+
+| Range | Name | What changes | Why there |
+|---|---|---|---|
+| < 48em (768px) | Mobile / base | Single-column flow: stacked hero, menu navigation | Below ~720px of content, two text columns lack a comfortable reading width |
+| ≥ 48em (768px) | Tablet / narrow | Full navigation visible | ~722px of content fits the logo, 4 links and a CTA on one line |
+| ≥ 64em (1024px) | Desktop | Split hero, case study with side panel, 12-column grid | ~969px of content lets a ~554px text column hold the Display next to a diagram |
+| ≥ ~1264px | Wide | No media query: the layout container reaches its 1200px max | Natural cap; type and spacing also stop growing at 1280px |
+
+Breakpoints are written in `em` as a choice of relative units, consistent with
+a type and spacing system already in `rem`. Zoom and reflow do not depend on
+that unit: when the page is zoomed, the CSS viewport shrinks and the layout
+moves to the matching breakpoint. What guarantees reflow is a fluid layout,
+safe grid minimums and no fixed widths.
+
+#### Containers
+
+| Container | Width | Use |
+|---|---|---|
+| Full-bleed | 100% of the viewport | Section backgrounds, dividers, structural lines, subtle background grid |
+| Layout | **max-width 1200px (75rem)** plus the fluid page gutter (16 → 32px) | All content: grids, hero, diagrams, screenshots |
+| Prose | **65ch** for body, **60ch** for body large and captions | Running text, always inside the layout container |
+
+- The layout container caps at a ~1264px viewport, where type and spacing also
+  stop growing (1280px): the whole system stops scaling at the same point.
+- There is no extra "wide" container. Diagrams and screenshots use the full
+  layout width (1200px), not the viewport.
+
+#### Grid
+
+- **12 columns from 64em**, used for asymmetric layouts. Below 64em, simple
+  single-column flow plus intrinsic grids. Column gaps use the fluid layout
+  grid gap (16 → 32px).
+- **Card grids are intrinsic**: `repeat(auto-fit, minmax(min(100%, 18rem), 1fr))`.
+  With an 18rem minimum and the 1200px cap, the grid produces 1, 2 or 3 columns
+  on its own and never 4 (four cards need 1248px). `min(100%, …)` prevents
+  overflow at 320px.
+
+| Pattern | < 48em | 48–64em | ≥ 64em |
+|---|---|---|---|
+| Hero | Stacked: eyebrow → thesis → statement → CTAs → proof | Stacked; diagram full width | 7 / 5 (text / system), guideline |
+| Case study | Stacked; metadata as a summary block on top | Same | 8 / 4 (narrative / sticky side panel), guideline; diagrams and screenshots span 12 columns |
+| Card grid | 1 column | 2 columns (from ~640px) | 3 columns |
+| Metrics | By container | By container | Up to 4 in a row |
+| Diagrams | Vertical | By container | Horizontal when it fits |
+
+#### Card padding (container query)
+
+| Card width | Padding |
+|---|---|
+| < 20rem (320px) | 24px |
+| ≥ 20rem (320px) | 32px |
+
+Decided by the card's own width, not the viewport. At 320px with 32px per
+side, 256px of content remain; below that width, 24px preserves the interior
+better. This avoids the desktop case where a ~305px card in a 3-column grid
+(1024px viewport) kept only ~241px of content with 32px padding; it now keeps
+~257px. This replaces the earlier rule "24px on mobile, 32px from tablet up".
+
+#### Container queries (guidelines)
+
+| Component | Threshold (container width) | Behavior |
+|---|---|---|
+| Card with media | 36rem | Image and text side by side |
+| Diagram / pipeline | 42rem (672px) | Horizontal at or above; vertical below (4 horizontal nodes need ~656px) |
+| Metric row | 24rem / 36rem | 2 columns below 24rem; all in one row at 36rem or wider |
+
+Not used for page layout (viewport-driven) or typography (already fluid).
+
+#### Wide screens
+
+- **Stays contained**: text, grids, diagrams, screenshots (1200px container).
+- **Expands**: section backgrounds, dividers and a structural background grid
+  (very low-contrast lines to the edges), so side margins read as part of the
+  system instead of dead space (guideline).
+- **Hero only**: the ambient system visual (one per viewport) may extend into
+  the margins as background, behind the content (guideline).
+- **Nothing else grows**: no larger type, spacing or column count past the caps.
+
+#### Accessibility and responsiveness
+
+- **Reflow (WCAG 1.4.10)**: everything works at **320px CSS width** with no
+  horizontal page scroll (equivalent to 1280px at 400% zoom).
+- **Text resize (WCAG 1.4.4)**: type and spacing in `rem` follow the user's font
+  settings.
+- **Risk at 320px**: Display has a 40px minimum and content is 288px wide;
+  "automatización" (~310px) does not fit. `overflow-wrap: break-word` prevents
+  scroll but breaks the word. Write theses without words of 13+ letters.
+- **Horizontal scroll** is allowed only inside code blocks, wide tables and
+  diagrams that cannot stack: in their own `overflow-x: auto` container, with
+  `tabindex="0"` and an accessible label.
+
+#### Trade-offs and risks
+
+- Only two media queries: between 768 and 1023px the hero stays stacked even
+  when there is room. Acceptable for portrait tablets.
+- The 12-column grid exists only on desktop; what happens between 768 and 1023px
+  is solved inside each component.
+- A 1200px container leaves wide margins on large monitors. Intentional, and it
+  relies on the structural background filling them.
+- Two responsive axes (viewport and container) add precision but need care when
+  debugging. Rule: page by viewport, components by container.
+- Every card must be a size container for its padding rule to apply.
+- A sticky case study side panel breaks if its content is taller than the
+  viewport; keep its content short.
+
+#### Definitive vs guideline
+
+| Definitive | Guideline |
+|---|---|
+| Breakpoints 48em and 64em | Hero 7/5 |
+| Layout container max-width 1200px | Case study 8/4 |
+| Fluid page gutter 16 → 32px | Display at most ~18ch |
+| Prose: 65ch body, 60ch body large and captions | Container queries: card with media 36rem, diagrams 42rem, metrics 24/36rem |
+| 12-column grid from 64em, simple flow below | Hero ambient visual |
+| Intrinsic card grids: `minmax(min(100%, 18rem), 1fr)` | Structural background grid |
+| Card padding by container query: < 20rem → 24px, ≥ 20rem → 32px | |
+| Page responds to the viewport, components to their container | |
+| Reflow at 320px with no horizontal page scroll | |
 
 ### Iconography and imagery
 - Simple, consistent line icons from a single set.
@@ -581,6 +711,7 @@ Before adding any visual element, effect or dependency, it must answer YES to:
 | Color system (Sprint 00C) | Cool graphite neutrals, amber scale around `#FFB11B`, and muted semantic colors (success, warning, error, info). No secondary accent is active; `#9AA8FF` is kept as a reserve candidate only. Full palette, rules and contrast checks in section 5. |
 | Typography scale (Sprint 00C) | Mobile-first scale with 11 roles on Geist and Geist Mono, 3 weights (400/500/600). Display, H1, H2, H3 and Metric are fluid (360–1280px); body, label, caption and mono label are fixed. Hero: short thesis in Display, full positioning statement in Body large; H1 reserved for page and case study titles. Details in section 5. |
 | Spacing system (Sprint 00C) | 4px-grid scale of 11 steps (0–128px) in rem. Components use fixed steps; only 5 layout roles are fluid (sections, narrative blocks, hero padding, page gutter, grid gap). Includes semantic usage, vertical rhythm, density rules and 44×44px touch targets. The container max-width is deferred to the layout/breakpoints sprint. Details in section 5. |
+| Layout system (Sprint 00C) | Breakpoints at 48em and 64em; layout container max-width 1200px with the fluid 16 → 32px gutter; prose at 65ch (body) and 60ch (body large, captions); 12-column grid from 64em with simple flow below; intrinsic card grids. Page responds to the viewport, components to their container. Card padding moves to a container query (< 20rem → 24px, ≥ 20rem → 32px), replacing the earlier "24px mobile / 32px from tablet" rule. Resolves the container max-width deferred by the spacing system. Details in section 5. |
 
 ### Content gap (context for the decisions above)
 
@@ -592,5 +723,4 @@ visual positioning is backed by evidence, as principle 1 requires.
 
 ### Still open
 
-- Container max-width and breakpoints (to be defined in the layout/breakpoints
-  sprint).
+- None at the moment.
