@@ -1,0 +1,35 @@
+/*
+ * Layout tokens. Source of truth: docs/DESIGN_DIRECTION.md, section 5
+ * "Breakpoints and layout" (and the fluid gutter / grid gap in "Spacing").
+ * Semantic-only: every value is role-specific, so there are no primitives.
+ *
+ * Implementation reference (not tokens):
+ * var() is not allowed inside @media or @container conditions, so these values
+ * stay literal wherever they are used. Custom media queries are not used.
+ *   Viewport breakpoints: 48em (768px) and 64em (1024px).
+ *   Container query thresholds: card padding 20rem; card with media 36rem;
+ *   diagram / pipeline 42rem; metric row 24rem / 36rem (guidelines).
+ * The page responds to the viewport; components respond to their container.
+ */
+
+/* Semantic */
+:root {
+  /* Layout container: 1200px cap, reached at a ~1264px viewport */
+  --container-max: 75rem;
+
+  /* Fluid 16 → 32px (360 → 1280px) */
+  --layout-gutter: clamp(1rem, 0.609rem + 1.739vw, 2rem);
+  --layout-grid-gap: clamp(1rem, 0.609rem + 1.739vw, 2rem);
+
+  /* 12-column grid from 64em; simple single-column flow below */
+  --layout-columns: 12;
+
+  /* Intrinsic card grids: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)) */
+  --layout-card-min: 18rem;
+
+  /* Reading measures */
+  --measure-body: 65ch;
+  --measure-body-lg: 60ch;
+  --measure-caption: 60ch;
+  --measure-display: 18ch; /* guideline */
+}

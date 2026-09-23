@@ -1,0 +1,87 @@
+/*
+ * Color tokens. Source of truth: docs/DESIGN_DIRECTION.md, section 5 "Color".
+ * Components consume semantic tokens only. The reserve candidate #9AA8FF is
+ * intentionally not tokenized: no secondary accent is active.
+ */
+
+/* Primitives */
+:root {
+  /* Neutrals (cool graphite) */
+  --gray-950: #0b0d10;
+  --gray-900: #12151a;
+  --gray-850: #1a1e24;
+  --gray-800: #232830;
+  --gray-750: #262b33;
+  --gray-700: #343b45;
+  --gray-600: #5e6773;
+  --gray-500: #667080;
+  --gray-400: #8c95a1;
+  --gray-200: #b6bec8;
+  --gray-50: #edeff2;
+
+  /* Amber (signal accent) */
+  --amber-100: #ffe9bf;
+  --amber-200: #ffd689;
+  --amber-300: #ffc552;
+  --amber-400: #ffb11b;
+  --amber-500: #e69a00;
+  --amber-600: #b87a00;
+  --amber-700: #855800;
+  --amber-800: #553800;
+  --amber-400-a12: rgb(255 177 27 / 0.12);
+
+  /* Semantic state hues */
+  --green-400: #4acb8e;
+  --orange-400: #ff8f4d;
+  --red-400: #f26b6b;
+  --blue-400: #6cb4ff;
+  --green-400-a12: rgb(74 203 142 / 0.12);
+  --orange-400-a12: rgb(255 143 77 / 0.12);
+  --red-400-a12: rgb(242 107 107 / 0.12);
+  --blue-400-a12: rgb(108 180 255 / 0.12);
+}
+
+/* Semantic */
+:root {
+  /* Surfaces */
+  --color-bg: var(--gray-950);
+  --color-surface: var(--gray-900);
+  --color-surface-elevated: var(--gray-850);
+  --color-surface-hover: var(--gray-800);
+
+  /* Borders: subtle and default are decorative; strong is for controls (>= 3:1) */
+  --color-border-subtle: var(--gray-750);
+  --color-border: var(--gray-700);
+  --color-border-strong: var(--gray-500);
+
+  /* Text */
+  --color-text: var(--gray-50);
+  --color-text-secondary: var(--gray-200);
+  --color-text-muted: var(--gray-400);
+  --color-text-disabled: var(--gray-600);
+
+  /* Accent: active / flowing / important */
+  --color-accent: var(--amber-400);
+  --color-accent-hover: var(--amber-300);
+  --color-accent-active: var(--amber-500);
+  --color-accent-soft: var(--amber-400-a12);
+  --color-accent-highlight: var(--amber-200);
+  --color-on-accent: var(--gray-950);
+  --color-focus-ring: var(--amber-400);
+
+  /* Flows */
+  --color-flow-active: var(--amber-400);
+  --color-flow-idle: var(--amber-600);
+  --color-connector-idle: var(--amber-700);
+  --color-track: var(--amber-800);
+
+  /* States: always paired with an icon or label, never color alone */
+  --color-success: var(--green-400);
+  --color-success-soft: var(--green-400-a12);
+  --color-warning: var(--orange-400);
+  --color-warning-soft: var(--orange-400-a12);
+  --color-error: var(--red-400);
+  --color-error-soft: var(--red-400-a12);
+  --color-info: var(--blue-400);
+  --color-info-soft: var(--blue-400-a12);
+}

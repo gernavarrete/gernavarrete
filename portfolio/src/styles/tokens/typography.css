@@ -1,0 +1,103 @@
+/*
+ * Typography tokens. Source of truth: docs/DESIGN_DIRECTION.md, section 5
+ * "Typography" (type scale, roles and clamp() reference).
+ * Components consume the semantic --text-* tokens only. Fluid sizes are
+ * role-specific clamp() values, so they are semantic-only by design.
+ */
+
+/* Primitives */
+:root {
+  --font-family-sans: "Geist Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-family-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --font-size-12: 0.75rem;
+  --font-size-13: 0.8125rem;
+  --font-size-14: 0.875rem;
+  --font-size-16: 1rem;
+  --font-size-18: 1.125rem;
+}
+
+/* Semantic */
+:root {
+  /* Display: hero thesis only, once per page (fluid 40 → 72px) */
+  --text-display-family: var(--font-family-sans);
+  --text-display-size: clamp(2.5rem, 1.717rem + 3.478vw, 4.5rem);
+  --text-display-line-height: 1.05;
+  --text-display-weight: var(--font-weight-semibold);
+  --text-display-tracking: -0.035em;
+
+  /* H1: page and case study titles (fluid 32 → 48px) */
+  --text-h1-family: var(--font-family-sans);
+  --text-h1-size: clamp(2rem, 1.609rem + 1.739vw, 3rem);
+  --text-h1-line-height: 1.10;
+  --text-h1-weight: var(--font-weight-semibold);
+  --text-h1-tracking: -0.025em;
+
+  /* H2: section titles (fluid 26 → 36px) */
+  --text-h2-family: var(--font-family-sans);
+  --text-h2-size: clamp(1.625rem, 1.380rem + 1.087vw, 2.25rem);
+  --text-h2-line-height: 1.15;
+  --text-h2-weight: var(--font-weight-semibold);
+  --text-h2-tracking: -0.02em;
+
+  /* H3: card titles, highlighted nodes, subsections (fluid 20 → 24px) */
+  --text-h3-family: var(--font-family-sans);
+  --text-h3-size: clamp(1.25rem, 1.152rem + 0.435vw, 1.5rem);
+  --text-h3-line-height: 1.30;
+  --text-h3-weight: var(--font-weight-semibold);
+  --text-h3-tracking: -0.01em;
+
+  /* Body large: leads, hero positioning statement */
+  --text-body-lg-family: var(--font-family-sans);
+  --text-body-lg-size: var(--font-size-18);
+  --text-body-lg-line-height: 1.60;
+  --text-body-lg-weight: var(--font-weight-regular);
+  --text-body-lg-tracking: 0;
+
+  /* Body: running text */
+  --text-body-family: var(--font-family-sans);
+  --text-body-size: var(--font-size-16);
+  --text-body-line-height: 1.65;
+  --text-body-weight: var(--font-weight-regular);
+  --text-body-tracking: 0;
+
+  /* Body small: secondary text, footnotes */
+  --text-body-sm-family: var(--font-family-sans);
+  --text-body-sm-size: var(--font-size-14);
+  --text-body-sm-line-height: 1.55;
+  --text-body-sm-weight: var(--font-weight-regular);
+  --text-body-sm-tracking: 0;
+
+  /* Label: buttons, navigation, form labels (always sans) */
+  --text-label-family: var(--font-family-sans);
+  --text-label-size: var(--font-size-14);
+  --text-label-line-height: 1.30;
+  --text-label-weight: var(--font-weight-medium);
+  --text-label-tracking: 0;
+
+  /* Caption: diagram and image captions */
+  --text-caption-family: var(--font-family-sans);
+  --text-caption-size: var(--font-size-13);
+  --text-caption-line-height: 1.45;
+  --text-caption-weight: var(--font-weight-regular);
+  --text-caption-tracking: 0.005em;
+
+  /* Mono label: eyebrows, node types, states, units (1–3 words, never below 12px) */
+  --text-mono-label-family: var(--font-family-mono);
+  --text-mono-label-size: var(--font-size-12);
+  --text-mono-label-line-height: 1.30;
+  --text-mono-label-weight: var(--font-weight-medium);
+  --text-mono-label-tracking: 0.08em;
+  --text-mono-label-transform: uppercase;
+
+  /* Metric / data value: impact figures (fluid 32 → 40px, tabular by design) */
+  --text-metric-family: var(--font-family-mono);
+  --text-metric-size: clamp(2rem, 1.804rem + 0.870vw, 2.5rem);
+  --text-metric-line-height: 1.00;
+  --text-metric-weight: var(--font-weight-medium);
+  --text-metric-tracking: -0.02em;
+}
