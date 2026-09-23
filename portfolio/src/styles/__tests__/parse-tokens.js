@@ -45,6 +45,26 @@ export function markdownTable(markdown, heading, expectedColumns) {
 // Plain text of a table cell, without Markdown emphasis or code marks.
 export const cellText = (cell) => cell.replace(/[*`]/g, "").trim();
 
+// Lines of the first fenced code block under `heading`.
+export function markdownCodeBlock(markdown, heading) {
+  const lines = markdownSection(markdown, heading).split("\n");
+  const open = lines.findIndex((line) => line.trim().startsWith("```"));
+  const close = lines.findIndex((line, i) => i > open && line.trim().startsWith("```"));
+  if (open === -1 || close === -1) throw new Error(`No code block found under "${heading}"`);
+  return lines.slice(open + 1, close).filter((line) => line.trim());
+}
+
+// Evaluates a fluid "clamp(Arem, Brem + Cvw, Drem)" value, in px, at a viewport width.
+export function clampAt(value, viewportPx, rootPx = 16) {
+  const match = value.match(
+    /^clamp\(\s*([\d.]+)rem\s*,\s*([\d.]+)rem\s*\+\s*([\d.]+)vw\s*,\s*([\d.]+)rem\s*\)$/
+  );
+  if (!match) throw new Error(`Unsupported clamp(): ${value}`);
+  const [min, base, slope, max] = match.slice(1).map(Number);
+  const preferred = base * rootPx + (slope * viewportPx) / 100;
+  return Math.min(max * rootPx, Math.max(min * rootPx, preferred));
+}
+
 // Values of a grouped cell: "16.89 / 15.88 / 14.52" -> ["16.89", "15.88", "14.52"].
 // A trailing ":1" is dropped, so "9.47:1" -> ["9.47"].
 export const cellValues = (cell) =>

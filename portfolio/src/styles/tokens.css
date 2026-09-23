@@ -3,3 +3,4 @@
  * Source of truth for every value: docs/DESIGN_DIRECTION.md.
  */
 @import "./tokens/color.css";
+@import "./tokens/typography.css";
