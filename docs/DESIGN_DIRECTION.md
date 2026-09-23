@@ -198,6 +198,98 @@ Rationale:
   ecosystem, so the identity must come from composition, the amber accent and
   the system motifs, not from the typeface alone.
 
+#### Type scale
+
+Mobile-first. Sizes are in `rem` (16px base) so they follow the user's font-size
+setting. Fluid roles interpolate between 360px and 1280px viewports and stay at
+their min/max outside that range. Only three weights are used: 400, 500 and 600.
+
+| Role | Family | Mobile (360px) | Desktop (1280px) | Line height | Weight | Letter spacing | Behavior |
+|---|---|---|---|---|---|---|---|
+| Display | Geist | 40px | 72px | 1.05 | 600 | −0.035em | Fluid |
+| H1 | Geist | 32px | 48px | 1.10 | 600 | −0.025em | Fluid |
+| H2 | Geist | 26px | 36px | 1.15 | 600 | −0.02em | Fluid |
+| H3 | Geist | 20px | 24px | 1.30 | 600 | −0.01em | Fluid (slight) |
+| Body large | Geist | 18px | 18px | 1.60 | 400 | 0 | Fixed |
+| Body | Geist | 16px | 16px | 1.65 | 400 | 0 | Fixed |
+| Body small | Geist | 14px | 14px | 1.55 | 400 | 0 | Fixed |
+| Label | Geist | 14px | 14px | 1.30 | 500 | 0 | Fixed |
+| Caption | Geist | 13px | 13px | 1.45 | 400 | 0.005em | Fixed |
+| Mono label | Geist Mono | 12px | 12px | 1.30 | 500 | +0.08em, uppercase | Fixed |
+| Metric / data value | Geist Mono | 32px | 40px | 1.00 | 500 | −0.02em | Fluid |
+
+Resulting ratios: about 1.2–1.25 between heading steps on mobile (compact) and
+about 1.33–1.5 on desktop (strong headline presence).
+
+#### Roles and usage
+
+- **Display**: once per page, for the hero thesis only. Short text (up to ~8 words).
+- **H1**: reserved for page titles and case study titles. One per page.
+- **H2**: section titles (cases, services, about).
+- **H3**: card titles, highlighted nodes, case study subsections.
+- **Body large**: section leads, the hero positioning statement, case summaries.
+  Max ~60ch.
+- **Body**: running text for paragraphs and case descriptions. Max ~65ch.
+- **Body small**: secondary text, longer metadata, footnotes.
+- **Label**: buttons, navigation, form labels, tabs. Always sans, never mono.
+- **Caption**: diagram captions, image captions, visible accessible descriptions.
+  Never the only carrier of critical information.
+- **Mono label**: eyebrows, node types (`AGENTE`, `INPUT`), states (`ACTIVO`),
+  pipeline stages, metric units. 1–3 words only, never sentences.
+- **Metric / data value**: impact figures (72%, 11 h). Geist Mono figures are
+  tabular by design. The unit goes in mono label, or at ~0.55em in amber.
+
+#### Fluid vs fixed
+
+- **Fluid** (Display, H1, H2, H3, Metric): these roles carry presence, and the
+  mobile/desktop difference is large (up to 1.8× for Display). Breakpoint jumps
+  would look abrupt on tablets. H3 is only slightly fluid, to avoid a 1.8× gap
+  between H2 and H3 on desktop.
+- **Fixed** (Body large, Body, Body small, Label, Caption, Mono label):
+  readability depends on absolute size, not viewport width. `clamp()` adds no
+  value here.
+
+#### clamp() reference (not tokens yet)
+
+Preferred values combine `rem + vw`, never `vw` alone, so text keeps scaling
+with the user's font settings and zoom (WCAG 1.4.4).
+
+```
+Display  clamp(2.5rem,   1.717rem + 3.478vw, 4.5rem)   40 → 72px
+H1       clamp(2rem,     1.609rem + 1.739vw, 3rem)     32 → 48px
+H2       clamp(1.625rem, 1.380rem + 1.087vw, 2.25rem)  26 → 36px
+H3       clamp(1.25rem,  1.152rem + 0.435vw, 1.5rem)   20 → 24px
+Metric   clamp(2rem,     1.804rem + 0.870vw, 2.5rem)   32 → 40px
+```
+
+The scale caps at 1280px on purpose: a larger Display on wide monitors pushes
+content out of the first view without adding clarity.
+
+#### Wrapping and density (Spanish)
+
+- Spanish runs about 15–25% longer than English. Headings use
+  `text-wrap: balance`; body text uses `text-wrap: pretty` to avoid one-word
+  last lines. Line lengths are set in `ch`, so they adapt to the language.
+- Long words at Display size on small phones: "automatización" (14 letters)
+  takes about 310px of the 328px available on a 360px screen. Words of 18+
+  letters overflow. Write Display theses without extreme words and use
+  `overflow-wrap: break-word` as a safety net. No `hyphens: auto` on headings.
+- Light text on dark grounds reads heavier (irradiation). Body keeps weight 400
+  and uses a 1.65 line height instead of 1.5.
+- Mono label is the minimum size (12px). It relies on uppercase, +0.08em
+  tracking and muted color (6.04:1 on surface). Never go below 12px.
+- Metric figures longer than 5 characters (e.g. "1.250.000") do not fit a
+  three-column metric row on mobile: stack the row to one column on mobile or
+  abbreviate ("1,2M").
+
+#### Hero typography
+
+- The hero uses a **short thesis in Display** (ideally up to ~8 words).
+- The **full positioning statement goes below it in Body large**.
+- The full positioning statement is never set in Display (at 72px it would
+  take 4–5 lines on desktop and about 8 on mobile).
+- H1 is not used in the hero; it is reserved for page and case study titles.
+
 ### Layout and composition
 - Grid-based, generous whitespace, strong alignment: an engineering-drawing feel.
 - Thin lines, precise connectors and subtle grids as structural elements.
@@ -306,6 +398,7 @@ Before adding any visual element, effect or dependency, it must answer YES to:
 | AI/Automation cases | The real AI and Automation cases will be defined **before** the landing redesign starts. The redesign does not begin without them. |
 | Typography (Sprint 00C) | Geist Variable as the primary typeface; Geist Mono Variable for data labels, metrics, states, nodes and system elements. Chosen over Manrope and Inter after a side-by-side comparison with identical content. Rationale in section 5. |
 | Color system (Sprint 00C) | Cool graphite neutrals, amber scale around `#FFB11B`, and muted semantic colors (success, warning, error, info). No secondary accent is active; `#9AA8FF` is kept as a reserve candidate only. Full palette, rules and contrast checks in section 5. |
+| Typography scale (Sprint 00C) | Mobile-first scale with 11 roles on Geist and Geist Mono, 3 weights (400/500/600). Display, H1, H2, H3 and Metric are fluid (360–1280px); body, label, caption and mono label are fixed. Hero: short thesis in Display, full positioning statement in Body large; H1 reserved for page and case study titles. Details in section 5. |
 
 ### Content gap (context for the decisions above)
 
