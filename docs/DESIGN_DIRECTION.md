@@ -77,14 +77,103 @@ rest restrained. The system is the hero, not effects.
 ## 5. Visual language (direction, not tokens)
 
 ### Color
-- Dark-first: deep neutral (graphite/ink) surfaces with layered elevation rather
-  than pure black; high-contrast, off-white text.
-- **One signal accent** means "active / flowing / important". It is an evolution
-  of the current amber brand color, used sparingly (at most ~5–10% of the surface).
-- At most one secondary hue, reserved for AI/agent states. Never decorative.
+
+Dark-first. A cool graphite neutral base, one amber signal accent, and muted
+semantic colors. Values below are the approved palette; token names and CSS
+files come later. Contrast ratios are computed with the WCAG 2.2 formula.
+
+#### Neutrals
+
+| Role | Hex | Use |
+|---|---|---|
+| Background | `#0B0D10` | Page background |
+| Surface | `#12151A` | Sections, cards, panels |
+| Surface elevated | `#1A1E24` | Popovers, highlighted nodes, mobile menu |
+| Surface hover | `#232830` | Hover/selected state of interactive surfaces |
+| Border subtle | `#262B33` | Decorative dividers only |
+| Border | `#343B45` | Card and container outlines (decorative) |
+| Border strong | `#667080` | Borders of controls (inputs, outline buttons); ≥ 3:1 on bg, surface and elevated |
+| Text primary | `#EDEFF2` | Headings and main body |
+| Text secondary | `#B6BEC8` | Supporting paragraphs, subtitles |
+| Text muted | `#8C95A1` | Metadata, mono labels, captions |
+| Text disabled | `#5E6773` | Disabled states only |
+
+#### Amber (signal accent)
+
+| Level | Hex | Use |
+|---|---|---|
+| 100 | `#FFE9BF` | High-emphasis text on amber-soft (rare) |
+| 200 | `#FFD689` | Highlights on very dark grounds |
+| 300 | `#FFC552` | Accent hover |
+| **400** | **`#FFB11B`** | **Base accent**: primary CTA, active state, flows, focus ring |
+| 500 | `#E69A00` | Accent active / pressed |
+| 600 | `#B87A00` | Idle flow lines, dim amber borders |
+| 700 | `#855800` | Decorative only (idle connectors) |
+| 800 | `#553800` | Decorative only (track backgrounds) |
+| Soft | amber at 12% alpha | Active node fill, highlight, badge background |
+
+On dark grounds, hover moves lighter (300) and active/pressed moves darker (500).
+
+#### Semantic
+
+| Role | Hex | On background | On surface |
+|---|---|---|---|
+| Success | `#4ACB8E` | 9.47:1 | 8.91:1 |
+| Warning | `#FF8F4D` | 8.61:1 | 8.09:1 |
+| Error | `#F26B6B` | 6.57:1 | 6.18:1 |
+| Info | `#6CB4FF` | 8.90:1 | 8.37:1 |
+
+Each semantic color also has a soft variant (12% alpha) for backgrounds.
+
+#### Secondary accent
+
+None is active. AI does not get its own color by default.
+`#9AA8FF` (desaturated periwinkle, 8.73:1 on background) is documented only as a
+**reserve candidate**, for a future case where agents or states must be told
+apart and shape + label are not enough. Adopting it requires updating this
+document first.
+
+#### Color rules
+
+- **Amber means active / flowing / important.** It is not used for decoration or
+  warnings, and it covers at most ~5–10% of the surface.
+- **AI has no color of its own.** Agent nodes are distinguished by shape, icon and
+  a mono label (e.g. `AGENTE`), not by hue.
+- **Color is never the only signal of state** (WCAG 1.4.1). Every state also
+  has an icon, a label or a change in shape.
+- **Text on amber is `#0B0D10`, never white.** White on amber is 1.58:1 and fails AA.
+- **Warning always carries an icon or label**, so it is never mistaken for the
+  brand accent (warning vs amber is only 1.24:1 in luminance).
 - Gradients only with a meaning (for example the direction of a flow), never as
   fills for their own sake. No rainbow or multi-hue gradients.
-- Every text/background pair meets AA contrast (4.5:1 body, 3:1 large text/UI).
+- Every text/background pair meets AA contrast (4.5:1 body, 3:1 large text and
+  UI components).
+
+#### Key contrast checks
+
+| Pair | Ratio | Result |
+|---|---|---|
+| Text primary on background / surface / elevated | 16.89 / 15.88 / 14.52 | ✅ AA |
+| Text secondary on background / surface / elevated | 10.37 / 9.75 / 8.91 | ✅ AA |
+| Text muted on background / surface / elevated / hover | 6.42 / 6.04 / 5.52 / 4.89 | ✅ AA |
+| Amber 400 on background / surface / elevated | 10.71 / 10.07 / 9.21 | ✅ AA |
+| `#0B0D10` on amber 400 (primary button) | 10.71 | ✅ AA |
+| Text primary on amber-soft | 12.71 | ✅ AA |
+| Amber 400 on amber-soft | 8.06 | ✅ AA |
+| Border strong on background / surface / elevated | 3.89 / 3.65 / 3.34 | ✅ 3:1 UI |
+
+#### Do not use
+
+| Pair | Ratio | Why |
+|---|---|---|
+| White / text primary on amber | 1.58 | Fails AA at any size |
+| Text primary on amber 500 / 600 | 2.03 / 3.13 | Fails for normal text |
+| Amber 700 / 800 as text | 3.14 / 1.81 | Decorative levels only |
+| Border / border subtle on a control | 1.72 / 1.37 | Below the 3:1 UI minimum |
+| Border strong on surface hover | 2.96 | Switch the control border to amber on hover |
+| Text disabled for real information | 3.39 | Reserved for disabled states |
+| Text muted on soft fills | ~4.8–5.2 | Passes, but thin margin; use primary or the state color |
+| Warning next to amber, or error next to warning, with no icon or label | 1.24 / 1.31 | Tell apart by hue only |
 
 ### Typography
 - **Geist Variable** is the primary typeface for headings, body and UI.
@@ -216,6 +305,7 @@ Before adding any visual element, effect or dependency, it must answer YES to:
 | Language | Spanish is the initial language. The architecture must be ready for future internationalization: no user-facing copy hardcoded deep inside components, content kept separate from presentation, and `lang` set correctly. No i18n library until a second language is actually needed. |
 | AI/Automation cases | The real AI and Automation cases will be defined **before** the landing redesign starts. The redesign does not begin without them. |
 | Typography (Sprint 00C) | Geist Variable as the primary typeface; Geist Mono Variable for data labels, metrics, states, nodes and system elements. Chosen over Manrope and Inter after a side-by-side comparison with identical content. Rationale in section 5. |
+| Color system (Sprint 00C) | Cool graphite neutrals, amber scale around `#FFB11B`, and muted semantic colors (success, warning, error, info). No secondary accent is active; `#9AA8FF` is kept as a reserve candidate only. Full palette, rules and contrast checks in section 5. |
 
 ### Content gap (context for the decisions above)
 
