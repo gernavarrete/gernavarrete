@@ -295,6 +295,187 @@ content out of the first view without adding clarity.
 - Thin lines, precise connectors and subtle grids as structural elements.
 - Diagrams are first-class content, not illustrations.
 
+### Spacing
+
+Mobile-first, on a **4px grid**, expressed in `rem` (16px base). Components use
+fixed steps; only layout-level spacing is fluid (360px → 1280px, same range as
+the type scale). Values are the approved reference; token names come later.
+
+#### Base scale
+
+| Step | rem | px | Typical use |
+|---|---|---|---|
+| 0 | 0 | 0 | Reset |
+| 1 | 0.25rem | 4 | Fine adjustments: node mono label → name, icon in badge |
+| 2 | 0.5rem | 8 | Icon ↔ text, inline gaps, label ↔ input |
+| 3 | 0.75rem | 12 | Control vertical padding, gap between buttons |
+| 4 | 1rem | 16 | Paragraph ↔ paragraph, heading → lead, mobile gutter |
+| 5 | 1.5rem | 24 | Card padding (mobile), field ↔ field, component stack |
+| 6 | 2rem | 32 | Card padding (tablet and up), lead → content |
+| 7 | 3rem | 48 | Between groups, hero → proof |
+| 8 | 4rem | 64 | Narrative blocks (desktop), sections (mobile) |
+| 9 | 6rem | 96 | Hero padding (desktop) |
+| 10 | 8rem | 128 | Sections (desktop) |
+
+Above 16px the scale jumps in large steps (×1.33–×1.5) so there are no
+"almost equal" values. 20, 40, 56 and 80 are intentionally not in the scale;
+snap to the nearest step.
+
+#### Components (fixed)
+
+| Context | Value | Step |
+|---|---|---|
+| Inline gap (chips, tags, social icons) | 8px | 2 |
+| Icon ↔ text (buttons, links, labels) | 8px | 2 |
+| Icon ↔ text in badges and mono labels | 4px | 1 |
+| Standard button | 12px / 24px padding, **min-height 44px** | 3 / 5 |
+| Large CTA button | 16px / 24px padding (≈ 50px tall) | 4 / 5 |
+| Gap between buttons | 12px | 3 |
+| Card padding | 24px on mobile, 32px from tablet up (stepped, not fluid) | 5 / 6 |
+| Card: title → text | 8px | 2 |
+| Card: text → action or metadata | 16px | 4 |
+| Form: label → input | 8px | 2 |
+| Form: input padding | 12px / 16px, **min-height 48px** | 3 / 4 |
+| Form: field ↔ field | 24px | 5 |
+| Form: group ↔ group | 32px | 6 |
+
+#### Content within a section (fixed)
+
+| Transition | Value | Step |
+|---|---|---|
+| Mono label (eyebrow) → H2 | 12px | 3 |
+| H2 → lead (Body large) | 16px | 4 |
+| Lead → content (grid, diagram, text) | 32px | 6 |
+| Paragraph ↔ paragraph (Body) | 16px | 4 |
+| Body → embedded component | 24px | 5 |
+| Related group ↔ related group | 48px | 7 |
+
+#### Layout (fluid)
+
+| Context | Mobile → Desktop | clamp() reference |
+|---|---|---|
+| Between sections | 64 → 128px | `clamp(4rem, 2.435rem + 6.957vw, 8rem)` |
+| Between narrative blocks | 32 → 64px | `clamp(2rem, 1.217rem + 3.478vw, 4rem)` |
+| Hero padding-block | 48 → 96px | `clamp(3rem, 1.826rem + 5.217vw, 6rem)` |
+| Page gutter | 16 → 32px | `clamp(1rem, 0.609rem + 1.739vw, 2rem)` |
+| Layout grid gap (cards, cases) | 16 → 32px | `clamp(1rem, 0.609rem + 1.739vw, 2rem)` |
+
+Both ends of every clamp land on a scale step; only intermediate values are
+continuous (e.g. sections: 92px at 768px, 110px at 1024px).
+
+#### Hero (fixed inside, fluid outside)
+
+| Transition | Value |
+|---|---|
+| Eyebrow (mono label) → Display | 16px (4) |
+| Display (thesis) → Body large (statement) | 24px (5) |
+| Statement → CTAs | 32px (6) |
+| Gap between CTAs | 12px (3) |
+| CTAs → proof (metrics or system) | 48px (7) |
+
+#### Diagrams and nodes
+
+| Context | Value |
+|---|---|
+| Node padding | 12px / 16px (3 / 4) |
+| Node mono label → name | 4px (1) |
+| Status dot ↔ text | 12px (3) |
+| Minimum connection length (space between nodes) | 24px vertical on mobile, 32px horizontal on desktop (5 / 6) |
+| Diagram → caption | 16px (4) |
+| Cluster ↔ cluster inside a diagram | 48px (7) |
+
+#### Metrics
+
+| Context | Value |
+|---|---|
+| Cell padding | 16px (4) |
+| Value → label | 8px (2) |
+| Gap between metrics | 16px, or a 1px divider over a shared background |
+
+#### Fixed vs fluid
+
+- **Fluid (5 layout roles only)**: sections, narrative blocks, hero padding,
+  page gutter and grid gap. They set how much air the page has, and must grow
+  on desktop for a premium feel.
+- **Fixed (everything else)**: components look the same at any viewport. A
+  button with fluid padding would change size when a phone rotates.
+- **Stepped exception**: card padding changes 24 → 32 at a breakpoint because it
+  depends on card width, not viewport width. Long term this is a case for
+  container queries.
+
+#### Vertical rhythm
+
+- **Proximity**: space **above** a heading is always larger than space
+  **below** it, by at least 2 steps, so the heading belongs to what follows.
+- **Standard section chain**: eyebrow → 12 → H2 → 16 → lead → 32 → content. The
+  same chain in every section, independent of font size.
+- **No `em`-based spacing**: `1em` under a fluid H2 would produce 26–36px,
+  off-scale and different at every viewport. Each transition uses a fixed step.
+- **No strict baseline grid**: line heights (e.g. 16 × 1.65 = 26.4px) are not
+  multiples of 4. Spacing follows the 4px grid; line heights stay optimized for
+  reading on dark grounds.
+
+#### Density
+
+Core rule: **dense inside, generous outside.** A dense zone (diagram, metrics,
+card grid) sits on its own surface with compact internal spacing (4–16px) and
+is surrounded by generous space (48px or more).
+
+To avoid an empty look:
+- Content has a controlled max-width, and text stays limited to 60–65ch, so
+  space is distributed instead of piling up on the sides. The exact container
+  value is defined in the layout/breakpoints sprint.
+- Section spacing is never doubled: it is a single layout value between
+  sections, not one section's bottom padding plus the next one's top padding
+  (which would reach 256px on desktop).
+- Every section has a visual anchor (diagram, metrics, screenshot).
+
+To avoid an overloaded look:
+- At most **one high-density zone per viewport**.
+- A group's internal gap is at least 2 steps smaller than the gap between
+  groups (e.g. 16 vs 48).
+- Density guideline, not a grid specification: card grids of up to 3 columns
+  and metric rows of up to 3–4 items. The definitive grid is defined in the
+  layout/breakpoints sprint.
+- Node connections are at least 24px; shorter ones stop reading as a flow.
+
+#### Accessibility and touch
+
+- Every interactive control has a **minimum 44×44px target** (beyond the
+  WCAG 2.2 AA minimum of 24×24, criterion 2.5.8; meets AAA 2.5.5).
+- A standard button with a 14px label and 12px padding is only 42.2px tall, so
+  buttons declare `min-height: 44px` instead of relying on padding.
+- Inputs are at least 48px tall with 16px text, which also avoids iOS
+  auto-zoom on focus.
+- Adjacent targets are at least 8px apart (step 2).
+- Compacting never shrinks a target: in dense zones visual spacing can shrink,
+  but interactive areas stay at 44px (with transparent padding if needed).
+
+#### Trade-offs
+
+- The 4px grid jumps in large steps above 16px: sometimes the "ideal" value
+  falls between steps. Consistency wins over fine-tuning.
+- Only 5 fluid values: less organic than fluid everything, but predictable,
+  and components behave the same everywhere.
+- No strict baseline grid: line-by-line alignment across columns is lost (rarely
+  noticed in a portfolio) in exchange for line heights tuned for dark reading.
+- 128px between sections on desktop is generous. It reads as premium but needs
+  sections with real content; generous space amplifies whatever is there,
+  strong or thin.
+
+#### Risks
+
+- **Doubled section spacing** (padding + padding): prevented by defining section
+  spacing as a single layout value.
+- **Off-scale values** slipping in during component work (the classic
+  `margin: 20px`): mitigated by tokens and, if needed later, a CSS lint rule.
+- **Stepped card padding inside fluid grids**: on tablets a narrow card may
+  already use 32px padding. The right fix is container queries, not more
+  breakpoints.
+- **Mobile diagrams**: a 4-node vertical pipeline is about 320px tall
+  (4 × ~62px nodes + 3 × 24px connections). Six or more nodes need collapsing
+  or internal scroll.
+
 ### Iconography and imagery
 - Simple, consistent line icons from a single set.
 - Real artifacts: product screenshots, architecture and flow diagrams, metrics
@@ -399,6 +580,7 @@ Before adding any visual element, effect or dependency, it must answer YES to:
 | Typography (Sprint 00C) | Geist Variable as the primary typeface; Geist Mono Variable for data labels, metrics, states, nodes and system elements. Chosen over Manrope and Inter after a side-by-side comparison with identical content. Rationale in section 5. |
 | Color system (Sprint 00C) | Cool graphite neutrals, amber scale around `#FFB11B`, and muted semantic colors (success, warning, error, info). No secondary accent is active; `#9AA8FF` is kept as a reserve candidate only. Full palette, rules and contrast checks in section 5. |
 | Typography scale (Sprint 00C) | Mobile-first scale with 11 roles on Geist and Geist Mono, 3 weights (400/500/600). Display, H1, H2, H3 and Metric are fluid (360–1280px); body, label, caption and mono label are fixed. Hero: short thesis in Display, full positioning statement in Body large; H1 reserved for page and case study titles. Details in section 5. |
+| Spacing system (Sprint 00C) | 4px-grid scale of 11 steps (0–128px) in rem. Components use fixed steps; only 5 layout roles are fluid (sections, narrative blocks, hero padding, page gutter, grid gap). Includes semantic usage, vertical rhythm, density rules and 44×44px touch targets. The container max-width is deferred to the layout/breakpoints sprint. Details in section 5. |
 
 ### Content gap (context for the decisions above)
 
@@ -410,4 +592,5 @@ visual positioning is backed by evidence, as principle 1 requires.
 
 ### Still open
 
-- None at the moment.
+- Container max-width and breakpoints (to be defined in the layout/breakpoints
+  sprint).
