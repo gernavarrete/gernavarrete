@@ -1,0 +1,5 @@
+/*
+ * Design tokens entry point. The single source of tokens for the app.
+ * Source of truth for every value: docs/DESIGN_DIRECTION.md.
+ */
+@import "./tokens/color.css";
