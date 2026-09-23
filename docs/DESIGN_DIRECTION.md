@@ -606,6 +606,149 @@ Not used for page layout (viewport-driven) or typography (already fluid).
 | Page responds to the viewport, components to their container | |
 | Reflow at 320px with no horizontal page scroll | |
 
+### Radius
+
+Geometric with a minimum of softness: precise and engineered, never bubbly.
+Values are expressed in `rem`, consistent with the spacing and type systems.
+The approved values are a reference; token names come later.
+
+#### Base scale
+
+| Step | rem | px | Use |
+|---|---|---|---|
+| 0 | 0 | 0 | Structure: sections, full-bleed surfaces, dividers, lines, background grid |
+| 1 | 0.125rem | 2 | Small pieces: badges, chips, tags, inline code |
+| 2 | 0.25rem | 4 | Controls and system blocks: buttons, inputs, nodes, tooltips |
+| 3 | 0.5rem | 8 | Containers: cards, panels, popovers, dialog, media. **System maximum** |
+| Round | 50% / 9999px | — | Intrinsically circular elements only |
+
+8px is the maximum anywhere in the system. 12px and 16px are intentionally
+excluded (the generic "pillowy" SaaS look), and 6px is excluded because it sits
+off the 4px grid and is barely distinguishable from 4 or 8.
+
+#### Semantic usage
+
+| Element | Radius | Shares exactly with |
+|---|---|---|
+| Sections, full-bleed surfaces, dividers, tables inside a card | 0 | — |
+| Badges, chips, tags, inline code, chips inside a node | 2px | — |
+| Buttons (including the CTA) | 4px | Inputs, selects, tooltips, nodes |
+| Inputs, selects, textarea | 4px | Buttons |
+| Nodes and system blocks | 4px | Controls |
+| Tooltips | 4px | Controls |
+| Cards | 8px | Panels, popovers, dialog, media, code blocks, diagram canvas |
+| Elevated surfaces (popover, mobile menu) | 8px | Cards |
+| Standalone screenshots and media | 8px | Cards |
+| Media touching a container edge | Inherits the container radius on the corners that coincide with its edge; 0 on corners facing the interior | — |
+| Modal / dialog | 8px | Cards |
+| Connection ports, status dots, avatar, toggle | Round | — |
+
+#### Shape language
+
+- **Generic SaaS look avoided**: CTAs at 4px (never pill), cards at 8px (never
+  12–16px), badges at 2px with a mono label (never rounded).
+- **"Systems, not screens"**: the same vocabulary as a real architecture
+  diagram: rectangles with minimal corners, straight connectors and circular
+  ports.
+- Technical elements use near-square corners (nodes 4px, chips 2px). A full 0
+  is reserved for structure; on interactive elements it reads as harsh.
+
+#### Hierarchy and nesting
+
+- Radius grows with component size, up to a cap: small pieces 2, controls and
+  nodes 4, containers 8, structure 0. Nothing exceeds 8, however large.
+- **Radius is never a semantic signal.** An agent node is told apart by border,
+  icon and label, not by its corners.
+- **Internal components keep their normal semantic radius**: card 8px → button
+  4px; node 4px → chip 2px.
+- **An inner element never exceeds the radius of its outer container.**
+- **When media or another surface touches the outer edge of a container**, the
+  corners that coincide with that edge inherit the outer radius, and the corners
+  facing the interior stay at 0. Example: card 8px with media flush at the top →
+  `8px 8px 0 0`.
+
+#### Pills and circles
+
+- **Round (`50%` / `9999px`) only for intrinsically circular or track-shaped
+  elements**: connection ports, status dots, avatar, toggle (track and thumb).
+- **Never pill**: CTAs and buttons, badges, tags and states (use 2px chips with
+  a mono label), cards and surfaces.
+- Pill exceptions (for example a toggle-style filter) are evaluated case by case
+  and documented (guideline).
+
+#### Diagrams and nodes
+
+| Element | Radius |
+|---|---|
+| Diagram canvas / container | 8px |
+| Node | 4px |
+| Chip or state inside a node | 2px |
+| Connection port | Round |
+| Status dot | Round |
+| Connector | No radius at the ends; curves only where the path needs them (guideline) |
+
+Descending hierarchy: canvas 8 → node 4 → chip 2 → round dot. An agent node
+keeps 4px and is distinguished by an amber border with soft fill, an icon and the
+`AGENTE` label.
+
+#### Accessibility and usability
+
+- Radius never reduces the touch area: the interactive area is the full box. A
+  circular icon button with a 24px visible circle still has a 44×44px target.
+- Focus outlines follow the radius. An amber outline with a 2px offset reads
+  visually as radius + 2px.
+- **No `overflow: hidden` on containers with focusable content just to clip
+  media**: it also clips focus rings. Apply the radius to the media itself,
+  with inherited corners per the nesting rule.
+- With radii up to 8px and 24–32px padding, content never touches a curve.
+
+#### Trade-offs and risks
+
+- An 8px cap on large surfaces can feel dry; warmth must come from type, the
+  amber accent and generous space.
+- 2px is barely visible on low-density screens. It softens but communicates
+  nothing, which is intended.
+- Without pill CTAs, buttons look less "friendly" than average. That is the
+  identity bet.
+- Inherited corners add one implementation rule; forgetting it leaves sharp
+  corners at the media/card junction.
+- Drift: with only 4 values, "a 6 for this case" will be tempting. Snap to the
+  nearest step.
+
+#### Correct vs incorrect
+
+| Correct | Incorrect | Why |
+|---|---|---|
+| Card 8px → button 4px | Card 8px → button 12px | Inner never exceeds outer |
+| Node 4px → chip 2px + round ports | Node 4px → chip 8px | Inverts the hierarchy |
+| Card 8px with media flush at the top: `8px 8px 0 0` | Media flush at the top with 8px on all four corners | Interior corners must be 0 |
+| Card 8px with media flush at the top: `8px 8px 0 0` | Media flush at the top with 0 on all four corners | Edge corners poke out of the card's curve |
+| Card 8px with a 4px button inside (not touching the edge) | Card 8px with an 8px button "to match" | Controls keep their semantic radius |
+| Amber CTA at 4px | Amber CTA as a pill | Generic SaaS look |
+| 2px status badge with mono label + icon | Pill status badge with color only | Forbidden shape, and color as the only signal |
+| Radius applied to the image | `overflow: hidden` on a card with links and buttons | Clips focus rings |
+| Agent node at 4px with amber border and `AGENTE` label | Agent node at 12px to set it apart | Radius is not a semantic signal |
+| Full-bleed section at 0 | Full-bleed section at 8px | Structure is square |
+
+#### Definitive vs guideline
+
+| Definitive | Guideline |
+|---|---|
+| Scale 0 / 2 / 4 / 8px (in rem) + round | Applying asymmetric radii in less obvious cases (media on a side, media touching two sides, media grids inside a card) |
+| Maximum 8px | Connector curves |
+| Structure: 0 | Pill exceptions, evaluated case by case |
+| Badges, chips and tags: 2px | |
+| Controls and nodes: 4px | |
+| Cards, panels, popovers, dialog and media: 8px | |
+| Round only for intrinsically circular elements | |
+| CTAs and badges never use pill | |
+| Radius is never a semantic signal | |
+| Internal components keep their semantic radius | |
+| An inner element never exceeds its outer container | |
+| Surfaces touching the container edge inherit the coinciding corners | |
+| Corners facing the interior stay at 0 | |
+| No `overflow: hidden` on containers with focusable content just to clip media | |
+
 ### Iconography and imagery
 - Simple, consistent line icons from a single set.
 - Real artifacts: product screenshots, architecture and flow diagrams, metrics
@@ -712,6 +855,7 @@ Before adding any visual element, effect or dependency, it must answer YES to:
 | Typography scale (Sprint 00C) | Mobile-first scale with 11 roles on Geist and Geist Mono, 3 weights (400/500/600). Display, H1, H2, H3 and Metric are fluid (360–1280px); body, label, caption and mono label are fixed. Hero: short thesis in Display, full positioning statement in Body large; H1 reserved for page and case study titles. Details in section 5. |
 | Spacing system (Sprint 00C) | 4px-grid scale of 11 steps (0–128px) in rem. Components use fixed steps; only 5 layout roles are fluid (sections, narrative blocks, hero padding, page gutter, grid gap). Includes semantic usage, vertical rhythm, density rules and 44×44px touch targets. The container max-width is deferred to the layout/breakpoints sprint. Details in section 5. |
 | Layout system (Sprint 00C) | Breakpoints at 48em and 64em; layout container max-width 1200px with the fluid 16 → 32px gutter; prose at 65ch (body) and 60ch (body large, captions); 12-column grid from 64em with simple flow below; intrinsic card grids. Page responds to the viewport, components to their container. Card padding moves to a container query (< 20rem → 24px, ≥ 20rem → 32px), replacing the earlier "24px mobile / 32px from tablet" rule. Resolves the container max-width deferred by the spacing system. Details in section 5. |
+| Radius system (Sprint 00C) | Scale 0 / 2 / 4 / 8px (in rem) plus round, with 8px as the maximum. Structure 0; badges, chips and tags 2px; controls and nodes 4px; cards, panels, popovers, dialog and media 8px; round only for intrinsically circular elements. CTAs and badges never use pill, and radius is never a semantic signal. Nesting: internal components keep their semantic radius and never exceed the outer container; surfaces touching the container edge inherit the coinciding corners, with interior corners at 0. Details in section 5. |
 
 ### Content gap (context for the decisions above)
 
