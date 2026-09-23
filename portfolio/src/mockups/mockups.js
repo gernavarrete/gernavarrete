@@ -1,4 +1,4 @@
-import mangiare from "../images/Mangiare.png";
+import mangiare from "../images/Mangiare-min.png";
 import foodapi from "../images/FoodApi.png";
 import starwars from "../images/screenshot1.png";
 import fullstore from "../images/fullstore.png";
