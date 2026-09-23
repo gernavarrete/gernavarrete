@@ -1,0 +1,31 @@
+/*
+ * Radius tokens. Source of truth: docs/DESIGN_DIRECTION.md, section 5 "Radius".
+ * 8px is the maximum anywhere in the system; 6px, 12px and 16px are excluded.
+ * Radius is never a semantic signal. Intrinsically circular elements (ports,
+ * status dots, avatar, toggle) use --radius-round directly: it is the only
+ * possible value, so it has no semantic alias. Media touching a container edge
+ * inherits the container radius on its coinciding corners (a rule, not a token).
+ */
+
+/* Primitives */
+:root {
+  --radius-0: 0;
+  --radius-1: 0.125rem;
+  --radius-2: 0.25rem;
+  --radius-3: 0.5rem;
+  --radius-round: 9999px;
+}
+
+/* Semantic */
+:root {
+  /* Sections, full-bleed surfaces, dividers, tables inside a card */
+  --radius-structure: var(--radius-0);
+  /* Badges, chips, tags, inline code, chips inside a node */
+  --radius-badge: var(--radius-1);
+  /* Buttons (including the CTA), inputs, selects, tooltips */
+  --radius-control: var(--radius-2);
+  /* Nodes and system blocks: share exactly with controls */
+  --radius-node: var(--radius-control);
+  /* Cards, panels, popovers, dialog, media, code blocks, diagram canvas */
+  --radius-container: var(--radius-3);
+}
