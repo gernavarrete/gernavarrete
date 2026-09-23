@@ -1,10 +1,14 @@
 // @vitest-environment node
-import { readFileSync } from "node:fs";
 import {
   buildRegistry,
+  cellText,
+  cellValues,
+  markdownSection,
+  markdownTable,
   missingReferences,
   nonTokenCss,
   parseTokens,
+  readDesignDirection,
   readTokenCss,
   resolveToken,
 } from "./parse-tokens.js";
@@ -16,22 +20,25 @@ const primitives = tokens.filter((t) => t.layer === "primitive");
 const semantic = tokens.filter((t) => t.layer === "semantic");
 const value = (name) => resolveToken(name, map);
 
+// WCAG 2.2 AA thresholds: validation criteria, not design-system data.
+const AA_TEXT = 4.5;
+const AA_LARGE_OR_UI = 3;
+
 // --- Design direction (source of truth) ------------------------------------
 
-const designDirection = readFileSync(
-  new URL("../../../../docs/DESIGN_DIRECTION.md", import.meta.url),
-  "utf8"
-);
-const colorSection = designDirection.slice(
-  designDirection.indexOf("### Color"),
-  designDirection.indexOf("### Typography")
-);
-// Table rows whose second column is a hex value: "| Label | `#RRGGBB` | ...".
-const documentedHex = Object.fromEntries(
-  [...colorSection.matchAll(/^\|\s*\**([^|*]+?)\**\s*\|\s*\**`(#[0-9A-Fa-f]{6})`/gm)].map(
-    ([, label, hex]) => [label.trim(), hex.toLowerCase()]
-  )
-);
+const colorSection = markdownSection(readDesignDirection(), "### Color");
+
+// Hex values documented in the Neutrals, Amber and Semantic tables.
+const hexRows = (heading, keyColumn) =>
+  markdownTable(colorSection, heading, [keyColumn, "Hex"])
+    .map((row) => [cellText(row[keyColumn]), cellText(row.Hex).toLowerCase()])
+    .filter(([, hex]) => /^#[0-9a-f]{6}$/.test(hex));
+
+const documentedHex = Object.fromEntries([
+  ...hexRows("#### Neutrals", "Role"),
+  ...hexRows("#### Amber (signal accent)", "Level"),
+  ...hexRows("#### Semantic", "Role"),
+]);
 
 // Primitive token -> label of its row in DESIGN_DIRECTION.md.
 const PRIMITIVE_DOC_LABEL = {
@@ -136,9 +143,185 @@ function contrast(a, b) {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-const solid = (name) => toRgba(value(name));
-// Soft fills are measured over the surface, as documented.
-const softOnSurface = (name) => over(value(name), value("--color-surface"));
+// A color reference in the mappings below: a token name, a soft fill measured
+// over the surface (as documented), or a literal CSS color.
+const soft = (token) => ({ soft: token });
+const WHITE = { literal: "#ffffff" };
+
+function colorOf(ref) {
+  if (typeof ref === "string") return toRgba(value(ref));
+  if (ref.soft) return over(value(ref.soft), value("--color-surface"));
+  return toRgba(ref.literal);
+}
+
+const refName = (ref) =>
+  typeof ref === "string" ? ref : ref.soft ? `${ref.soft} over surface` : ref.literal;
+
+// --- Documented contrast tables -> real token pairs ----------------------------
+
+// "Key contrast checks": row label -> foreground and one background per ratio.
+const KEY_CONTRAST = {
+  "Text primary on background / surface / elevated": {
+    fg: "--color-text",
+    on: ["--color-bg", "--color-surface", "--color-surface-elevated"],
+    min: AA_TEXT,
+  },
+  "Text secondary on background / surface / elevated": {
+    fg: "--color-text-secondary",
+    on: ["--color-bg", "--color-surface", "--color-surface-elevated"],
+    min: AA_TEXT,
+  },
+  "Text muted on background / surface / elevated / hover": {
+    fg: "--color-text-muted",
+    on: ["--color-bg", "--color-surface", "--color-surface-elevated", "--color-surface-hover"],
+    min: AA_TEXT,
+  },
+  "Amber 400 on background / surface / elevated": {
+    fg: "--color-accent",
+    on: ["--color-bg", "--color-surface", "--color-surface-elevated"],
+    min: AA_TEXT,
+  },
+  "#0B0D10 on amber 400 (primary button)": {
+    fg: "--color-on-accent",
+    on: ["--color-accent"],
+    min: AA_TEXT,
+  },
+  "Text primary on amber-soft": {
+    fg: "--color-text",
+    on: [soft("--color-accent-soft")],
+    min: AA_TEXT,
+  },
+  "Amber 400 on amber-soft": {
+    fg: "--color-accent",
+    on: [soft("--color-accent-soft")],
+    min: AA_TEXT,
+  },
+  "Border strong on background / surface / elevated": {
+    fg: "--color-border-strong",
+    on: ["--color-bg", "--color-surface", "--color-surface-elevated"],
+    min: AA_LARGE_OR_UI,
+  },
+};
+
+// "Semantic": role -> token; ratio columns -> background token.
+const STATE_TOKENS = {
+  Success: "--color-success",
+  Warning: "--color-warning",
+  Error: "--color-error",
+  Info: "--color-info",
+};
+const STATE_COLUMNS = { "On background": "--color-bg", "On surface": "--color-surface" };
+
+// "Do not use": row label -> one [foreground, background] pair per ratio.
+const DO_NOT_USE = {
+  "White on amber": { pairs: [[WHITE, "--color-accent"]], max: AA_LARGE_OR_UI },
+  "Text primary on amber": { pairs: [["--color-text", "--color-accent"]], max: AA_LARGE_OR_UI },
+  "Text primary on amber 500 / 600": {
+    pairs: [
+      ["--color-text", "--color-accent-active"],
+      ["--color-text", "--color-flow-idle"],
+    ],
+    max: AA_TEXT,
+  },
+  "Amber 700 / 800 as text": {
+    pairs: [
+      ["--color-connector-idle", "--color-bg"],
+      ["--color-track", "--color-bg"],
+    ],
+    max: AA_TEXT,
+  },
+  "Border / border subtle on a control": {
+    pairs: [
+      ["--color-border", "--color-bg"],
+      ["--color-border-subtle", "--color-bg"],
+    ],
+    max: AA_LARGE_OR_UI,
+  },
+  "Border strong on surface hover": {
+    pairs: [["--color-border-strong", "--color-surface-hover"]],
+    max: AA_LARGE_OR_UI,
+  },
+  "Text disabled for real information": {
+    pairs: [["--color-text-disabled", "--color-bg"]],
+    max: AA_TEXT,
+  },
+  "Warning next to amber, or error next to warning, with no icon or label": {
+    pairs: [
+      ["--color-warning", "--color-accent"],
+      ["--color-error", "--color-warning"],
+    ],
+    max: AA_LARGE_OR_UI,
+  },
+};
+
+// "Do not use" row documented as an approximate range rather than a failure:
+// muted text passes on every soft fill, with a thin margin.
+const RANGE_ROWS = {
+  "Text muted on soft fills": {
+    fg: "--color-text-muted",
+    on: [
+      soft("--color-accent-soft"),
+      soft("--color-success-soft"),
+      soft("--color-warning-soft"),
+      soft("--color-error-soft"),
+      soft("--color-info-soft"),
+    ],
+    min: AA_TEXT,
+  },
+};
+
+// Resolves a documented table into test cases, failing on any unmapped row or
+// on a mismatch between the number of documented ratios and mapped pairs.
+function casesFrom(tableName, rows, mapping, toPairs) {
+  return rows.flatMap((row) => {
+    const label = cellText(row.Pair);
+    const spec = mapping[label];
+    if (!spec) throw new Error(`Unmapped row in "${tableName}": "${label}"`);
+    const ratios = cellValues(row.Ratio);
+    const pairs = toPairs(spec);
+    if (ratios.length !== pairs.length) {
+      throw new Error(`"${label}" documents ${ratios.length} ratios but ${pairs.length} pairs are mapped`);
+    }
+    return pairs.map(([fg, bg], i) => ({ label, fg, bg, documented: ratios[i], spec }));
+  });
+}
+
+const keyRows = markdownTable(colorSection, "#### Key contrast checks", ["Pair", "Ratio", "Result"]);
+const keyCases = casesFrom("Key contrast checks", keyRows, KEY_CONTRAST, (spec) =>
+  spec.on.map((bg) => [spec.fg, bg])
+);
+
+const stateCases = markdownTable(colorSection, "#### Semantic", [
+  "Role",
+  ...Object.keys(STATE_COLUMNS),
+]).flatMap((row) => {
+  const role = cellText(row.Role);
+  if (!STATE_TOKENS[role]) throw new Error(`Unmapped row in "Semantic": "${role}"`);
+  return Object.entries(STATE_COLUMNS).map(([column, bg]) => ({
+    label: `${role} ${column.toLowerCase()}`,
+    fg: STATE_TOKENS[role],
+    bg,
+    documented: cellValues(row[column])[0],
+  }));
+});
+
+const doNotUseRows = markdownTable(colorSection, "#### Do not use", ["Pair", "Ratio", "Why"]);
+const rangeRows = doNotUseRows.filter((row) => cellText(row.Pair) in RANGE_ROWS);
+const doNotUseCases = casesFrom(
+  "Do not use",
+  doNotUseRows.filter((row) => !rangeRows.includes(row)),
+  DO_NOT_USE,
+  (spec) => spec.pairs
+);
+
+// "~4.8–5.2" -> { min: 4.8, max: 5.2 }
+function documentedRange(cell) {
+  const match = cellText(cell).match(/^~?([\d.]+)\s*[–-]\s*([\d.]+)$/);
+  if (!match) throw new Error(`Expected a range like "~4.8–5.2", found "${cell}"`);
+  return { min: +match[1], max: +match[2] };
+}
+
+const ratioOf = (fg, bg) => contrast(colorOf(fg), colorOf(bg));
 
 // --- Tests ---------------------------------------------------------------------
 
@@ -206,78 +389,67 @@ describe("color tokens: values match DESIGN_DIRECTION.md", () => {
   });
 });
 
-describe("color tokens: contrast computed from the real tokens", () => {
-  // "Key contrast checks" plus the semantic state ratios, as documented.
-  const APPROVED = [
-    ["--color-text", "--color-bg", "16.89", 4.5],
-    ["--color-text", "--color-surface", "15.88", 4.5],
-    ["--color-text", "--color-surface-elevated", "14.52", 4.5],
-    ["--color-text-secondary", "--color-bg", "10.37", 4.5],
-    ["--color-text-secondary", "--color-surface", "9.75", 4.5],
-    ["--color-text-secondary", "--color-surface-elevated", "8.91", 4.5],
-    ["--color-text-muted", "--color-bg", "6.42", 4.5],
-    ["--color-text-muted", "--color-surface", "6.04", 4.5],
-    ["--color-text-muted", "--color-surface-elevated", "5.52", 4.5],
-    ["--color-text-muted", "--color-surface-hover", "4.89", 4.5],
-    ["--color-accent", "--color-bg", "10.71", 4.5],
-    ["--color-accent", "--color-surface", "10.07", 4.5],
-    ["--color-accent", "--color-surface-elevated", "9.21", 4.5],
-    ["--color-on-accent", "--color-accent", "10.71", 4.5],
-    ["--color-border-strong", "--color-bg", "3.89", 3],
-    ["--color-border-strong", "--color-surface", "3.65", 3],
-    ["--color-border-strong", "--color-surface-elevated", "3.34", 3],
-    ["--color-success", "--color-bg", "9.47", 4.5],
-    ["--color-success", "--color-surface", "8.91", 4.5],
-    ["--color-warning", "--color-bg", "8.61", 4.5],
-    ["--color-warning", "--color-surface", "8.09", 4.5],
-    ["--color-error", "--color-bg", "6.57", 4.5],
-    ["--color-error", "--color-surface", "6.18", 4.5],
-    ["--color-info", "--color-bg", "8.90", 4.5],
-    ["--color-info", "--color-surface", "8.37", 4.5],
-  ];
-
-  it.each(APPROVED)("%s on %s is %s:1 (>= %s)", (fg, bg, documented, min) => {
-    const ratio = contrast(solid(fg), solid(bg));
-    expect(ratio.toFixed(2)).toBe(documented);
-    expect(ratio).toBeGreaterThanOrEqual(min);
+describe("color tokens: documented contrast tables are fully covered", () => {
+  it("maps every row of every contrast table, and nothing else", () => {
+    const labels = (rows) => rows.map((row) => cellText(row.Pair)).sort();
+    expect(labels(keyRows)).toEqual(Object.keys(KEY_CONTRAST).sort());
+    expect(labels(doNotUseRows)).toEqual(
+      [...Object.keys(DO_NOT_USE), ...Object.keys(RANGE_ROWS)].sort()
+    );
+    expect(stateCases.map((c) => c.fg).sort()).toEqual(
+      Object.values(STATE_TOKENS).flatMap((t) => [t, t]).sort()
+    );
   });
 
-  it("text on amber-soft is 12.71:1 and amber on amber-soft is 8.06:1", () => {
-    const soft = softOnSurface("--color-accent-soft");
-    expect(contrast(solid("--color-text"), soft).toFixed(2)).toBe("12.71");
-    expect(contrast(solid("--color-accent"), soft).toFixed(2)).toBe("8.06");
+  it("checks 39 documented ratios plus the muted-on-soft range", () => {
+    expect(keyCases.length + stateCases.length + doNotUseCases.length).toBe(39);
+    expect(rangeRows).toHaveLength(1);
   });
 });
 
+describe("color tokens: contrast computed from the real tokens", () => {
+  it.each(keyCases.map((c) => [c.label, refName(c.fg), refName(c.bg), c]))(
+    "Key contrast checks · %s · %s on %s",
+    (_label, _fg, _bg, { fg, bg, documented, spec }) => {
+      const ratio = ratioOf(fg, bg);
+      expect(ratio.toFixed(2)).toBe(documented);
+      expect(ratio).toBeGreaterThanOrEqual(spec.min);
+    }
+  );
+
+  it.each(stateCases.map((c) => [c.label, c]))(
+    "Semantic · %s",
+    (_label, { fg, bg, documented }) => {
+      const ratio = ratioOf(fg, bg);
+      expect(ratio.toFixed(2)).toBe(documented);
+      expect(ratio).toBeGreaterThanOrEqual(AA_TEXT);
+    }
+  );
+});
+
 describe("color tokens: 'Do not use' pairs stay below their threshold", () => {
-  const DO_NOT_USE = [
-    ["text primary on amber", "--color-text", "--color-accent", "1.58", 4.5],
-    ["text primary on amber 500", "--color-text", "--color-accent-active", "2.03", 4.5],
-    ["text primary on amber 600", "--color-text", "--color-flow-idle", "3.13", 4.5],
-    ["amber 700 as text", "--color-connector-idle", "--color-bg", "3.14", 4.5],
-    ["amber 800 as text", "--color-track", "--color-bg", "1.81", 4.5],
-    ["border on a control", "--color-border", "--color-bg", "1.72", 3],
-    ["border subtle on a control", "--color-border-subtle", "--color-bg", "1.37", 3],
-    ["border strong on surface hover", "--color-border-strong", "--color-surface-hover", "2.96", 3],
-    ["text disabled", "--color-text-disabled", "--color-bg", "3.39", 4.5],
-    ["warning next to amber", "--color-warning", "--color-accent", "1.24", 3],
-    ["error next to warning", "--color-error", "--color-warning", "1.31", 3],
-  ];
+  it.each(doNotUseCases.map((c) => [c.label, refName(c.fg), refName(c.bg), c]))(
+    "Do not use · %s · %s vs %s",
+    (_label, _fg, _bg, { fg, bg, documented, spec }) => {
+      const ratio = ratioOf(fg, bg);
+      expect(ratio.toFixed(2)).toBe(documented);
+      expect(ratio).toBeLessThan(spec.max);
+    }
+  );
 
-  it.each(DO_NOT_USE)("%s: %s vs %s is %s:1 (< %s)", (_, a, b, documented, max) => {
-    const ratio = contrast(solid(a), solid(b));
-    expect(ratio.toFixed(2)).toBe(documented);
-    expect(ratio).toBeLessThan(max);
-  });
-
-  // DESIGN_DIRECTION.md groups "White / text primary on amber" at 1.58:1; that
-  // ratio is text primary. Pure white is 1.82:1. Both fail AA at any size.
-  it("pure white on amber also fails (1.82:1)", () => {
-    const white = { r: 255, g: 255, b: 255, a: 1 };
-    const ratio = contrast(white, solid("--color-accent"));
-    expect(ratio.toFixed(2)).toBe("1.82");
-    expect(ratio).toBeLessThan(3);
-  });
+  it.each(rangeRows.map((row) => [cellText(row.Pair), row]))(
+    "Do not use · %s stays within the documented range and passes AA",
+    (label, row) => {
+      const { min, max } = documentedRange(row.Ratio);
+      const spec = RANGE_ROWS[label];
+      for (const bg of spec.on) {
+        const ratio = ratioOf(spec.fg, bg);
+        expect(+ratio.toFixed(1), refName(bg)).toBeGreaterThanOrEqual(min);
+        expect(+ratio.toFixed(1), refName(bg)).toBeLessThanOrEqual(max);
+        expect(ratio, refName(bg)).toBeGreaterThanOrEqual(spec.min);
+      }
+    }
+  );
 });
 
 describe("parse-tokens helper", () => {
@@ -301,5 +473,15 @@ describe("parse-tokens helper", () => {
     expect(sample.tokens).toEqual([{ name: "--d", value: "1s", layer: "semantic" }]);
     expect(sample.reducedMotion).toEqual([{ name: "--d", value: "0s", layer: "reduced-motion" }]);
     expect(() => parseTokens(":root { --e: 1px; }")).toThrow(/Primitives|Semantic/);
+  });
+
+  it("reads Markdown tables and grouped cells, failing clearly on structure changes", () => {
+    const doc = "## A\n\n#### Table\n\n| Pair | Ratio |\n|---|---|\n| `x` on y | 1.5 / 2.25:1 |\n\n## B\n";
+    const rows = markdownTable(doc, "#### Table", ["Pair", "Ratio"]);
+    expect(rows).toEqual([{ Pair: "`x` on y", Ratio: "1.5 / 2.25:1" }]);
+    expect(cellText(rows[0].Pair)).toBe("x on y");
+    expect(cellValues(rows[0].Ratio)).toEqual(["1.5", "2.25"]);
+    expect(() => markdownTable(doc, "#### Missing", [])).toThrow(/Heading not found/);
+    expect(() => markdownTable(doc, "#### Table", ["Why"])).toThrow(/missing Why/);
   });
 });

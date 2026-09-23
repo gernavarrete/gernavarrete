@@ -4,6 +4,54 @@ import { readFileSync } from "node:fs";
 export const readTokenCss = (fileName) =>
   readFileSync(new URL(`../tokens/${fileName}`, import.meta.url), "utf8");
 
+// Reads docs/DESIGN_DIRECTION.md, the source of truth for every token value.
+export const readDesignDirection = () =>
+  readFileSync(new URL("../../../../docs/DESIGN_DIRECTION.md", import.meta.url), "utf8");
+
+// --- Markdown tables (only what the token tests need) -------------------------
+
+const headingLevel = (line) => line.match(/^(#{1,6})\s/)?.[1].length ?? 0;
+
+// Returns the lines under `heading` up to the next heading of the same or a
+// higher level. `heading` is the full heading line, e.g. "### Color".
+export function markdownSection(markdown, heading) {
+  const lines = markdown.split("\n");
+  const start = lines.findIndex((line) => line.trim() === heading);
+  if (start === -1) throw new Error(`Heading not found: "${heading}"`);
+  const level = headingLevel(heading);
+  const end = lines.findIndex((line, i) => i > start && headingLevel(line) > 0 && headingLevel(line) <= level);
+  return lines.slice(start, end === -1 ? undefined : end).join("\n");
+}
+
+// Parses the first table under `heading` into row objects keyed by header text.
+// Throws with a clear message if the heading, the table or a column is missing.
+export function markdownTable(markdown, heading, expectedColumns) {
+  const tableLines = markdownSection(markdown, heading)
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.startsWith("|"));
+  if (tableLines.length < 3) throw new Error(`No table found under "${heading}"`);
+  const cellsOf = (line) => line.slice(1, -1).split("|").map((cell) => cell.trim());
+  const header = cellsOf(tableLines[0]);
+  const missing = expectedColumns.filter((column) => !header.includes(column));
+  if (missing.length) {
+    throw new Error(`Table under "${heading}" is missing ${missing.join(", ")}; found ${header.join(", ")}`);
+  }
+  return tableLines
+    .slice(2)
+    .map((line) => Object.fromEntries(cellsOf(line).map((cell, i) => [header[i], cell])));
+}
+
+// Plain text of a table cell, without Markdown emphasis or code marks.
+export const cellText = (cell) => cell.replace(/[*`]/g, "").trim();
+
+// Values of a grouped cell: "16.89 / 15.88 / 14.52" -> ["16.89", "15.88", "14.52"].
+// A trailing ":1" is dropped, so "9.47:1" -> ["9.47"].
+export const cellValues = (cell) =>
+  cellText(cell)
+    .split("/")
+    .map((part) => part.trim().replace(/:1$/, ""));
+
 const REDUCED_MOTION = /@media\s*\(\s*prefers-reduced-motion\s*:\s*reduce\s*\)\s*\{/;
 // A :root block, optionally preceded by a single comment used as its layer label.
 const ROOT_BLOCK = /(?:\/\*((?:(?!\*\/)[\s\S])*)\*\/\s*)?:root\s*\{([^}]*)\}/g;
