@@ -768,16 +768,276 @@ keeps 4px and is distinguished by an amber border with soft fill, an icon and th
 
 ## 7. Motion
 
-- Purpose over ornament: motion explains state, causality or hierarchy.
-- Animate `transform` and `opacity` only. No layout-thrashing animations and no
-  scroll-jacking.
-- Short durations (roughly 150–400 ms for UI, longer only for narrative flows);
-  a shared easing set.
-- `prefers-reduced-motion` gets a fully static, equally clear experience.
-- No autoplay loops that compete with reading. Ambient motion pauses when
-  offscreen.
-- Start with CSS; add a motion library only when CSS clearly can't do the job
-  (with a justification, per CLAUDE.md).
+Single source of truth for motion in this portfolio. Values are the approved
+reference; token names come later.
+
+### Principles
+
+Motion is used for:
+- **Causality**: showing that something produces something else (data enters,
+  a node processes it, a result comes out). This is the central use.
+- **State**: confirming that something changed (hover, active, open, completed).
+- **Continuity**: explaining where an element comes from or goes to (a menu
+  opening, a tab indicator moving).
+- **Temporal hierarchy**: drawing attention to one thing at a time.
+
+Motion is not used for:
+- Decoration, or delaying content: text never waits for an animation to become
+  readable.
+- Animating screens: route changes are instant.
+- Counters, typing effects, parallax, floating blobs, shifting gradients,
+  particles, orbits or decorative loops.
+
+**"Systems, not screens": the interface stays still; data moves through the
+system.** Nodes, cards and layout do not move. What travels is information: a
+pulse along an edge, a state change on a node.
+
+### Duration scale
+
+| Duration | Name | Use |
+|---|---|---|
+| 0ms | Instant | Focus ring, route changes, reduced motion |
+| 100ms | Feedback | Hover, press, color changes on controls |
+| 200ms | Micro | Tooltips, tab indicator, node state changes |
+| 300ms | Component | Mobile menu, popovers, modal, accordion |
+| 400ms | Reveal | Scroll reveal of supporting visual groups |
+| 800ms | Flow step | One pulse traveling along one diagram edge |
+
+- **Exits use the previous step** of the scale (enter 300 → exit 200).
+- A full flow sequence lasts **≤ 5 seconds**.
+
+### Easing
+
+| Curve | Value | Use |
+|---|---|---|
+| Standard (decelerate) | `cubic-bezier(0.2, 0, 0, 1)` | The primary curve: entrances and state changes |
+| Exit (accelerate) | `cubic-bezier(0.3, 0, 1, 1)` | Exits |
+| Move (in-out) | `cubic-bezier(0.65, 0, 0.35, 1)` | Something traveling between two known points: edge pulse, tab indicator |
+| Linear | `linear` | Continuous progress only (progress bar, steady flow on an active edge) |
+
+No curve leaves the 0–1 range: no overshoot, bounce or elastic effects.
+
+### Semantic usage
+
+| Category | What animates | Duration | Curve | Notes |
+|---|---|---|---|---|
+| Hover | Color, background, border | 100ms | Standard | Never moves or scales the element |
+| Focus | Focus ring | 0ms | — | Always instant |
+| Buttons and controls | Background and border (hover amber 300, press amber 500) | 100ms | Standard | No scale on press |
+| Cards | Border only on hover (to border strong or amber 600) | 100ms | Standard | No lift, no translateY, no growing shadow |
+| Nav | Link color; the active-section indicator slides | 100ms / 200ms | Standard / Move | — |
+| Mobile menu | Opacity + translateY −8px → 0 | 300ms in / 200ms out | Standard / Exit | Focus trap; body scroll locked |
+| Tooltips | Opacity | 200ms in / 100ms out | Standard / Exit | 400ms hover delay (guideline); on focus, appears immediately |
+| Popovers | Opacity + translateY 4px | 200ms / 100ms | Standard / Exit | — |
+| Modal / dialog | Backdrop opacity; dialog opacity + translateY 8px | 200ms backdrop / 300ms dialog; 200ms out | Standard / Exit | No backdrop blur |
+| Accordions | Chevron rotates 180°; content opacity | 200ms | Standard | Height is not animated; content expands instantly |
+| Tabs | Indicator slides; panel crossfade | 200ms | Move / Standard | — |
+| Filters | Opacity of items entering and leaving | 200ms | Standard | No grid re-layout animation |
+| Metrics | Appear with their group | (reveal) | — | No counters; the real value is visible from the first frame |
+| Diagrams | Node states; pulses along edges | 200ms / 800ms per edge | Standard / Move | See "Diagrams and flows" |
+| Hero system visual | One flow sequence | ≤ 5s total, once | Move | See "Hero" |
+| Route / page change | Nothing | 0ms | — | New content visible immediately; focus moves to the new view's H1; no slide, fade or global page transition |
+| Scroll reveal | Opacity + translateY | 400ms | Standard | Supporting groups only; see "Scroll reveal" |
+
+### Diagrams and flows
+
+Nodes never move: their position and size are fixed. Only their **state**
+changes.
+
+| State | Visual | Transition |
+|---|---|---|
+| Idle | Surface + border + muted mono label | — |
+| Active | Amber 400 border + soft fill + amber label | 200ms, standard |
+| Completed | Border strong + success check icon + label | 200ms, standard |
+| Error | Error icon + label + error color | 200ms; no shaking |
+
+Every state carries an icon or label; never color or motion alone.
+
+Edges:
+- **Idle**: a static line in the border color.
+- **A pulse travels only when it represents real movement** of data or work
+  along that path: a short amber segment runs from source to target in 800ms
+  with the move curve.
+- **Continuous flow** (linear) only on an edge that is active at that moment
+  in a demonstration; never on every edge at once, never as decoration.
+
+Sequences are **sequential, not simultaneous**, so motion explains causality:
+node A active (200) → pulse along A→B (800) → node B active (200) → …
+A 4-node pipeline takes about 3–4 seconds and then **rests in its final state**
+(completed), static.
+
+When it runs:
+- **Once**, when the diagram enters the viewport (guideline: ≥ 50% visible).
+- **Replay** only through an explicit control ("Ver flujo" / "Repetir"), a
+  real, keyboard-operable button.
+- **Never an infinite loop.** Any future loop requires a pause control
+  (WCAG 2.2.2) and pauses when offscreen.
+
+### Scroll reveal
+
+Allowed only for **supporting visual and content groups**:
+- card groups
+- diagrams
+- screenshots
+- proof / metrics groups
+- secondary visual blocks
+
+| Rule | Value |
+|---|---|
+| Maximum translate | 16px (translateY) |
+| Opacity | 0 → 1 |
+| Duration and curve | 400ms, standard |
+| Repetition | Once; no re-animation when scrolling back up |
+| Stagger | 60ms between items in a group (guideline) |
+| Maximum items animated together | 4; larger groups enter as one unit |
+| Trigger threshold | ≥ 15% of the group visible (guideline) |
+
+**Never use an opacity-0 reveal on**:
+- section headings
+- narrative / prose text
+- forms
+- navigation
+- long lists
+- tables
+- anything visible on initial load (above the fold)
+
+Primary text content is visible as soon as it enters the viewport.
+
+**Progressive enhancement**: the hidden starting state is applied only when
+JavaScript is running, the user has not requested reduced motion, and the group
+is outside the viewport. Content reached through an anchor (`#section`) or
+keyboard navigation is shown directly. If the script fails, everything is
+visible.
+
+### Hero
+
+- **Always stable**: the thesis (Display), the positioning statement, the CTAs
+  and the navigation are visible and still from the first frame. No text
+  reveals or typing.
+- **Can move**: only the system visual. It runs one flow sequence (nodes
+  activating, pulses along edges), starting about 600ms after load (guideline),
+  for **≤ 5 seconds in total**, then rests in its final state. It can be
+  replayed with a control.
+- **Ambient motion**: none by default. A very subtle ambient flow (for example,
+  a slow flow on a single edge) may be considered in the future (guideline),
+  only with a pause control, pausing offscreen and when the tab is hidden, and
+  **never on mobile**.
+- Instead of blobs, parallax, animated gradients, particles or typing text, the
+  hero shows **a real system working once**: evidence, not decoration.
+
+### Reduced motion
+
+With `prefers-reduced-motion: reduce`:
+
+| Removed (shown in final state) | Kept |
+|---|---|
+| All translate and rotate | Hover/active color and border changes, instant (0ms) |
+| Scroll reveals (everything visible from the start) | Opacity crossfades ≤ 100ms where they help explain a change (tabs, modal) |
+| Edge pulses and diagram sequences | Focus ring (already instant) |
+| Accordion chevron rotation | Menu, modal and popover open/close, without translate |
+| `scroll-behavior: smooth` (becomes an instant jump) | |
+
+Meaning is preserved without motion:
+- Diagrams show their final state with every node labeled and a text
+  description of the flow.
+- The "Ver flujo" control becomes **step by step** (guideline): each activation
+  advances one node, with state shown by label and icon.
+- No state depends on motion.
+
+### Performance
+
+- **UI geometry motion uses `transform` and `opacity`.**
+- **Short state transitions** may animate color, background and border,
+  ≤ 200ms.
+- **Small SVG flow indicators** may animate `stroke-dashoffset`, as a
+  documented exception.
+- **Never animate** layout properties (`width`, `height`, `top`, `left`,
+  `margin`, `padding`, `grid-template-*`), `filter`, `blur`, `backdrop-filter`
+  or `box-shadow`.
+- **Animated edges at once**: at most 2 on desktop, 1 on mobile. They pause
+  when offscreen and when the tab is hidden.
+- **`will-change`** only right before a known animation, removed afterwards.
+  Never global, never on more than a few elements.
+- **No motion libraries**: CSS transitions and keyframes, IntersectionObserver
+  for reveals, and the native Web Animations API to sequence diagrams.
+- **Mobile**: no ambient motion, sequences run once, no scroll-linked
+  animations.
+
+### Accessibility
+
+- **Vestibular safety**: no parallax, screen zoom, rotation of large elements,
+  scroll-jacking, or translate beyond 16px.
+- **Autoplay**: anything that moves on its own lasts ≤ 5 seconds or has a
+  pause/stop control (WCAG 2.2.2). Nothing flashes more than 3 times per
+  second (2.3.1).
+- **State never depends on motion**: there is always a label, icon or border
+  change.
+- **Focus and keyboard**: focus is instant and never moved by an animation.
+  Opening a modal or the mobile menu moves focus inside and traps it; closing
+  returns focus to the control that opened it. Animations never block
+  interaction: nothing is disabled while a transition runs. The replay control
+  is a real `button`.
+
+### Trade-offs and risks
+
+- A hero that runs once and rests has less impact than a loop. Intentional
+  (evidence, not spectacle), but the sequence must be very well designed: it
+  is the only chance.
+- No metric counters: a common device is lost, in exchange for numbers that
+  read instantly and are announced correctly by screen readers.
+- Accordions without height animation look less smooth than average, but avoid
+  layout recalculation.
+- Instant route changes feel less "app-like", but content appears immediately
+  and focus lands in the right place.
+- Stagger capped at 4: larger grids enter as one block.
+- **Drift**: the temptation of "one more animation". Every animation must pass
+  the decision filter (section 13) and the performance budget.
+- **Invisible content**: hiding with CSS without depending on JS leaves
+  sections at opacity 0 if a script fails. The progressive enhancement rule
+  prevents it.
+
+### Correct vs incorrect
+
+| Correct | Incorrect | Why |
+|---|---|---|
+| Card hover: border to amber 600 in 100ms | Card hover: lifts 4px and the shadow grows | Generic SaaS hover; animates shadow |
+| One amber pulse along edge A→B, 800ms, once | "Marching ants" on every edge in a loop | Decorative, distracting, explains nothing |
+| Node turns active (amber border + label) in 200ms | Node pulsing (scale 1 → 1.05) in a loop | Nodes don't move; the pulse is ornamental |
+| Metric "72%" visible from the first frame | Counter from 0 to 72% | Exhibitionist and less trustworthy |
+| Hero text still; system visual runs once | Headline typed letter by letter | Delays the main content (LCP); a cliché |
+| Reveal of a card group: 16px, 400ms, once | Reveal of each paragraph with 60px translate | Primary text must not be hidden; vestibular risk |
+| Route change: new view instantly, focus on H1 | Route change with a slide or fade | Screens are not animated |
+| Modal: backdrop opacity + dialog rises 8px | Modal with animated `backdrop-filter: blur()` | Glassmorphism; expensive |
+| Accordion: chevron rotates + content opacity | Accordion animating `height` | Recalculates layout every frame |
+| Focus ring instant | Focus ring fading in over 200ms | Focus is never delayed |
+| Reduced motion: static diagram with labels + step-by-step control | Reduced motion: diagram with no flow information | Meaning lost, not just motion |
+| Tooltip on focus: appears immediately | Tooltip on focus: waits 400ms | The delay is for hover only |
+
+### Definitive vs guideline
+
+| Definitive | Guideline |
+|---|---|
+| Durations 0 / 100 / 200 / 300 / 400ms + 800ms flow step | 400ms hover delay on tooltips |
+| Easings: standard `(0.2, 0, 0, 1)`, exit `(0.3, 0, 1, 1)`, move `(0.65, 0, 0.35, 1)`, linear for continuous progress only | Scroll reveal threshold at 15% visible |
+| No overshoot, bounce or elastic effects | Stagger of 60ms |
+| Exits use the previous duration step | Hero sequence starting about 600ms after load |
+| UI geometry motion: transform and opacity | Diagram sequence trigger at 50% visible |
+| State transitions: color, background, border ≤ 200ms | Future subtle ambient motion in the hero (with pause control, never on mobile) |
+| Small SVG flow indicators: `stroke-dashoffset` as a documented exception | Step-by-step flow control under reduced motion |
+| Never animate layout properties, filter, blur, backdrop-filter or box-shadow | |
+| Nodes and layout never move; data moves | |
+| Flows are sequential, run once, last ≤ 5s, with a replay control | |
+| Nothing moves automatically for more than 5s without a pause control | |
+| No counters, typing effects, parallax, scroll-jacking or decorative loops | |
+| Route changes are instant: no slide, fade or global page transition; focus to the new H1 | |
+| Hero text is stable from the first frame | |
+| Scroll reveal only for supporting groups (cards, diagrams, screenshots, proof/metrics, secondary visuals): ≤ 16px, 400ms, standard, once, at most 4 items together, progressive enhancement | |
+| No opacity-0 reveal on headings, prose, forms, nav, long lists, tables or above-the-fold content | |
+| Full reduced motion behavior: no translate or sequences; final states with meaning preserved | |
+| Focus is instant; animations never block interaction | |
+| At most 2 animated edges on desktop, 1 on mobile | |
+| No ambient motion on mobile | |
+| No motion libraries (CSS + Web Animations API) | |
 
 ## 8. Narrative and content
 
@@ -856,6 +1116,7 @@ Before adding any visual element, effect or dependency, it must answer YES to:
 | Spacing system (Sprint 00C) | 4px-grid scale of 11 steps (0–128px) in rem. Components use fixed steps; only 5 layout roles are fluid (sections, narrative blocks, hero padding, page gutter, grid gap). Includes semantic usage, vertical rhythm, density rules and 44×44px touch targets. The container max-width is deferred to the layout/breakpoints sprint. Details in section 5. |
 | Layout system (Sprint 00C) | Breakpoints at 48em and 64em; layout container max-width 1200px with the fluid 16 → 32px gutter; prose at 65ch (body) and 60ch (body large, captions); 12-column grid from 64em with simple flow below; intrinsic card grids. Page responds to the viewport, components to their container. Card padding moves to a container query (< 20rem → 24px, ≥ 20rem → 32px), replacing the earlier "24px mobile / 32px from tablet" rule. Resolves the container max-width deferred by the spacing system. Details in section 5. |
 | Radius system (Sprint 00C) | Scale 0 / 2 / 4 / 8px (in rem) plus round, with 8px as the maximum. Structure 0; badges, chips and tags 2px; controls and nodes 4px; cards, panels, popovers, dialog and media 8px; round only for intrinsically circular elements. CTAs and badges never use pill, and radius is never a semantic signal. Nesting: internal components keep their semantic radius and never exceed the outer container; surfaces touching the container edge inherit the coinciding corners, with interior corners at 0. Details in section 5. |
+| Motion system (Sprint 00C) | Section 7 becomes the single source of truth for motion. Durations 0/100/200/300/400ms plus an 800ms flow step; standard, exit and move easings plus linear, with no overshoot or bounce. Interface and nodes stay still while data moves; flows are sequential, run once and last ≤ 5s. Route changes are instant with focus on the new H1. Geometry motion uses transform/opacity; state transitions may animate color, background and border ≤ 200ms; small SVG flow indicators may animate stroke-dashoffset; layout properties, filter, blur, backdrop-filter and box-shadow are never animated. Scroll reveal only for supporting groups. Full reduced motion support. |
 
 ### Content gap (context for the decisions above)
 
