@@ -1,0 +1,62 @@
+/*
+ * Motion tokens. Source of truth: docs/DESIGN_DIRECTION.md, section 7 "Motion".
+ * Components consume semantic tokens only. Focus and route changes are never
+ * animated, so there is no "instant" semantic token. Primitives never change,
+ * not even under reduced motion: only semantic tokens are reassigned.
+ */
+
+/* Primitives */
+:root {
+  --duration-0: 0ms;
+  --duration-100: 100ms;
+  --duration-200: 200ms;
+  --duration-300: 300ms;
+  --duration-400: 400ms;
+  --duration-800: 800ms;
+
+  --ease-decelerate: cubic-bezier(0.2, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-linear: linear;
+}
+
+/* Semantic */
+:root {
+  --duration-feedback: var(--duration-100); /* hover, press, control color */
+  --duration-state: var(--duration-200); /* node state, tab/nav indicator, chevron */
+  --duration-crossfade: var(--duration-200); /* tooltip, popover, tab panel, filters, modal backdrop */
+  --duration-crossfade-exit: var(--duration-100); /* exits of the above */
+  --duration-component: var(--duration-300); /* mobile menu, dialog */
+  --duration-component-exit: var(--duration-200); /* exits of the above */
+  --duration-reveal: var(--duration-400); /* scroll reveal of supporting groups */
+  --duration-flow: var(--duration-800); /* one pulse along one edge */
+
+  --ease-standard: var(--ease-decelerate);
+  --ease-exit: var(--ease-accelerate);
+  --ease-move: var(--ease-in-out);
+  --ease-progress: var(--ease-linear); /* continuous progress only */
+
+  --motion-reveal-distance: var(--space-4); /* 16px */
+  --motion-menu-distance: var(--space-2); /* 8px */
+  --motion-modal-distance: var(--space-2); /* 8px */
+  --motion-popover-distance: var(--space-1); /* 4px */
+}
+
+/* Reduced motion: only semantic tokens are reassigned. --duration-crossfade-exit
+   is already 100ms, within the <= 100ms crossfade cap, so it is not overridden. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-feedback: var(--duration-0);
+    --duration-state: var(--duration-0);
+    --duration-crossfade: var(--duration-100);
+    --duration-component: var(--duration-100);
+    --duration-component-exit: var(--duration-100);
+    --duration-reveal: var(--duration-0);
+    --duration-flow: var(--duration-0);
+
+    --motion-reveal-distance: var(--space-0);
+    --motion-menu-distance: var(--space-0);
+    --motion-modal-distance: var(--space-0);
+    --motion-popover-distance: var(--space-0);
+  }
+}
