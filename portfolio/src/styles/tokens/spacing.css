@@ -1,0 +1,88 @@
+/*
+ * Spacing tokens. Source of truth: docs/DESIGN_DIRECTION.md, section 5 "Spacing".
+ * 4px grid in rem. Components use fixed steps; only layout-level spacing is
+ * fluid. 20, 40, 56 and 80px are intentionally not part of the scale.
+ * Page gutter and layout grid gap live in layout.css.
+ */
+
+/* Primitives */
+:root {
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+}
+
+/* Semantic */
+:root {
+  /* Inline */
+  --space-inline: var(--space-2);
+  --space-icon-gap: var(--space-2);
+  --space-icon-gap-tight: var(--space-1);
+
+  /* Controls */
+  --space-control-y: var(--space-3);
+  --space-control-x: var(--space-5);
+  --space-cta-y: var(--space-4);
+  --space-cta-x: var(--space-5);
+  --space-button-gap: var(--space-3);
+
+  /* Cards: padding switches at a 20rem card width via container query */
+  --space-card-padding: var(--space-5);
+  --space-card-padding-wide: var(--space-6);
+  --space-card-title-text: var(--space-2);
+  --space-card-text-action: var(--space-4);
+
+  /* Forms */
+  --space-form-label: var(--space-2);
+  --space-input-y: var(--space-3);
+  --space-input-x: var(--space-4);
+  --space-field-gap: var(--space-5);
+  --space-field-group-gap: var(--space-6);
+
+  /* Content within a section */
+  --space-eyebrow-heading: var(--space-3);
+  --space-heading-lead: var(--space-4);
+  --space-lead-content: var(--space-6);
+  --space-paragraph: var(--space-4);
+  --space-body-component: var(--space-5);
+  --space-group: var(--space-7);
+
+  /* Hero (fixed inside); the gap between CTAs uses --space-button-gap */
+  --space-hero-eyebrow: var(--space-4);
+  --space-hero-thesis: var(--space-5);
+  --space-hero-statement: var(--space-6);
+  --space-hero-proof: var(--space-7);
+
+  /* Diagrams and nodes */
+  --space-node-y: var(--space-3);
+  --space-node-x: var(--space-4);
+  --space-node-label: var(--space-1);
+  --space-status-dot: var(--space-3);
+  --space-connector-min: var(--space-5);
+  --space-connector-min-horizontal: var(--space-6);
+  --space-diagram-caption: var(--space-4);
+  --space-cluster-gap: var(--space-7);
+
+  /* Metrics */
+  --space-metric-cell: var(--space-4);
+  --space-metric-label: var(--space-2);
+  --space-metric-gap: var(--space-4);
+
+  /* Layout (fluid 360 → 1280px) */
+  --space-section: clamp(4rem, 2.435rem + 6.957vw, 8rem);
+  --space-narrative: clamp(2rem, 1.217rem + 3.478vw, 4rem);
+  --space-hero-block: clamp(3rem, 1.826rem + 5.217vw, 6rem);
+
+  /* Minimum sizes (not part of the spacing scale) */
+  --size-touch-target: 2.75rem;
+  --size-control-min: 2.75rem;
+  --size-input-min: 3rem;
+}
