@@ -141,7 +141,8 @@ document first.
   a mono label (e.g. `AGENTE`), not by hue.
 - **Color is never the only signal of state** (WCAG 1.4.1). Every state also
   has an icon, a label or a change in shape.
-- **Text on amber is `#0B0D10`, never white.** White on amber is 1.58:1 and fails AA.
+- **Text on amber is `#0B0D10`, never white.** White on amber is 1.82:1 and
+  text primary (`#EDEFF2`) on amber is 1.58:1; both fail AA.
 - **Warning always carries an icon or label**, so it is never mistaken for the
   brand accent (warning vs amber is only 1.24:1 in luminance).
 - Gradients only with a meaning (for example the direction of a flow), never as
@@ -166,7 +167,8 @@ document first.
 
 | Pair | Ratio | Why |
 |---|---|---|
-| White / text primary on amber | 1.58 | Fails AA at any size |
+| White on amber | 1.82 | Fails AA at any size |
+| Text primary on amber | 1.58 | Fails AA at any size |
 | Text primary on amber 500 / 600 | 2.03 / 3.13 | Fails for normal text |
 | Amber 700 / 800 as text | 3.14 / 1.81 | Decorative levels only |
 | Border / border subtle on a control | 1.72 / 1.37 | Below the 3:1 UI minimum |
