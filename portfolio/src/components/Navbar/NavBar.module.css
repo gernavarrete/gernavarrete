@@ -86,14 +86,14 @@ padding: 0px 7px;
 .sobremi {
     margin-right: 20px;
 }
-h3 {
+:where(.NavBarContainer) h3 {
     color: #A1B0BF;
     font-weight: 400;
     font-size: 18px;
     line-height: 22.59px;
     
 }
-h3:hover {
+:where(.NavBarContainer) h3:hover {
     color:crimson;
     font-weight: 700;
 }
