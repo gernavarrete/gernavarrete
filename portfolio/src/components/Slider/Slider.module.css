@@ -83,6 +83,7 @@
     margin-left: 1rem;
     margin-right: 1rem;
     /* Previously inherited from the global `p` rule in SobreMi.css */
+    width: 95%;
     height: 100%;
     font-family: 'Mulish';
     font-size: 18px;
