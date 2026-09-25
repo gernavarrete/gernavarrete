@@ -30,8 +30,7 @@ export function extractRules(css) {
   for (let i = 0; i < src.length; i++) {
     const char = src[i];
     if (char === '"' || char === "'") {
-      const end = src.indexOf(char, i + 1);
-      i = end === -1 ? src.length : end;
+      i = stringEnd(src, i);
     } else if (char === ";") {
       start = i + 1;
     } else if (char === "}") {
@@ -59,12 +58,31 @@ export function extractRules(css) {
   return rules;
 }
 
-// Splits a selector list on top-level commas (ignoring commas inside () and []).
+// Returns the index of the quote that closes the string opened at `start`,
+// honoring backslash escapes, or the last index if the string never closes.
+function stringEnd(text, start) {
+  const quote = text[start];
+  for (let i = start + 1; i < text.length; i++) {
+    if (text[i] === "\\") i++;
+    else if (text[i] === quote) return i;
+  }
+  return text.length - 1;
+}
+
+// Splits a selector list on top-level commas (ignoring commas inside (), [] and
+// strings). Brackets inside strings do not change the depth.
 export function splitSelectorList(list) {
   const parts = [];
   let depth = 0;
   let current = "";
-  for (const char of list) {
+  for (let i = 0; i < list.length; i++) {
+    const char = list[i];
+    if (char === '"' || char === "'") {
+      const end = stringEnd(list, i);
+      current += list.slice(i, end + 1);
+      i = end;
+      continue;
+    }
     if (char === "(" || char === "[") depth++;
     if (char === ")" || char === "]") depth--;
     if (char === "," && depth === 0) {

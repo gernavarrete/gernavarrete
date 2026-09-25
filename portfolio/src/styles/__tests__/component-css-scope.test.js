@@ -86,6 +86,17 @@ describe("tokenizer edge cases", () => {
     expect(selectorsOf(".foo p, p { color: red; }")).toEqual(["p"]);
   });
 
+  it.each([
+    ['.foo[data-x=")"], p', ["p"]],
+    ['.foo[data-x="]"], p', ["p"]],
+    ['.foo[data-x="a,b"], p', ["p"]],
+    [':is(.a[title=")"], p) span', [':is(.a[title=")"], p) span']],
+    ['.foo[data-x="a\\")b"], p', ["p"]],
+    [".foo[data-x='a\\']b'], p", ["p"]],
+  ])("ignores brackets and commas inside strings: %s", (selector, expected) => {
+    expect(selectorsOf(`${selector} { color: red; }`)).toEqual(expected);
+  });
+
   it("ignores comments and strings", () => {
     const css = '/* p { color: red; } */\n.foo::before { content: "p { }"; }';
     expect(findViolations(css)).toEqual([]);
