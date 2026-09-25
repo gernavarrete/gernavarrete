@@ -169,7 +169,10 @@ flex-grow: 0;
     height: 24.5px;
 }
 .text-tecnologias {
-    
+    /* Previously inherited from the global `p` rule in SobreMi.css */
+    width: 95%;
+    height: 100%;
+
     /* Paragraph */
 
     font-family: 'Mulish';

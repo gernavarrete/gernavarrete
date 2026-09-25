@@ -1,5 +1,5 @@
 .main-div-home {
-    background-color: black;
+    background-color: var(--color-bg);
     height: 100vh;
 }
 

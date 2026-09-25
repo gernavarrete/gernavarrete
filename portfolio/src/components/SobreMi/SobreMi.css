@@ -1,7 +1,7 @@
 .main-div-sobremi {
     display: flex;
     flex-direction: column;
-    background-color: #0A0A0A;
+    background-color: var(--color-bg);
     width: 100%;
     height: auto;
 }
@@ -46,7 +46,7 @@
     margin-left: 90px;
 }
 
-p {
+:where(.main-div-sobremi) p {
     width: 95%;
     height: 100%;
     
