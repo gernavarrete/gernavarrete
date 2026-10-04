@@ -9,8 +9,14 @@ Status: v0.1 (Sprint 00B). Tokens, components and layout come later and must fol
 
 ## 1. Positioning
 
-**I design and build systems where AI, automation and software create measurable
-business outcomes.**
+**I design and build systems where AI, automation and software run real business
+operations.**
+
+Spanish site copy: **Diseño y construyo sistemas donde la IA, la automatización y
+el software sostienen operaciones reales de negocio.**
+
+This wording is temporary. "Measurable business outcomes" returns only when the
+cases publish metrics that meet the evidence rules in section 14.
 
 The portfolio sits at the intersection of four pillars, each with a distinct role:
 
@@ -1111,7 +1117,7 @@ Before adding any visual element, effect or dependency, it must answer YES to:
 | Accent color | Keep amber `#FFB11B` as the starting point of the identity. Tokens may refine tints, shades and contrast-safe variants, but the identity starts from it. |
 | Theme | Dark-first. No light theme for now. |
 | Language | Spanish is the initial language. The architecture must be ready for future internationalization: no user-facing copy hardcoded deep inside components, content kept separate from presentation, and `lang` set correctly. No i18n library until a second language is actually needed. |
-| AI/Automation cases | The real AI and Automation cases will be defined **before** the landing redesign starts. The redesign does not begin without them. |
+| AI/Automation cases | The real AI and Automation cases will be defined **before** the landing redesign starts. The redesign does not begin without them. **Satisfied** before Sprint 02A: see "Defined cases" below. |
 | Typography (Sprint 00C) | Geist Variable as the primary typeface; Geist Mono Variable for data labels, metrics, states, nodes and system elements. Chosen over Manrope and Inter after a side-by-side comparison with identical content. Rationale in section 5. |
 | Color system (Sprint 00C) | Cool graphite neutrals, amber scale around `#FFB11B`, and muted semantic colors (success, warning, error, info). No secondary accent is active; `#9AA8FF` is kept as a reserve candidate only. Full palette, rules and contrast checks in section 5. |
 | Typography scale (Sprint 00C) | Mobile-first scale with 11 roles on Geist and Geist Mono, 3 weights (400/500/600). Display, H1, H2, H3 and Metric are fluid (360–1280px); body, label, caption and mono label are fixed. Hero: short thesis in Display, full positioning statement in Body large; H1 reserved for page and case study titles. Details in section 5. |
@@ -1120,14 +1126,33 @@ Before adding any visual element, effect or dependency, it must answer YES to:
 | Radius system (Sprint 00C) | Scale 0 / 2 / 4 / 8px (in rem) plus round, with 8px as the maximum. Structure 0; badges, chips and tags 2px; controls and nodes 4px; cards, panels, popovers, dialog and media 8px; round only for intrinsically circular elements. CTAs and badges never use pill, and radius is never a semantic signal. Nesting: internal components keep their semantic radius and never exceed the outer container; surfaces touching the container edge inherit the coinciding corners, with interior corners at 0. Details in section 5. |
 | Motion system (Sprint 00C) | Section 7 becomes the single source of truth for motion. Durations 0/100/200/300/400ms plus an 800ms flow step; standard, exit and move easings plus linear, with no overshoot or bounce. Interface and nodes stay still while data moves; flows are sequential, run once and last ≤ 5s. Route changes are instant with focus on the new H1. Geometry motion uses transform/opacity; state transitions may animate color, background and border ≤ 200ms; small SVG flow indicators may animate stroke-dashoffset; layout properties, filter, blur, backdrop-filter and box-shadow are never animated. Scroll reveal only for supporting groups. Full reduced motion support. |
 
-### Content gap (context for the decisions above)
+### Defined cases (content gate for the landing redesign)
 
-The current site does not yet show enough evidence of AI and Automation work: its
-published projects are general web applications. This is a **content gap of the
-current site**, not a conclusion about the owner's professional experience. Closing
-it means selecting and documenting real cases (following section 8) so that the
-visual positioning is backed by evidence, as principle 1 requires.
+The landing redesign can start. It is built on these four cases, each covering a
+different dimension. Case studies still follow section 8.
+
+| Case | Pillars | Role in the narrative | Attribution |
+|---|---|---|---|
+| Business operating system on Odoo for a construction-materials company | Business Systems, Automation, Software Engineering | Anchor case: a production system running multi-company operations, credit, checks, margin control, inventory, deliveries, approvals and CRM | Team implementation. Personal claim: primary contributor to credit, treasury, margin-control and delivery workflows |
+| AI-assisted sales intake on WhatsApp | AI, Automation, Business Systems | Main AI proof: AI inside an operating system, with human handoff and humans deciding | Team work. Personal claim: designed and productionized the intake (agent behavior, business rules, messaging integration, model configuration, ERP tools, CRM handoff, production guardrails). The agent runtime and the WhatsApp connector are third-party and never claimed |
+| Private multi-platform product | Software Engineering | Architecture judgement: multi-client system design, decision records, trade-offs and technical debt | Anonymized. No business impact is claimed |
+| This portfolio | Software Engineering | The only publicly verifiable case: design-system discipline, tests, documentation and atomic delivery | Public repository. Kept proportionate: the smallest case |
+
+### Evidence gap (context for the decisions above)
+
+The gap is no longer missing cases. It is:
+
+- **No published metrics yet.** A metric needs a period, a denominator and a source;
+  any improvement claim also needs a baseline. Volume counts show real use, not
+  outcomes. Without a documented method, never claim margin saved, hours saved,
+  stockouts avoided, AI-attributed sales, ROI, conversion gains or headcount
+  reduction.
+- **Attribution stays precise.** Team work is presented as team work, and
+  third-party components are never presented as own work.
+- **Anonymity.** Until the client grants written permission, the first two cases
+  show no client name, identifying screenshots or internal module names, and the
+  owner's company context is not placed next to them.
 
 ### Still open
 
-- None at the moment.
+- Client permission to be named. Until it is granted, cases 1 and 2 stay anonymized.
