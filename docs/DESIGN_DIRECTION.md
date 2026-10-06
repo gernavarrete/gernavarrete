@@ -501,10 +501,14 @@ Two media queries, chosen by content behavior, not by device.
 
 | Range | Name | What changes | Why there |
 |---|---|---|---|
-| < 48em (768px) | Mobile / base | Single-column flow: stacked hero, menu navigation | Below ~720px of content, two text columns lack a comfortable reading width |
+| < 48em (768px) | Mobile / base | Single-column flow: stacked hero, inline or menu navigation (rule below) | Below ~720px of content, two text columns lack a comfortable reading width |
 | ≥ 48em (768px) | Tablet / narrow | Full navigation visible | ~722px of content fits the logo, 4 links and a CTA on one line |
 | ≥ 64em (1024px) | Desktop | Split hero, case study with side panel, 12-column grid | ~969px of content lets a ~554px text column hold the Display next to a diagram |
 | ≥ ~1264px | Wide | No media query: the layout container reaches its 1200px max | Natural cap; type and spacing also stop growing at 1280px |
+
+Below 48em, navigation stays inline while every destination fits down to 320px
+without horizontal overflow, every target keeps the 44×44px minimum and the
+hierarchy stays clear. A menu is used only when those constraints cannot hold.
 
 Breakpoints are written in `em` as a choice of relative units, consistent with
 a type and spacing system already in `rem`. Zoom and reflow do not depend on
