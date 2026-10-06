@@ -339,6 +339,9 @@ snap to the nearest step.
 | Standard button | 12px / 24px padding, **min-height 44px** | 3 / 5 |
 | Large CTA button | 16px / 24px padding (≈ 50px tall) | 4 / 5 |
 | Gap between buttons | 12px | 3 |
+| Navigation item: horizontal padding | 12px | 3 |
+| Header: vertical padding | 8px; 16px from 48em | 2 / 4 |
+| Header: identity → actions | 24px | 5 |
 | Card padding | 24px when the card is narrower than 20rem, 32px when it is 20rem or wider (container query on the card, not the viewport) | 5 / 6 |
 | Card: title → text | 8px | 2 |
 | Card: text → action or metadata | 16px | 4 |

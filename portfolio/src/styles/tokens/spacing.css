@@ -34,6 +34,12 @@
   --space-cta-x: var(--space-5);
   --space-button-gap: var(--space-3);
 
+  /* Navigation and page header; the header padding switches at 48em */
+  --space-nav-item-x: var(--space-3);
+  --space-header-y: var(--space-2);
+  --space-header-y-wide: var(--space-4);
+  --space-header-identity-actions: var(--space-5);
+
   /* Cards: padding switches at a 20rem card width via container query */
   --space-card-padding: var(--space-5);
   --space-card-padding-wide: var(--space-6);
