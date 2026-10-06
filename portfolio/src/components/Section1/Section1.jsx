@@ -1,66 +1,57 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import "./Section1.css";
-import javascript from "../../images/JavaScript_unofficial_logo.svg";
-import react from "../../images/React-icon.svg";
-import node from "../../images/Node.js_logo.svg";
-import macbookair from "../../images/MacBook-Air-min.png";
-import splash from "../../images/pngegg (1).png";
-import { NavLink } from "react-router-dom";
+
+const CV_URL =
+  "https://drive.google.com/file/d/1AmhmiGbEJAhj0lvf-eybKjjAQItS29-6/view?usp=drive_link";
+const CONTACT_URL =
+  "mailto:contacto@germannavarrete.tech?Subject=Necesito%20comunicarme%20con%20usted!";
+const pillars = ["IA", "Automatización", "Software", "Sistemas de negocio"];
 
 export default function Section1() {
   return (
-    <div className="main-div-section1">
-      <div className="div-text-section1">
-        <h1>
-          Me desempeño como <span>Desarrollador Fullstack</span>
-        </h1>
-        <p className="parrafo-sobremi">
-          Soy apasionado por la creación de proyectos innovadores y de alto
-          impacto. Me interesa trabajar en equipos multidisciplinarios y en
-          proyectos que permitan utilizar y desarrollar mis habilidades técnicas
-          y creativas para brindar soluciones innovadoras y escalables a los
-          usuarios finales.
+    <section className="hero" aria-labelledby="hero-title">
+      <div className="hero-inner">
+        <p className="hero-eyebrow">
+          {pillars.map((pillar, i) => (
+            <span className="hero-pillar" key={pillar}>
+              {pillar}
+              {i < pillars.length - 1 && (
+                <span className="hero-pillar-separator" aria-hidden="true">
+                  ·
+                </span>
+              )}
+            </span>
+          ))}
         </p>
-        <div className="div-buttons">
-          <NavLink
-            to="https://drive.google.com/file/d/1AmhmiGbEJAhj0lvf-eybKjjAQItS29-6/view?usp=drive_link"
+        <h1 className="hero-thesis" id="hero-title">
+          Sistemas, no pantallas.
+        </h1>
+        <p className="hero-statement">
+          Diseño y construyo sistemas donde la IA, la automatización y el
+          software sostienen operaciones reales de negocio.
+        </p>
+        <div className="hero-actions">
+          <Link className="hero-cta hero-cta-primary" to="/proyectos">
+            Ver proyectos
+          </Link>
+          <a className="hero-cta hero-cta-secondary" href={CONTACT_URL}>
+            Hablemos
+          </a>
+          <a
+            className="hero-cta-tertiary"
+            href={CV_URL}
             target="_blank"
-            style={{ textDecoration: "none" }}
+            rel="noopener noreferrer"
           >
-            <button className="button-ir-al-cv">Ir al CV</button>
-          </NavLink>
-          <button className="button-verproyectos">
-            <a
-              className="aMailTo"
-              href="mailto:contacto@germannavarrete.tech?Subject=Necesito%20comunicarme%20con%20usted!"
-            >
-              Contactame
-            </a>
-          </button>
+            Ver CV
+          </a>
         </div>
-        <div className="div-tecnologias">
-          <div className="div-logo-tecnologia">
-            <img
-              className="logo-tecnologias"
-              src={javascript}
-              alt="javascript-logo"
-            />
-            <p className="text-tecnologias">Javascript</p>
-          </div>
-          <div className="div-logo-tecnologia">
-            <img className="logo-tecnologias" src={react} alt="react-logo" />
-            <p className="text-tecnologias">React JS</p>
-          </div>
-          <div className="div-logo-tecnologia">
-            <img className="logo-tecnologias node" src={node} alt="node-logo" />
-            <p className="text-tecnologias">Node JS</p>
-          </div>
-        </div>
+        <p className="hero-proof">
+          En producción: flujos de crédito, margen, CRM, inventario y entregas
+          sobre Odoo, y un agente de IA que canaliza consultas de WhatsApp hacia
+          oportunidades comerciales en CRM.
+        </p>
       </div>
-      <div className="div-image-section1">
-        <img className="image-splash" src={splash} alt="splash" />
-        <img className="image-macbook" src={macbookair} alt="MacBook-Air" />
-      </div>
-    </div>
+    </section>
   );
 }
