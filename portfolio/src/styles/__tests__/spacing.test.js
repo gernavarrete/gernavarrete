@@ -61,6 +61,9 @@ const FIXED_TABLES = {
       "Standard button": ["--space-control-y", "--space-control-x"],
       "Large CTA button": ["--space-cta-y", "--space-cta-x"],
       "Gap between buttons": ["--space-button-gap"],
+      "Navigation item: horizontal padding": ["--space-nav-item-x"],
+      "Header: vertical padding": ["--space-header-y", "--space-header-y-wide"],
+      "Header: identity → actions": ["--space-header-identity-actions"],
       "Card padding": ["--space-card-padding", "--space-card-padding-wide"],
       "Card: title → text": ["--space-card-title-text"],
       "Card: text → action or metadata": ["--space-card-text-action"],
@@ -193,14 +196,14 @@ const EXCLUDED_PX = excluded.slice(1).map(Number);
 // --- Tests ---------------------------------------------------------------------
 
 describe("spacing tokens: structure", () => {
-  it("declares exactly 11 primitives and 44 semantic tokens", () => {
+  it("declares exactly 11 primitives and 48 semantic tokens", () => {
     expect(primitives).toHaveLength(11);
-    expect(semantic).toHaveLength(44);
+    expect(semantic).toHaveLength(48);
     expect(reducedMotion).toHaveLength(0);
   });
 
-  it("splits the semantic tokens into 38 fixed, 3 fluid and 3 sizes", () => {
-    expect(fixedTokens).toHaveLength(38);
+  it("splits the semantic tokens into 42 fixed, 3 fluid and 3 sizes", () => {
+    expect(fixedTokens).toHaveLength(42);
     expect(fluidCases).toHaveLength(3);
     expect(Object.keys(SIZES)).toHaveLength(3);
     expect(semantic.map((t) => t.name).sort()).toEqual(

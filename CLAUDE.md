@@ -53,11 +53,11 @@ Current counts (verified by the token tests):
 |---|---|---|
 | Color | 28 | 30 |
 | Typography | 10 | 56 |
-| Spacing | 11 | 44 |
+| Spacing | 11 | 48 |
 | Radius | 5 | 5 |
 | Layout | 0 | 9 |
 | Motion | 10 | 16 |
-| **Total** | **64** | **160** |
+| **Total** | **64** | **164** |
 
 Plus 11 reduced-motion overrides in `motion.css`.
 
