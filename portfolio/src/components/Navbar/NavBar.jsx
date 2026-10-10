@@ -1,5 +1,4 @@
 import s from "../Navbar/NavBar.module.css";
-import { Link, useParams } from "react-router-dom";
 
 // Monochrome marks drawn from the previous brand SVGs; the inner glyphs are
 // cut out with evenodd so the icons follow currentColor on any background.
@@ -24,19 +23,10 @@ const socialLinks = [
   },
 ];
 
-const navLinks = [
-  { id: "inicio", to: "/inicio", label: "Inicio" },
-  { id: "sobremi", to: "/sobremi", label: "Sobre mi" },
-  { id: "proyectos", to: "/proyectos", label: "Proyectos" },
-];
+// Section anchors of the single-page home; each section adds its own link.
+const navLinks = [{ href: "#inicio", label: "Inicio" }];
 
 const NavBar = () => {
-  const params = useParams();
-  // Mirrors Home: any route other than sobremi/proyectos renders Inicio.
-  const current = ["sobremi", "proyectos"].includes(params.component)
-    ? params.component
-    : "inicio";
-
   return (
     <header className={s.NavBarContainer}>
       <div className={s.inner}>
@@ -67,16 +57,11 @@ const NavBar = () => {
         </div>
         <nav aria-label="Navegación principal">
           <ul className={s.links}>
-            {navLinks.map(({ id, to, label }) => (
-              <li key={id}>
-                <Link
-                  className={s.link}
-                  to={to}
-                  id={id}
-                  aria-current={current === id ? "page" : undefined}
-                >
+            {navLinks.map(({ href, label }) => (
+              <li key={href}>
+                <a className={s.link} href={href}>
                   {label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>

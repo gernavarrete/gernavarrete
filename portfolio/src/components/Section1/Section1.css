@@ -6,11 +6,9 @@
   padding: var(--space-hero-block) var(--layout-gutter);
 }
 
-/* Mono label role set in Geist Sans: Geist Mono stays unloaded while Mulish
-   still loads for the legacy routes (2-family budget). */
 .hero-eyebrow {
   margin: 0 0 var(--space-hero-eyebrow);
-  font-family: var(--text-label-family);
+  font-family: var(--text-mono-label-family);
   font-size: var(--text-mono-label-size);
   line-height: var(--text-mono-label-line-height);
   font-weight: var(--text-mono-label-weight);

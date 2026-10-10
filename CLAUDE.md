@@ -17,8 +17,8 @@ AI, Automation, Software Engineering and Business Systems.
 
 - App lives in `portfolio/` (the repo root only holds docs and the profile README).
 - Stack: React 18, Vite 8, React Router 6, plain JavaScript (no TypeScript yet).
-- Styling today: plain CSS + CSS Modules. Design tokens exist as CSS custom
-  properties but legacy components do not use them yet (see "Design tokens").
+- Styling: plain CSS + CSS Modules on semantic design tokens (see "Design
+  tokens").
 - Tests: Vitest + Testing Library + jsdom. Lint: ESLint 9 flat config.
 - Hosting: Vercel project `my-portfolio` (root `portfolio`, output `build/`,
   SPA fallback in `portfolio/vercel.json`).
@@ -67,8 +67,8 @@ Plus 11 reduced-motion overrides in `motion.css`.
   no token. Text on amber uses `--color-on-accent` (`#0B0D10`), never white.
   State is never communicated by color alone.
 - **Typography**: Geist Variable is the primary face; Geist Mono Variable is for
-  system and data labels only. Neither is applied to the UI yet: do not set
-  fonts globally without a sprint for it.
+  system and data labels only. The body inherits Geist; Geist Mono is set per
+  element through the mono label role.
 - **Spacing**: 4px grid. Never introduce 20, 40, 56 or 80px steps. Fixed
   semantics reference primitives; fluid semantics may hold a `clamp()` directly.
 - **Radius**: 8px is the normal maximum. `--radius-round` is only for
@@ -88,12 +88,12 @@ Plus 11 reduced-motion overrides in `motion.css`.
 
 ### Adoption status
 
-- Sprint 01A created the foundation only. **Legacy components do not consume
-  these tokens yet.** Defining a token does not mean it is applied.
-- Do not migrate components opportunistically; visual migration happens in
-  later sprints with their own scope.
-- Geist is declared but not used, so no Geist file is downloaded. Keep it that
-  way until a sprint applies it. Mulish remains in the legacy UI until then.
+- The home is a single page at `/` (Navbar + sections); every other path
+  redirects to it. The legacy views (`/sobremi`, `/proyectos`) are removed.
+- Navbar and hero consume semantic tokens. Sections of the home are added in
+  Sprint 02B, each with its own scope. Defining a token does not mean it is
+  applied.
+- Fonts: Geist and Geist Mono only (2-family budget). Mulish is removed.
 
 ### Changing tokens
 
@@ -151,9 +151,5 @@ UI changes are also checked in a browser at mobile (375px) and desktop widths.
 
 ## Known debt (tracked, do not fix opportunistically)
 
-- `Home.jsx` switches views with setState inside an effect (eslint-disable
-  marked); routing refactor is its own task.
 - `react-router-dom` 6.10 has high-severity advisories; needs a bump.
-- Carousel arrows are not keyboard/screen-reader operable.
-- Meta description is still the CRA default; FoodApi, screenshot1 and
-  fullstore PNGs are unoptimized.
+- Meta description and `manifest.json` are still the CRA defaults.
