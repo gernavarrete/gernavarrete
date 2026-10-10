@@ -816,7 +816,7 @@ pulse along an edge, a state change on a node.
 | 200ms | Micro | Tooltips, tab indicator, node state changes |
 | 300ms | Component | Mobile menu, popovers, modal, accordion |
 | 400ms | Reveal | Scroll reveal of supporting visual groups |
-| 800ms | Flow step | One pulse traveling along one diagram edge |
+| 800ms | Flow step | One pulse traveling along one diagram edge, or along one stage of consecutive edges |
 
 - **Exits use the previous step** of the scale (enter 300 → exit 200).
 - A full flow sequence lasts **≤ 5 seconds**.
@@ -880,6 +880,12 @@ Sequences are **sequential, not simultaneous**, so motion explains causality:
 node A active (200) → pulse along A→B (800) → node B active (200) → …
 A 4-node pipeline takes about 3–4 seconds and then **rests in its final state**
 (completed), static.
+
+A system with more nodes than fit in 5 seconds is sequenced by **stages**: one
+pulse per stage travels the consecutive edges of that stage in 800ms, and each
+node turns active as the pulse reaches it. Stages keep the same order and
+spacing (stage pulse 800 → final node of the stage active 200 → next stage),
+so 4 stages take about 4 seconds.
 
 When it runs:
 - **Once**, when the diagram enters the viewport (guideline: ≥ 50% visible).
@@ -1086,7 +1092,7 @@ Meaning is preserved without motion:
 | Small SVG flow indicators: `stroke-dashoffset` as a documented exception | Step-by-step flow control under reduced motion |
 | Never animate layout properties, filter, blur, backdrop-filter or box-shadow | |
 | Nodes and layout never move; data moves | |
-| Flows are sequential, run once, last ≤ 5s, with a replay control | |
+| Flows are sequential (per edge, or per stage of consecutive edges), run once, last ≤ 5s, with a replay control | |
 | Nothing moves automatically for more than 5s without a pause control | |
 | No counters, typing effects, parallax, scroll-jacking or decorative loops | |
 | Route changes are instant: no slide, fade or global page transition; focus to the new H1 | |
