@@ -54,7 +54,7 @@ export default function Section1() {
             hacia oportunidades comerciales en CRM.
           </p>
         </div>
-        <SystemDiagram flow={heroFlow} startDelay={600} />
+        <SystemDiagram flow={heroFlow} id="fig-intake" startDelay={600} />
       </div>
     </section>
   );

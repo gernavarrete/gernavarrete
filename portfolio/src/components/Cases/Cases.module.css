@@ -1,0 +1,242 @@
+.section {
+  border-block-start: 1px solid var(--color-border-subtle);
+}
+
+.inner {
+  box-sizing: border-box;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-section) var(--layout-gutter);
+}
+
+.eyebrow,
+.label,
+.pillars {
+  font-family: var(--text-mono-label-family);
+  font-size: var(--text-mono-label-size);
+  line-height: var(--text-mono-label-line-height);
+  font-weight: var(--text-mono-label-weight);
+  letter-spacing: var(--text-mono-label-tracking);
+  text-transform: var(--text-mono-label-transform);
+}
+
+.eyebrow {
+  margin: 0 0 var(--space-eyebrow-heading);
+  color: var(--color-text-muted);
+}
+
+.title {
+  max-width: var(--measure-display);
+  margin: 0 0 var(--space-lead-content);
+  font-family: var(--text-h2-family);
+  font-size: var(--text-h2-size);
+  line-height: var(--text-h2-line-height);
+  font-weight: var(--text-h2-weight);
+  letter-spacing: var(--text-h2-tracking);
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+/* Cases stack below 64em; from 64em A and B share a row (8 / 4) and C takes
+   the full width. */
+.grid {
+  display: grid;
+  gap: var(--layout-grid-gap);
+}
+
+@media (min-width: 64em) {
+  .grid {
+    grid-template-columns: repeat(var(--layout-columns), minmax(0, 1fr));
+  }
+
+  .case:nth-child(1) {
+    grid-column: span 8;
+  }
+
+  .case:nth-child(2) {
+    grid-column: span 4;
+  }
+
+  .case:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Each case is a card: its padding follows its own width (§5 card padding). */
+.case {
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-container);
+  container-type: inline-size;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-body-component);
+  padding: var(--space-card-padding);
+}
+
+@container (min-width: 20rem) {
+  .body {
+    padding: var(--space-card-padding-wide);
+  }
+}
+
+/* Below 48em a framed case inside a framed figure costs too much width: the
+   case drops its frame and reads as a block separated by a rule. */
+@media (max-width: 47.99em) {
+  .case {
+    border-width: 1px 0 0;
+    border-color: var(--color-border-subtle);
+    border-radius: 0;
+  }
+
+  .case .body {
+    padding-inline: 0;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-card-title-text);
+}
+
+.label {
+  color: var(--color-text-muted);
+}
+
+.caseTitle {
+  margin: 0;
+  font-family: var(--text-h3-family);
+  font-size: var(--text-h3-size);
+  line-height: var(--text-h3-line-height);
+  font-weight: var(--text-h3-weight);
+  letter-spacing: var(--text-h3-tracking);
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+.pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-inline);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-text-secondary);
+}
+
+.pillars li {
+  padding: var(--space-icon-gap-tight) var(--space-inline);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-badge);
+}
+
+.content {
+  display: grid;
+  gap: var(--space-body-component);
+}
+
+/* The full-width case puts its diagram next to its facts when it has room. */
+@container (min-width: 52rem) {
+  .content {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: start;
+  }
+}
+
+.factList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-paragraph);
+  margin: 0;
+}
+
+.factList > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-form-label);
+}
+
+.factList dd {
+  margin: 0;
+  font-family: var(--text-body-family);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line-height);
+  font-weight: var(--text-body-weight);
+  letter-spacing: var(--text-body-tracking);
+  color: var(--color-text-secondary);
+}
+
+.note {
+  margin: var(--space-body-component) 0 0;
+  padding-block-start: var(--space-paragraph);
+  border-block-start: 1px solid var(--color-border-subtle);
+  font-family: var(--text-caption-family);
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-line-height);
+  font-weight: var(--text-caption-weight);
+  letter-spacing: var(--text-caption-tracking);
+  color: var(--color-text-muted);
+}
+
+.guardrails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-diagram-caption);
+  margin: 0;
+  padding: var(--space-card-padding);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-container);
+}
+
+.guardrailList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-paragraph);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guardrailList li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-node-label);
+  padding-inline-start: var(--space-node-y);
+  border-inline-start: 2px solid var(--color-border-strong);
+}
+
+.guardrailList .label {
+  color: var(--color-text);
+}
+
+.guardrailText {
+  font-family: var(--text-body-sm-family);
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line-height);
+  font-weight: var(--text-body-sm-weight);
+  letter-spacing: var(--text-body-sm-tracking);
+  color: var(--color-text-secondary);
+}
+
+.reference {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: var(--size-touch-target);
+  font-family: var(--text-label-family);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-line-height);
+  font-weight: var(--text-label-weight);
+  letter-spacing: var(--text-label-tracking);
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  transition: color var(--duration-feedback) var(--ease-standard);
+}
+
+.reference:hover {
+  color: var(--color-text);
+}

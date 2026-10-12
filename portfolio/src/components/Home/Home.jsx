@@ -1,6 +1,8 @@
 import "./Home.css";
 import NavBar from "../Navbar/NavBar.jsx";
 import Section1 from "../Section1/Section1.jsx";
+import SystemsBand from "../SystemsBand/SystemsBand.jsx";
+import Cases from "../Cases/Cases.jsx";
 
 export default function Home() {
   return (
@@ -8,6 +10,8 @@ export default function Home() {
       <NavBar />
       <main>
         <Section1 />
+        <SystemsBand />
+        <Cases />
       </main>
     </div>
   );
