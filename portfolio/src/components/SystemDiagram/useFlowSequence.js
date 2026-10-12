@@ -32,7 +32,8 @@ const isVertical = (dir) => dir === "down" || dir === "up";
 export function useFlowSequence(flow, { startDelay = 0 } = {}) {
   const rootRef = useRef(null);
   const run = useRef({ token: 0, timer: 0, animations: [] });
-  const [animated] = useState(canAnimate);
+  // Flows without stages are static diagrams.
+  const [animated] = useState(() => flow.stages.length > 0 && canAnimate());
   const [timeline, setTimeline] = useState(() =>
     compileTimeline(flow.edges, flow.stages, DEFAULT_TIMING)
   );
