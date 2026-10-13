@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { cases } from "./cases.js";
 import { systems } from "./systems.js";
 import { heroFlow } from "./heroFlow.js";
+import { approach, context, contact, footer } from "./closing.js";
 
 // Every user-facing string in a content block, joined.
 const strings = (value) =>
@@ -84,5 +85,15 @@ describe("evidence content", () => {
 
   it("shows six systems in production", () => {
     expect(systems.items).toHaveLength(6);
+  });
+
+  it("names the owner's company only in the context section", () => {
+    for (const block of [approach, contact, footer]) expect(text(block)).not.toMatch(/hornero/i);
+    expect(text(context)).toMatch(/Hornero Digital/);
+  });
+
+  it("does not overclaim instrumentation", () => {
+    const step = approach.steps.find((entry) => entry.title === "Instrumentar");
+    expect(step.text).toBe("Registro las decisiones clave para poder auditarlas.");
   });
 });
