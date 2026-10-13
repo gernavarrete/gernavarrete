@@ -2,3 +2,20 @@
   background-color: var(--color-bg);
   min-height: 100vh;
 }
+
+/* The skip-link target takes focus without showing a ring. */
+:where(.main-div-home) main:focus {
+  outline: none;
+}
+
+/* Sections snap by proximity and keep their heading clear of the sticky
+   header from 48em, where the header is one row (§7, "Page navigation"). */
+:where(.main-div-home) main > section {
+  scroll-snap-align: start;
+}
+
+@media (min-width: 48em) {
+  :where(.main-div-home) main > section {
+    scroll-margin-top: calc(var(--size-touch-target) + 2 * var(--space-header-y-wide) + 1px);
+  }
+}

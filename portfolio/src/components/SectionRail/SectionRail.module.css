@@ -1,0 +1,63 @@
+.rail {
+  display: none;
+}
+
+/* From 82em the side margin holds the 44px targets. The rail is centered in
+   the margin left by the 1200px container. */
+@media (min-width: 82em) {
+  .rail {
+    position: fixed;
+    inset-block-start: 50%;
+    inset-inline-end: calc((100vw - var(--container-max)) / 4 - var(--size-touch-target) / 2);
+    z-index: 10;
+    display: block;
+    transform: translateY(-50%);
+  }
+}
+
+.list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The track joins the ports, from the first center to the last. */
+.list::before {
+  content: "";
+  position: absolute;
+  inset-block: calc(var(--size-touch-target) / 2);
+  inset-inline-start: calc(50% - 0.5px);
+  width: 1px;
+  background-color: var(--color-border);
+}
+
+.link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+}
+
+.port {
+  width: 0.5625rem;
+  height: 0.5625rem;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-text-muted);
+  border-radius: var(--radius-badge);
+  transition:
+    background-color var(--duration-state) var(--ease-standard),
+    border-color var(--duration-state) var(--ease-standard);
+}
+
+.link:hover .port {
+  border-color: var(--color-text);
+}
+
+/* Active: filled port, a shape change as well as a color change. */
+.link[aria-current] .port {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
