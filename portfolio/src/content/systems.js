@@ -1,6 +1,7 @@
 // Systems running in production today (owner-confirmed). One short rule each.
 export const systems = {
-  title: "02 · Sistemas en producción",
+  number: "02",
+  title: "Sistemas en producción",
   items: [
     { label: "Crédito y cheques", text: "Riesgo real del cliente, incluidos cheques diferidos." },
     {

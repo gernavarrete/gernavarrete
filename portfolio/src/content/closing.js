@@ -35,7 +35,8 @@ export const approach = {
 
 // Owner-confirmed: co-founder, four partners, and the stack below.
 export const context = {
-  title: "05 · Contexto",
+  number: "05",
+  title: "Contexto",
   role: "Cofundador · Hornero Digital",
   description: "Consultora Odoo, 4 socios.",
   stackLabel: "Dominios y stack",

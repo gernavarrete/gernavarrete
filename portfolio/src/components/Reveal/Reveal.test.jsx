@@ -88,4 +88,17 @@ describe("Reveal", () => {
     renderGroup();
     expect(group()).not.toHaveAttribute("data-reveal");
   });
+
+  it("shows the group directly when keyboard focus enters it", () => {
+    below();
+    render(
+      <Reveal>
+        <a href="#x">Grupo</a>
+      </Reveal>
+    );
+    const node = screen.getByText("Grupo").parentElement;
+    expect(node).toHaveAttribute("data-reveal", "hidden");
+    act(() => screen.getByText("Grupo").focus());
+    expect(node).not.toHaveAttribute("data-reveal");
+  });
 });

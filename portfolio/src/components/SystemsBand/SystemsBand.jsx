@@ -7,6 +7,7 @@ export default function SystemsBand() {
     <section className={s.band} id="sistemas" aria-labelledby="sistemas-title">
       <div className={s.inner}>
         <h2 className={s.title} id="sistemas-title">
+          <span aria-hidden="true">{systems.number} · </span>
           {systems.title}
         </h2>
         <Reveal>

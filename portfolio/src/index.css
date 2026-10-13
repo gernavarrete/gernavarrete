@@ -29,3 +29,10 @@ code {
     scroll-snap-type: y proximity;
   }
 }
+
+/* Focus ring (§5, §7): amber, 2px offset, follows each element's radius and
+   is never animated. */
+:where(a, button, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}

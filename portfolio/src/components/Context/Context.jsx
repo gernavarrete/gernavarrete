@@ -7,6 +7,7 @@ export default function Context() {
       <div className={s.inner}>
         <div className={s.about}>
           <h2 className={s.label} id="contexto-title">
+            <span aria-hidden="true">{context.number} · </span>
             {context.title}
           </h2>
           <p className={s.role}>{context.role}</p>

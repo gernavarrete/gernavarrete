@@ -15,7 +15,8 @@
 }
 
 @media (min-width: 48em) {
-  :where(.main-div-home) main > section {
+  :where(.main-div-home) main > section,
+  :where(.main-div-home) main figure[id] {
     scroll-margin-top: calc(var(--size-touch-target) + 2 * var(--space-header-y-wide) + 1px);
   }
 }
