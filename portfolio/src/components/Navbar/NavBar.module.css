@@ -35,37 +35,11 @@
   color: var(--color-text);
 }
 
-.social,
 .links {
   display: flex;
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-/* Inline gap between social targets, not between the visible glyphs. */
-.social {
-  gap: var(--space-inline);
-}
-
-.socialLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--size-touch-target);
-  height: var(--size-touch-target);
-  color: var(--color-text-muted);
-  transition: color var(--duration-feedback) var(--ease-standard);
-}
-
-.socialLink:hover {
-  color: var(--color-text);
-}
-
-.icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  fill: currentColor;
 }
 
 /* The links' own padding is pulled back so their text aligns with the gutter. */

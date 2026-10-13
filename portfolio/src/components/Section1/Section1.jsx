@@ -1,11 +1,9 @@
 import "./Section1.css";
+import cta from "../Cta/Cta.module.css";
 import SystemDiagram from "../SystemDiagram/SystemDiagram.jsx";
 import { heroFlow } from "../../content/heroFlow.js";
+import { links } from "../../content/links.js";
 
-const CV_URL =
-  "https://drive.google.com/file/d/1AmhmiGbEJAhj0lvf-eybKjjAQItS29-6/view?usp=drive_link";
-const CONTACT_URL =
-  "mailto:contacto@germannavarrete.tech?Subject=Necesito%20comunicarme%20con%20usted!";
 const pillars = ["IA", "Automatización", "Software", "Sistemas de negocio"];
 
 export default function Section1() {
@@ -33,15 +31,15 @@ export default function Section1() {
             software sostienen operaciones reales de negocio.
           </p>
           <div className="hero-actions">
-            <a className="hero-cta hero-cta-primary" href="#casos">
+            <a className={`${cta.button} ${cta.primary}`} href="#casos">
               Ver casos
             </a>
-            <a className="hero-cta hero-cta-secondary" href={CONTACT_URL}>
+            <a className={`${cta.button} ${cta.secondary}`} href={links.contact}>
               Hablemos
             </a>
             <a
-              className="hero-cta-tertiary"
-              href={CV_URL}
+              className={cta.tertiary}
+              href={links.cv}
               target="_blank"
               rel="noopener noreferrer"
             >
