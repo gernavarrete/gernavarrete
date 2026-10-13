@@ -3,6 +3,7 @@ import { useActiveSection } from "../../hooks/useActiveSection.js";
 import { sections } from "../../content/sections.js";
 import SectionRail from "../SectionRail/SectionRail.jsx";
 import ScrollProgress from "../ScrollProgress/ScrollProgress.jsx";
+import PointerAccent from "../PointerAccent/PointerAccent.jsx";
 import NavBar from "../Navbar/NavBar.jsx";
 import Section1 from "../Section1/Section1.jsx";
 import SystemsBand from "../SystemsBand/SystemsBand.jsx";
@@ -31,6 +32,7 @@ export default function Home() {
       </main>
       <Footer />
       <SectionRail active={active} />
+      <PointerAccent />
     </div>
   );
 }
