@@ -1,5 +1,6 @@
 import s from "./Cases.module.css";
 import SystemDiagram from "../SystemDiagram/SystemDiagram.jsx";
+import Reveal from "../Reveal/Reveal.jsx";
 
 function Guardrails({ figure }) {
   return (
@@ -37,11 +38,13 @@ export default function CaseStudy({ item }) {
           </ul>
         </header>
         <div className={s.content}>
-          {item.figure.type === "diagram" ? (
-            <SystemDiagram flow={item.figure.flow} />
-          ) : (
-            <Guardrails figure={item.figure} />
-          )}
+          <Reveal>
+            {item.figure.type === "diagram" ? (
+              <SystemDiagram flow={item.figure.flow} />
+            ) : (
+              <Guardrails figure={item.figure} />
+            )}
+          </Reveal>
           <div className={s.facts}>
             <dl className={s.factList}>
               {item.facts.map(({ term, detail }) => (
