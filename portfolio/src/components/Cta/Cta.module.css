@@ -1,0 +1,62 @@
+/* Calls to action shared by the hero and the contact section. */
+.button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-control-min);
+  padding: var(--space-cta-y) var(--space-cta-x);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  font-family: var(--text-label-family);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-line-height);
+  font-weight: var(--text-label-weight);
+  letter-spacing: var(--text-label-tracking);
+  text-decoration: none;
+  transition:
+    background-color var(--duration-feedback) var(--ease-standard),
+    border-color var(--duration-feedback) var(--ease-standard),
+    color var(--duration-feedback) var(--ease-standard);
+}
+
+.primary {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.primary:active {
+  background-color: var(--color-accent-active);
+}
+
+.secondary {
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.secondary:hover {
+  background-color: var(--color-surface-hover);
+}
+
+/* Tertiary: a plain text link with a full-height target, lower emphasis than both buttons. */
+.tertiary {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  font-family: var(--text-label-family);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-line-height);
+  font-weight: var(--text-label-weight);
+  letter-spacing: var(--text-label-tracking);
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  transition: color var(--duration-feedback) var(--ease-standard);
+}
+
+.tertiary:hover {
+  color: var(--color-text);
+}
