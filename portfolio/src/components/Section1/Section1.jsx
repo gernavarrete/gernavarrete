@@ -1,4 +1,6 @@
 import "./Section1.css";
+import SystemDiagram from "../SystemDiagram/SystemDiagram.jsx";
+import { heroFlow } from "../../content/heroFlow.js";
 
 const CV_URL =
   "https://drive.google.com/file/d/1AmhmiGbEJAhj0lvf-eybKjjAQItS29-6/view?usp=drive_link";
@@ -10,46 +12,49 @@ export default function Section1() {
   return (
     <section className="hero" id="inicio" aria-labelledby="hero-title">
       <div className="hero-inner">
-        <p className="hero-eyebrow">
-          {pillars.map((pillar, i) => (
-            <span className="hero-pillar" key={pillar}>
-              {pillar}
-              {i < pillars.length - 1 && (
-                <span className="hero-pillar-separator" aria-hidden="true">
-                  ·
-                </span>
-              )}
-            </span>
-          ))}
-        </p>
-        <h1 className="hero-thesis" id="hero-title">
-          Sistemas, no pantallas.
-        </h1>
-        <p className="hero-statement">
-          Diseño y construyo sistemas donde la IA, la automatización y el
-          software sostienen operaciones reales de negocio.
-        </p>
-        <div className="hero-actions">
-          <a className="hero-cta hero-cta-primary" href="#casos">
-            Ver proyectos
-          </a>
-          <a className="hero-cta hero-cta-secondary" href={CONTACT_URL}>
-            Hablemos
-          </a>
-          <a
-            className="hero-cta-tertiary"
-            href={CV_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Ver CV
-          </a>
+        <div className="hero-copy">
+          <p className="hero-eyebrow">
+            {pillars.map((pillar, i) => (
+              <span className="hero-pillar" key={pillar}>
+                {pillar}
+                {i < pillars.length - 1 && (
+                  <span className="hero-pillar-separator" aria-hidden="true">
+                    ·
+                  </span>
+                )}
+              </span>
+            ))}
+          </p>
+          <h1 className="hero-thesis" id="hero-title">
+            Sistemas, no pantallas.
+          </h1>
+          <p className="hero-statement">
+            Diseño y construyo sistemas donde la IA, la automatización y el
+            software sostienen operaciones reales de negocio.
+          </p>
+          <div className="hero-actions">
+            <a className="hero-cta hero-cta-primary" href="#casos">
+              Ver casos
+            </a>
+            <a className="hero-cta hero-cta-secondary" href={CONTACT_URL}>
+              Hablemos
+            </a>
+            <a
+              className="hero-cta-tertiary"
+              href={CV_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ver CV
+            </a>
+          </div>
+          <p className="hero-proof">
+            En producción: flujos de crédito, margen, CRM, inventario y entregas
+            sobre Odoo, y un agente de IA que canaliza consultas de WhatsApp
+            hacia oportunidades comerciales en CRM.
+          </p>
         </div>
-        <p className="hero-proof">
-          En producción: flujos de crédito, margen, CRM, inventario y entregas
-          sobre Odoo, y un agente de IA que canaliza consultas de WhatsApp hacia
-          oportunidades comerciales en CRM.
-        </p>
+        <SystemDiagram flow={heroFlow} startDelay={600} />
       </div>
     </section>
   );
