@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "./Section1.css";
 
 const CV_URL =
@@ -9,7 +8,7 @@ const pillars = ["IA", "Automatización", "Software", "Sistemas de negocio"];
 
 export default function Section1() {
   return (
-    <section className="hero" aria-labelledby="hero-title">
+    <section className="hero" id="inicio" aria-labelledby="hero-title">
       <div className="hero-inner">
         <p className="hero-eyebrow">
           {pillars.map((pillar, i) => (
@@ -31,9 +30,9 @@ export default function Section1() {
           software sostienen operaciones reales de negocio.
         </p>
         <div className="hero-actions">
-          <Link className="hero-cta hero-cta-primary" to="/proyectos">
+          <a className="hero-cta hero-cta-primary" href="#casos">
             Ver proyectos
-          </Link>
+          </a>
           <a className="hero-cta hero-cta-secondary" href={CONTACT_URL}>
             Hablemos
           </a>

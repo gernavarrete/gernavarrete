@@ -16,15 +16,16 @@ test("renders the hero at /", async () => {
   ).toBeInTheDocument();
 });
 
-test("renders the about section at /sobremi", async () => {
-  renderAt("/sobremi");
-  expect(await screen.findByText("Mi Background")).toBeInTheDocument();
-});
-
-test("renders the projects section at /proyectos", async () => {
-  renderAt("/proyectos");
-  expect(
-    await screen.findByRole("heading", { name: "Proyectos", level: 1 })
-  ).toBeInTheDocument();
-  expect(await screen.findByText("Mangiar-e")).toBeInTheDocument();
-});
+test.each(["/sobremi", "/proyectos", "/inicio"])(
+  "redirects %s to the home",
+  async (path) => {
+    renderAt(path);
+    expect(
+      await screen.findByRole("heading", {
+        name: "Sistemas, no pantallas.",
+        level: 1,
+      })
+    ).toBeInTheDocument();
+    expect(window.location.pathname).toBe("/");
+  }
+);
