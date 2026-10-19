@@ -950,9 +950,12 @@ visible.
 
 The home is a single page navigated by section anchors (see section 8).
 
+- **Sticky header from 48em only**: there the header is a single row. Below
+  48em it takes two rows (about 15% of a phone screen), so it scrolls away and
+  the mobile progress indicator keeps the orientation.
 - **Anchor scrolling**: native `scroll-behavior: smooth`, instant under reduced
-  motion. Every section sets `scroll-margin-top` to the sticky header height so
-  its heading is never hidden.
+  motion. From 48em every section sets `scroll-margin-top` to the sticky header
+  height so its heading is never hidden.
 - **Scroll snap**: `scroll-snap-type: y proximity`, only from 48em and never
   under reduced motion. Never `mandatory`, and scrolling is never intercepted
   with script (wheel, touch or key handlers): that is scroll-jacking. A section

@@ -1,0 +1,16 @@
+.reveal {
+  min-width: 0;
+}
+
+/* Hidden only while JS has marked the group; shown groups animate once.
+   A group revealed by an anchor loses the attribute and appears instantly. */
+.reveal[data-reveal="hidden"] {
+  opacity: 0;
+  transform: translateY(var(--motion-reveal-distance));
+}
+
+.reveal[data-reveal="shown"] {
+  transition:
+    opacity var(--duration-reveal) var(--ease-standard),
+    transform var(--duration-reveal) var(--ease-standard);
+}

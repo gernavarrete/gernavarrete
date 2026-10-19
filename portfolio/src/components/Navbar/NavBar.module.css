@@ -3,6 +3,39 @@
   border-bottom: 1px solid var(--color-border-subtle);
 }
 
+/* Sticky from 48em only, where the header is a single row (§7, "Page navigation"). */
+@media (min-width: 48em) {
+  .NavBarContainer {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 10;
+  }
+}
+
+/* Skip link: off-screen until focused, then shown at the top. */
+.skip {
+  position: absolute;
+  inset-block-start: var(--space-header-y);
+  inset-inline-start: var(--layout-gutter);
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  padding-inline: var(--space-nav-item-x);
+  background-color: var(--color-surface-elevated);
+  border-radius: var(--radius-control);
+  font-family: var(--text-label-family);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-line-height);
+  font-weight: var(--text-label-weight);
+  color: var(--color-text);
+  transform: translateY(-200%);
+}
+
+.skip:focus {
+  transform: none;
+}
+
 /* Mobile: identity row, then the navigation row. */
 .inner {
   box-sizing: border-box;
@@ -26,7 +59,11 @@
 }
 
 .name {
+  display: flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
   margin: 0;
+  text-decoration: none;
   font-family: var(--text-label-family);
   font-size: var(--text-label-size);
   line-height: var(--text-label-line-height);
@@ -71,7 +108,7 @@
 }
 
 /* Active: primary text plus a 2px amber indicator, so state never relies on color alone. */
-.link[aria-current="page"] {
+.link[aria-current] {
   color: var(--color-text);
   border-block-end-color: var(--color-accent);
 }

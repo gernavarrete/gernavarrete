@@ -43,3 +43,9 @@ test("closes the page with a footer outside the main content", async () => {
   await screen.findByRole("heading", { name: "Sistemas, no pantallas.", level: 1 });
   expect(screen.getByRole("contentinfo")).toBeInTheDocument();
 });
+
+test("gives the main content a skip-link target", async () => {
+  renderAt("/");
+  await screen.findByRole("heading", { name: "Sistemas, no pantallas.", level: 1 });
+  expect(screen.getByRole("main")).toHaveAttribute("id", "main");
+});

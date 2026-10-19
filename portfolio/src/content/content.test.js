@@ -74,6 +74,7 @@ describe("evidence content", () => {
     expect(b.note).toMatch(/runtime del agente/i);
     expect(b.note).toMatch(/conector de WhatsApp/i);
     expect(b.note).toMatch(/terceros/i);
+    expect(b.note).toMatch(/^Trabajo en equipo\./);
     expect(fact(b, "Contribución")).not.toMatch(/WhatsApp|Meta/);
   });
 

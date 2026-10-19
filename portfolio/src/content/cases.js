@@ -179,7 +179,7 @@ export const cases = {
         },
         { term: "Evidencia", detail: "En producción." },
       ],
-      note: "El runtime del agente y el conector de WhatsApp son de terceros.",
+      note: "Trabajo en equipo. El runtime del agente y el conector de WhatsApp son de terceros.",
     },
     {
       id: "caso-c",

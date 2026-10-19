@@ -31,7 +31,7 @@ const isVertical = (dir) => dir === "down" || dir === "up";
 // changes when a pulse reaches a node.
 export function useFlowSequence(flow, { startDelay = 0 } = {}) {
   const rootRef = useRef(null);
-  const run = useRef({ token: 0, timer: 0, animations: [] });
+  const run = useRef({ token: 0, timer: 0, animations: [], observer: null });
   // Flows without stages are static diagrams.
   const [animated] = useState(() => flow.stages.length > 0 && canAnimate());
   const [timeline, setTimeline] = useState(() =>
@@ -50,6 +50,8 @@ export function useFlowSequence(flow, { startDelay = 0 } = {}) {
   const play = useCallback(() => {
     const root = rootRef.current;
     if (!root) return;
+    // Playing, by visibility or by replay, ends the wait for visibility.
+    run.current.observer?.disconnect();
     stop();
     const token = run.current.token;
     const style = getComputedStyle(root);
@@ -93,14 +95,21 @@ export function useFlowSequence(flow, { startDelay = 0 } = {}) {
   useEffect(() => {
     if (!animated) return undefined;
     const current = run.current;
+    // Starts at 50% of the diagram visible, or when the diagram fills half of
+    // the viewport: a diagram taller than twice the viewport (landscape
+    // phones, zoom) never reaches a 50% ratio.
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return;
+        const enough =
+          entry.intersectionRatio >= 0.5 ||
+          entry.intersectionRect.height >= window.innerHeight * 0.5;
+        if (!entry.isIntersecting || !enough) return;
         observer.disconnect();
         current.timer = setTimeout(play, startDelay);
       },
-      { threshold: 0.5 }
+      { threshold: [0, 0.25, 0.5] }
     );
+    current.observer = observer;
     observer.observe(rootRef.current);
     return () => {
       observer.disconnect();

@@ -3,11 +3,12 @@ import SystemsBand from "./SystemsBand.jsx";
 import { systems } from "../../content/systems.js";
 
 describe("SystemsBand", () => {
-  it("is a section titled by its heading", () => {
+  it("is a section titled by its heading, without the section number", () => {
     render(<SystemsBand />);
     const section = screen.getByRole("region", { name: systems.title });
     expect(section).toHaveAttribute("id", "sistemas");
     expect(screen.getByRole("heading", { level: 2, name: systems.title })).toBeInTheDocument();
+    expect(section).toHaveTextContent(`${systems.number} ·`);
   });
 
   it("lists every system with its rule", () => {

@@ -3,9 +3,11 @@ import Context from "./Context.jsx";
 import { context } from "../../content/closing.js";
 
 describe("Context", () => {
-  it("is a section titled by its heading", () => {
+  it("is a section titled by its heading, without the section number", () => {
     render(<Context />);
-    expect(screen.getByRole("region", { name: context.title })).toHaveAttribute("id", "contexto");
+    const section = screen.getByRole("region", { name: context.title });
+    expect(section).toHaveAttribute("id", "contexto");
+    expect(section).toHaveTextContent(`${context.number} ·`);
   });
 
   it("states the role and the company", () => {
