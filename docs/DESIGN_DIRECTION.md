@@ -940,6 +940,49 @@ visible.
 - Instead of blobs, parallax, animated gradients, particles or typing text, the
   hero shows **a real system working once**: evidence, not decoration.
 
+### Page navigation
+
+The home is a single page navigated by section anchors (see section 8).
+
+- **Anchor scrolling**: native `scroll-behavior: smooth`, instant under reduced
+  motion. Every section sets `scroll-margin-top` to the sticky header height so
+  its heading is never hidden.
+- **Scroll snap**: `scroll-snap-type: y proximity`, only from 48em and never
+  under reduced motion. Never `mandatory`, and scrolling is never intercepted
+  with script (wheel, touch or key handlers): that is scroll-jacking. A section
+  taller than the viewport scrolls freely.
+- **Active section**: the header link of the section in view carries
+  `aria-current` and the active-section indicator (see "Semantic usage", Nav).
+- **Section rail**: a fixed column of section links on the right edge, with the
+  same active state. Shown only where the side margin holds it without
+  overlapping the layout container (from 82em, about 1312px). That media query
+  is a visibility condition for an out-of-flow element, not a layout
+  breakpoint. Links are real anchors with 44×44px targets and an accessible
+  name.
+- **Mobile progress indicator**: a 2px amber bar at the top edge below 48em,
+  hidden from assistive technology. It is a position readout, not an
+  animation: its only property is `transform: scaleX()`, set directly from the
+  scroll position with no transition.
+
+### Pointer accent
+
+An **owner-approved, decorative exception** to "Motion is not used for
+decoration": an amber ring that follows the mouse with a short trail and grows
+over interactive elements.
+
+- Only with `(hover: hover) and (pointer: fine)`; never on touch or pen input,
+  and never under reduced motion.
+- The native cursor is never hidden or replaced; the accent sits on top with
+  `pointer-events: none` and is hidden from assistive technology.
+- Moves with `transform` only. The animation loop runs while the pointer moves
+  and stops once the trail settles; nothing runs while the pointer is still,
+  outside the window or while the tab is hidden.
+- Amber only, at most 1.5px strokes; no glow, blur or particles. The trail is
+  at most 4 points.
+- It carries no meaning: no state or information depends on it.
+- It does not count against the animated-edge budget, and it is the only
+  decorative motion allowed. Removing it must never change the page.
+
 ### Reduced motion
 
 With `prefers-reduced-motion: reduce`:
@@ -951,6 +994,7 @@ With `prefers-reduced-motion: reduce`:
 | Edge pulses and diagram sequences | Focus ring (already instant) |
 | Accordion chevron rotation | Menu, modal and popover open/close, without translate |
 | `scroll-behavior: smooth` (becomes an instant jump) | |
+| Scroll snap and the pointer accent | |
 
 Meaning is preserved without motion:
 - Diagrams show their final state with every node labeled and a text
@@ -976,7 +1020,8 @@ Meaning is preserved without motion:
 - **No motion libraries**: CSS transitions and keyframes, IntersectionObserver
   for reveals, and the native Web Animations API to sequence diagrams.
 - **Mobile**: no ambient motion, sequences run once, no scroll-linked
-  animations.
+  animations (the mobile progress indicator is a position readout, see "Page
+  navigation").
 
 ### Accessibility
 
@@ -1053,6 +1098,9 @@ Meaning is preserved without motion:
 | At most 2 animated edges on desktop, 1 on mobile | |
 | No ambient motion on mobile | |
 | No motion libraries (CSS + Web Animations API) | |
+| Single-page anchor navigation: smooth scroll (instant under reduced motion), proximity snap only from 48em and never under reduced motion, no scroll interception | |
+| Section rail only where it does not overlap the layout container; mobile progress indicator uses `transform: scaleX()` with no transition | |
+| Pointer accent: fine pointer only, never under reduced motion, native cursor kept, transform only, idle when the pointer is still, no meaning | |
 
 ## 8. Narrative and content
 
@@ -1062,6 +1110,33 @@ Meaning is preserved without motion:
 - Numbers when real; honest qualitative impact when not. Never invented metrics.
 - Clear calls to action per audience: hire / consult / view CV / contact.
 - Tone: direct, confident and concrete. Show judgement, not adjectives.
+
+### Home structure (single page)
+
+The portfolio is one page at `/`, navigated by section anchors. The former
+`/sobremi` and `/proyectos` routes are removed and redirect to `/`.
+
+| # | Section | Content |
+|---|---|---|
+| 01 | Hero | Eyebrow, Display thesis, positioning statement, CTAs, proof. From 64em the hero is split with the intake diagram (section 7, "Hero") |
+| 02 | Systems in production | The systems running today, one short line each |
+| 03 | Cases | Cases 1, 2 and 3 from section 14, each with a diagram and its text alternative |
+| 04 | Approach | How systems are built, as a short sequence of steps |
+| 05 | Context | The owner's company and stack |
+| 06 | Contact | Closing question, contact and CV, then the footer |
+
+- **Home cases are summaries.** The full Context → Problem → System →
+  Decisions → Impact → Stack structure applies to case study pages, if they
+  are added later.
+- **Case 3 (private product)** shows context, system and topology only. In
+  place of decision records it states that the product is confidential and
+  that decisions, trade-offs and managed debt can be reviewed in a
+  conversation. No placeholder content is ever published.
+- **Anonymity**: the Context section is separated from the cases by at least
+  one section and never links the owner's company to cases 1 and 2.
+- **No projects section** until there are publicly verifiable projects (live
+  link and preview). Earlier demo projects are not shown.
+- Case 4 (this portfolio) is not a home card for now.
 
 ## 9. Anti-patterns (do not use)
 
@@ -1132,6 +1207,14 @@ Before adding any visual element, effect or dependency, it must answer YES to:
 | Layout system (Sprint 00C) | Breakpoints at 48em and 64em; layout container max-width 1200px with the fluid 16 → 32px gutter; prose at 65ch (body) and 60ch (body large, captions); 12-column grid from 64em with simple flow below; intrinsic card grids. Page responds to the viewport, components to their container. Card padding moves to a container query (< 20rem → 24px, ≥ 20rem → 32px), replacing the earlier "24px mobile / 32px from tablet" rule. Resolves the container max-width deferred by the spacing system. Details in section 5. |
 | Radius system (Sprint 00C) | Scale 0 / 2 / 4 / 8px (in rem) plus round, with 8px as the maximum. Structure 0; badges, chips and tags 2px; controls and nodes 4px; cards, panels, popovers, dialog and media 8px; round only for intrinsically circular elements. CTAs and badges never use pill, and radius is never a semantic signal. Nesting: internal components keep their semantic radius and never exceed the outer container; surfaces touching the container edge inherit the coinciding corners, with interior corners at 0. Details in section 5. |
 | Motion system (Sprint 00C) | Section 7 becomes the single source of truth for motion. Durations 0/100/200/300/400ms plus an 800ms flow step; standard, exit and move easings plus linear, with no overshoot or bounce. Interface and nodes stay still while data moves; flows are sequential, run once and last ≤ 5s. Route changes are instant with focus on the new H1. Geometry motion uses transform/opacity; state transitions may animate color, background and border ≤ 200ms; small SVG flow indicators may animate stroke-dashoffset; layout properties, filter, blur, backdrop-filter and box-shadow are never animated. Scroll reveal only for supporting groups. Full reduced motion support. |
+
+### Resolved (Sprint 02B)
+
+| Topic | Decision |
+|---|---|
+| Home structure | Single page at `/` with six anchored sections; `/sobremi` and `/proyectos` are removed and redirect to `/`. Legacy demo projects are not shown; a projects section returns only with publicly verifiable projects. Details in section 8. |
+| Page navigation and pointer accent | Anchor navigation with smooth scroll, proximity snap from 48em, section rail where it fits and a mobile progress indicator. A decorative pointer accent is approved as the only decorative motion, under strict conditions. Details in section 7. |
+| Case 3 evidence | Published as confidential: context, system and topology, plus an invitation to review decisions in a conversation. No placeholders. |
 
 ### Defined cases (content gate for the landing redesign)
 
