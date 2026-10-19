@@ -1,272 +1,143 @@
-.main-div-section1 {
-    display: flex;
-    /*background-color: #0A0A0A;
-    width: 100%;
-    height: 100%;
-    
-    */
-    }
-
-.div-text-section1{
-    width: 50%;
-    margin-left: 102px;
+/* Hero: one column at every width; the system visual arrives with the cases. */
+.hero-inner {
+  box-sizing: border-box;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-hero-block) var(--layout-gutter);
 }
 
-.div-text-section1 h1 {
-    width: 442px;
-    height: 100px;
-
-    font-family: 'Mulish';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 40px;
-    line-height: 50px;
-
-    color: #FFFFFF;
+/* Mono label role set in Geist Sans: Geist Mono stays unloaded while Mulish
+   still loads for the legacy routes (2-family budget). */
+.hero-eyebrow {
+  margin: 0 0 var(--space-hero-eyebrow);
+  font-family: var(--text-label-family);
+  font-size: var(--text-mono-label-size);
+  line-height: var(--text-mono-label-line-height);
+  font-weight: var(--text-mono-label-weight);
+  letter-spacing: var(--text-mono-label-tracking);
+  text-transform: var(--text-mono-label-transform);
+  color: var(--color-text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--space-inline);
 }
 
-.div-text-section1 span {
-    background: linear-gradient(180deg, #FFDF1B 0%, #FFB11B 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+/* Each pillar wraps as a unit. Separators only show from 48em, where the
+   eyebrow fits on one line, so a "·" never ends or starts a wrapped line. */
+.hero-pillar {
+  white-space: nowrap;
 }
 
-.div-buttons {
-    display: flex;
+.hero-pillar-separator {
+  display: none;
+  margin-inline-start: var(--space-inline);
 }
 
-.button-ir-al-cv {
-
-display: flex;
-flex-direction: row;
-align-items: flex-start;
-padding: 15px 20px;
-gap: 10px;
-margin-right: 1rem;
-
-width: auto;
-height: 53px;
-
-background: linear-gradient(180deg, #FFDF1B 0%, #FFB11B 100%);
-border-radius: 6px;
-
-/* Paragraph Bold */
-
-font-family: 'Mulish';
-font-style: normal;
-font-weight: 700;
-font-size: 18px;
-line-height: 23px;
-/* identical to box height */
-
-text-align: center;
-
-color: #0A0A0A;
-
-/* Inside auto layout */
-
-flex: none;
-order: 0;
-flex-grow: 0;
-
-transition: .5s;
-}
-.aMailTo {
-    color: whitesmoke;
-    text-decoration: none;
-    transition: .5s;
+@media (min-width: 48em) {
+  .hero-pillar-separator {
+    display: inline;
+  }
 }
 
-.aMailTo:hover {
-    cursor:pointer;
-    color: #0A0A0A;
-}
-.button-ir-al-cv:hover {
-    cursor:pointer;
-    color: white
-}
-
-.button-verproyectos {
-/* Button */
-
-transition: .5s;
-/* Auto layout */
-
-display: flex;
-flex-direction: row;
-align-items: flex-start;
-padding: 15px 20px;
-gap: 10px;
-
-width: auto;
-height: 53px;
-
-/* Button-Mute */
-
-background: #222222;
-border-radius: 6px;
-
-/* Paragraph Bold */
-
-font-family: 'Mulish';
-font-style: normal;
-font-weight: 700;
-font-size: 18px;
-line-height: 23px;
-/* identical to box height */
-
-text-align: center;
-
-color: #FFFFFF;
-
-
-/* Inside auto layout */
-
-flex: none;
-order: 0;
-flex-grow: 0;
+.hero-thesis {
+  max-width: var(--measure-display);
+  margin: 0 0 var(--space-hero-thesis);
+  font-family: var(--text-display-family);
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-line-height);
+  font-weight: var(--text-display-weight);
+  letter-spacing: var(--text-display-tracking);
+  color: var(--color-text);
 }
 
-.parrafo-sobremi {
-    width: 550px;
-    height: 191px;
-    
-/* Lead Light */
-
-    font-family: 'Mulish';
-    font-style: normal;
-    font-weight: 300;
-    font-size: 22px;
-    line-height: 28px;
-
-/* Muted */
-    color: #A1B0BF;
+.hero-statement {
+  max-width: var(--measure-body-lg);
+  margin: 0;
+  font-family: var(--text-body-lg-family);
+  font-size: var(--text-body-lg-size);
+  line-height: var(--text-body-lg-line-height);
+  font-weight: var(--text-body-lg-weight);
+  letter-spacing: var(--text-body-lg-tracking);
+  color: var(--color-text-secondary);
 }
 
-.div-tecnologias {
-    display: flex;
-    margin-top: 2rem;
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-button-gap);
+  margin-top: var(--space-hero-statement);
 }
 
-.div-logo-tecnologia {
-    width: 124px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    margin: 1rem;
+.hero-cta {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--size-control-min);
+  padding: var(--space-cta-y) var(--space-cta-x);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  font-family: var(--text-label-family);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-line-height);
+  font-weight: var(--text-label-weight);
+  letter-spacing: var(--text-label-tracking);
+  text-decoration: none;
+  transition:
+    background-color var(--duration-feedback) var(--ease-standard),
+    border-color var(--duration-feedback) var(--ease-standard),
+    color var(--duration-feedback) var(--ease-standard);
 }
 
-.logo-tecnologias {
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-    margin-right: 1rem;
+.hero-cta-primary {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
-.node {
-    width: 40px;
-    height: 24.5px;
-}
-.text-tecnologias {
-    /* Previously inherited from the global `p` rule in SobreMi.css */
-    width: 95%;
-    height: 100%;
-
-    /* Paragraph */
-
-    font-family: 'Mulish';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 23px;
-    /* identical to box height */
-
-    color: #A1B0BF;
-}
-.div-image-section1 {
-    width: 50%;
+.hero-cta-primary:hover {
+  background-color: var(--color-accent-hover);
 }
 
-.image-macbook {
-    z-index: 2;
-    position: absolute;
-    width: 600px;
-    height: 450px;
-    transition: 0.5s;
+.hero-cta-primary:active {
+  background-color: var(--color-accent-active);
 }
 
-.image-splash {
-    z-index: 1;
-    position: absolute;
-    margin-right: auto;
-    width: 618px;
-    height: 456px;
-    transform: matrix(1, 0, 0, -1, 0, 0);
+.hero-cta-secondary {
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
 }
 
-@media(max-width: 768px) {
-    .main-div-section1 {
-        display: inline-block;
-        width: 100%;
-    }
-    .image-splash {
-        background-color: black;
-        width: 100%;
-        height: auto;
-        transform: matrix(1, 0, 0, -1, 0, 0);
-        
-    }
-    .image-macbook {
-        width: 100%;
-        height: auto;
-        /*z-index: 2;
-        position: absolute;
-        transition: 0.5s;*/
-    }
-    .div-text-section1 {
-        width: auto;
-        margin-left: 1rem;
-    }
-    .div-text-section1 h1 {
-        width: auto; 
-        height: auto;
-        font-family: 'Mulish';
-        font-style: normal;
-        font-weight: 300;
-        font-size: 40px;
-        line-height: 50px;
-        color: #FFFFFF;
-    }
+.hero-cta-secondary:hover {
+  background-color: var(--color-surface-hover);
+}
 
-    .div-image-section1 {
-        width: 100%;
-        height: auto;
-    }
+/* Tertiary: a plain text link with a full-height target, lower emphasis than both buttons. */
+.hero-cta-tertiary {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-touch-target);
+  font-family: var(--text-label-family);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-line-height);
+  font-weight: var(--text-label-weight);
+  letter-spacing: var(--text-label-tracking);
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  transition: color var(--duration-feedback) var(--ease-standard);
+}
 
-    .parrafo-sobremi {
-        width: auto; 
-        height: auto;
-        font-family: 'Mulish';
-        font-style: normal;
-        font-weight: 300;
-        font-size: 22px;
-        line-height: 28px;
-        color: #A1B0BF;
-    }
+.hero-cta-tertiary:hover {
+  color: var(--color-text);
+}
 
-    .div-tecnologias {
-        display: flex;
-        /* width: 100%; */
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-        justify-content: center;
-    }
-    .div-logo-tecnologia {
-        width: 124px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        margin: 0.5rem;
-    }
+.hero-proof {
+  max-width: var(--measure-body);
+  margin: var(--space-hero-proof) 0 0;
+  font-family: var(--text-body-family);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line-height);
+  font-weight: var(--text-body-weight);
+  letter-spacing: var(--text-body-tracking);
+  color: var(--color-text-muted);
 }

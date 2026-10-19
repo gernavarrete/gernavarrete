@@ -339,6 +339,9 @@ snap to the nearest step.
 | Standard button | 12px / 24px padding, **min-height 44px** | 3 / 5 |
 | Large CTA button | 16px / 24px padding (≈ 50px tall) | 4 / 5 |
 | Gap between buttons | 12px | 3 |
+| Navigation item: horizontal padding | 12px | 3 |
+| Header: vertical padding | 8px; 16px from 48em | 2 / 4 |
+| Header: identity → actions | 24px | 5 |
 | Card padding | 24px when the card is narrower than 20rem, 32px when it is 20rem or wider (container query on the card, not the viewport) | 5 / 6 |
 | Card: title → text | 8px | 2 |
 | Card: text → action or metadata | 16px | 4 |
@@ -498,10 +501,14 @@ Two media queries, chosen by content behavior, not by device.
 
 | Range | Name | What changes | Why there |
 |---|---|---|---|
-| < 48em (768px) | Mobile / base | Single-column flow: stacked hero, menu navigation | Below ~720px of content, two text columns lack a comfortable reading width |
+| < 48em (768px) | Mobile / base | Single-column flow: stacked hero, inline or menu navigation (rule below) | Below ~720px of content, two text columns lack a comfortable reading width |
 | ≥ 48em (768px) | Tablet / narrow | Full navigation visible | ~722px of content fits the logo, 4 links and a CTA on one line |
 | ≥ 64em (1024px) | Desktop | Split hero, case study with side panel, 12-column grid | ~969px of content lets a ~554px text column hold the Display next to a diagram |
 | ≥ ~1264px | Wide | No media query: the layout container reaches its 1200px max | Natural cap; type and spacing also stop growing at 1280px |
+
+Below 48em, navigation stays inline while every destination fits down to 320px
+without horizontal overflow, every target keeps the 44×44px minimum and the
+hierarchy stays clear. A menu is used only when those constraints cannot hold.
 
 Breakpoints are written in `em` as a choice of relative units, consistent with
 a type and spacing system already in `rem`. Zoom and reflow do not depend on

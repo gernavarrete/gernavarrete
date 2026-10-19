@@ -6,9 +6,14 @@ function renderAt(path) {
   render(<App />);
 }
 
-test("renders the hero text at /", async () => {
+test("renders the hero at /", async () => {
   renderAt("/");
-  expect(await screen.findByText("Desarrollador Fullstack")).toBeInTheDocument();
+  expect(
+    await screen.findByRole("heading", {
+      name: "Sistemas, no pantallas.",
+      level: 1,
+    })
+  ).toBeInTheDocument();
 });
 
 test("renders the about section at /sobremi", async () => {
