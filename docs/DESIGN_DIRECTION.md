@@ -981,8 +981,14 @@ over interactive elements.
 
 - Only with `(hover: hover) and (pointer: fine)`; never on touch or pen input,
   and never under reduced motion.
-- The native cursor is never hidden or replaced; the accent sits on top with
-  `pointer-events: none` and is hidden from assistive technology.
+- While the accent is active, it replaces the native cursor: a solid amber
+  point is painted at the exact pointer position on every pointer event, with
+  no easing, and the ring and trail follow it. The native cursor is hidden only
+  while the accent is active (after the first mouse move in the window) and
+  returns whenever it is not: without a fine pointer, under reduced motion,
+  before scripts run, when the pointer leaves the window or the tab is hidden.
+- The layer has `pointer-events: none` and is hidden from assistive
+  technology.
 - Moves with `transform` only. The animation loop runs while the pointer moves
   and stops once the trail settles; nothing runs while the pointer is still,
   outside the window or while the tab is hidden.
@@ -1109,7 +1115,7 @@ Meaning is preserved without motion:
 | No motion libraries (CSS + Web Animations API) | |
 | Single-page anchor navigation: smooth scroll (instant under reduced motion), proximity snap only from 48em and never under reduced motion, no scroll interception | |
 | Section rail only where it does not overlap the layout container; mobile progress indicator uses `transform: scaleX()` with no transition | |
-| Pointer accent: fine pointer only, never under reduced motion, native cursor kept, transform only, idle when the pointer is still, no meaning | |
+| Pointer accent: fine pointer only, never under reduced motion, native cursor hidden only while the accent is active, exact-position point with no lag, transform only, idle when the pointer is still, no meaning | |
 
 ## 8. Narrative and content
 
