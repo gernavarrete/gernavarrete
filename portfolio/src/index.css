@@ -36,3 +36,10 @@ code {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
+
+/* PointerAccent sets this on <html> only while it replaces the native cursor
+   (DESIGN_DIRECTION §7), so the cursor returns whenever the accent is off. */
+:root[data-pointer-accent],
+:root[data-pointer-accent] * {
+  cursor: none;
+}
