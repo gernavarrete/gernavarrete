@@ -5,10 +5,11 @@ const TRAIL = 4;
 const INTERACTIVE = "a, button, summary, [role='button']";
 const EPSILON = 0.1;
 
-// The owner-approved decorative exception in §7 ("Pointer accent"): an amber
-// ring with a short trail over the native cursor. Mouse only, never under
-// reduced motion; it moves with transforms and its frame loop stops as soon
-// as the trail settles.
+// The owner-approved decorative exception in §7 ("Pointer accent"): a solid
+// amber point at the exact pointer position replaces the native cursor while
+// the accent is active, followed by a ring with a short trail. Mouse only,
+// never under reduced motion; it moves with transforms and its frame loop
+// stops as soon as the trail settles.
 function canRun() {
   return (
     Boolean(window.matchMedia?.("(hover: hover) and (pointer: fine)").matches) &&
@@ -25,6 +26,8 @@ export default function PointerAccent() {
   useEffect(() => {
     if (!enabled) return undefined;
     const layer = layerRef.current;
+    const root = document.documentElement;
+    const pointer = layer.querySelector("[data-pointer]");
     const ring = layer.querySelector("[data-ring]");
     const dots = [...layer.querySelectorAll("[data-trail]")];
     const state = { tx: 0, ty: 0, x: 0, y: 0, scale: 1, targetScale: 1, frame: 0, shown: false };
@@ -73,6 +76,8 @@ export default function PointerAccent() {
     const show = (visible) => {
       state.shown = visible;
       layer.style.opacity = visible ? "1" : "0";
+      // The native cursor is hidden only while the accent replaces it.
+      root.toggleAttribute("data-pointer-accent", visible);
     };
 
     const onMove = (event) => {
@@ -80,6 +85,8 @@ export default function PointerAccent() {
       state.tx = event.clientX;
       state.ty = event.clientY;
       state.targetScale = event.target?.closest?.(INTERACTIVE) ? 1.625 : 1;
+      // The point stands in for the cursor, so it never waits for a frame.
+      pointer.style.transform = translate(state.tx, state.ty);
       if (!state.shown) {
         // Appear at the pointer instead of flying in from the last position.
         Object.assign(state, { x: state.tx, y: state.ty });
@@ -103,6 +110,7 @@ export default function PointerAccent() {
     document.addEventListener("visibilitychange", onVisibility);
     return () => {
       cancelAnimationFrame(state.frame);
+      root.removeAttribute("data-pointer-accent");
       window.removeEventListener("pointermove", onMove);
       document.documentElement.removeEventListener("mouseleave", hide);
       document.removeEventListener("visibilitychange", onVisibility);
@@ -116,6 +124,7 @@ export default function PointerAccent() {
         <span key={i} className={s.dot} data-trail="" />
       ))}
       <span className={s.ring} data-ring="" />
+      <span className={s.pointer} data-pointer="" />
     </div>
   );
 }

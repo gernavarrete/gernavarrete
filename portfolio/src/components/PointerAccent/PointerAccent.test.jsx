@@ -73,6 +73,36 @@ describe("PointerAccent", () => {
     expect(frames).toHaveLength(0);
   });
 
+  it("paints the pointer point at the exact position without waiting for a frame", () => {
+    stubMedia({ fine: true, reduced: false });
+    const { container } = render(<PointerAccent />);
+    move(100, 100);
+    move(140, 60);
+    const point = container.querySelector("[data-pointer]");
+    expect(point.style.transform).toMatch(/translate\(140(\.0+)?px, 60(\.0+)?px\)/);
+  });
+
+  it("hides the native cursor only while the accent is active", () => {
+    stubMedia({ fine: true, reduced: false });
+    const root = document.documentElement;
+    const { unmount } = render(<PointerAccent />);
+    expect(root).not.toHaveAttribute("data-pointer-accent");
+    move(100, 100);
+    expect(root).toHaveAttribute("data-pointer-accent");
+    act(() => root.dispatchEvent(new Event("mouseleave")));
+    expect(root).not.toHaveAttribute("data-pointer-accent");
+    move(100, 100);
+    unmount();
+    expect(root).not.toHaveAttribute("data-pointer-accent");
+  });
+
+  it("keeps the native cursor when the accent cannot run", () => {
+    stubMedia({ fine: false, reduced: false });
+    render(<PointerAccent />);
+    move(100, 100);
+    expect(document.documentElement).not.toHaveAttribute("data-pointer-accent");
+  });
+
   it("moves with transforms and stops once the trail settles", () => {
     stubMedia({ fine: true, reduced: false });
     const { container } = render(<PointerAccent />);
